@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        BigInt       @id @default(autoincrement()) @db.BigInt
+  name      String
+  email     String       @unique
+  password  String?      // Nullable for OAuth users
+  addresses Address[]    // Multiple addresses
+  orders    Order[]      // Multiple orders
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now()) @updatedAt
+}
+
+model Address {
+  id        BigInt       @id @default(autoincrement()) @db.BigInt
+  userId    BigInt       // Foreign key to User
+  street    String
+  city      String
+  state     String
+  postalCode String
+  country   String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now()) @updatedAt
+  
+  user      User         @relation(fields: [userId], references: [id])
+  orders    Order[]      @relation("AddressOrders") // Multiple orders
+}
+
+model Order {
+  id          BigInt      @id @default(autoincrement()) @db.BigInt
+  userId      BigInt      // Foreign key to User
+  addressId   BigInt      // Foreign key to Address
+  totalAmount Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt
+  
+  user        User        @relation(fields: [userId], references: [id])
+  address     Address     @relation(fields: [addressId], references: [id], name: "AddressOrders")
+  orderItems  OrderItem[] // Multiple order items
+}
+
+model Product {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  stock       Int
+  categoryId  Int
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt
+
+  category    Category    @relation(fields: [categoryId], references: [id])
+  orderItems  OrderItem[] // Multiple order items
+}
+
+model Category {
+  id        Int          @id @default(autoincrement())
+  name      String       @unique
+  products  Product[]
+}
+
+model OrderItem {
+  id        Int         @id @default(autoincrement())
+  orderId   BigInt      // Foreign key to Order
+  productId Int         // Foreign key to Product
+  quantity  Int
+  price     Float
+
+  order     Order       @relation(fields: [orderId], references: [id])
+  product   Product     @relation(fields: [productId], references: [id])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
