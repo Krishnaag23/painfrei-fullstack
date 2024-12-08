@@ -1,13 +1,13 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 
 const ProfilePage = () => {
-  const { data: session } = useSession(); 
+  const { isLoggedIn,user,loading } = useAuth();
 
   // Redirect if user is not authenticated
-  if (!session) {
+  if (!isLoggedIn) {
     return (
       <div className="flex items-center justify-center min-h-screen text-center">
         <h1 className="text-2xl">Please sign in to view your profile.</h1>
@@ -17,6 +17,7 @@ const ProfilePage = () => {
       </div>
     );
   }
+  if (loading)  return <p>Loading...</p>;
 
   return (
     <>
@@ -30,10 +31,10 @@ const ProfilePage = () => {
             <div className="border-b border-body-color border-opacity-10 pb-4 mb-6">
               <h2 className="text-xl font-semibold text-black dark:text-white">Profile Information</h2>
               <p className="text-base text-body-color dark:text-body-color-dark mt-2">
-                <strong>Name:</strong> {session.user.name}
+                <strong>Name:</strong> {user.name}
               </p>
               <p className="text-base text-body-color dark:text-body-color-dark mt-2">
-                <strong>Email:</strong> {session.user.email}
+                <strong>Email:</strong> {user.email}
               </p>
             </div>
 
@@ -51,7 +52,7 @@ const ProfilePage = () => {
             {/* Sign Out Button */}
             <div className="flex justify-end">
               <button 
-                onClick={() => signOut()} 
+                
                 className="inline-flex items-center justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-white hover:bg-red-700 transition duration-300"
               >
                 Sign Out

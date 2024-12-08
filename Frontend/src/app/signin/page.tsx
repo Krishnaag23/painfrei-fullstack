@@ -15,23 +15,26 @@ const SigninPage = () => {
     e.preventDefault();
     setLoading(true);
     setSuccessMessage(null);
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-    console.log("After result");
-    console.log(result);
-    if (result?.error) {
-      setError(result.error);
-    } else {
-      setSuccessMessage("Successfully signed in! Redirecting...");
-      // Redirect after a short delay to give users time to read the message
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message  || "Something went wrong.");
+      }
+
+      localStorage.setItem("token", data.token);
+      alert("Signin successful!");
+      window.location.href = "/";
+    } catch (error) {
+      setError(error.message);
+      
     }
-    setLoading(false);
   };
 
   const handleGoogleSignIn = async () => {

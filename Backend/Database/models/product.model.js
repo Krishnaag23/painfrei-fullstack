@@ -43,21 +43,7 @@ const productSchema = new Schema(
       default: 0,
       min: 0,
     },
-    // category: {
-    //   type: Schema.ObjectId,
-    //   ref: "category",
-    //   required: true,
-    // },
-    // subcategory: {
-    //   type: Schema.ObjectId,
-    //   ref: "subcategory",
-    //   required: true,
-    // },
-    // brand: {
-    //   type: Schema.ObjectId,
-    //   ref: "brand",
-    //   required: true,
-    // },
+
     ratingAvg: {
       type: Number,
       min: 1,

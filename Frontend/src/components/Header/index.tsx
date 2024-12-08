@@ -3,17 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
+import useAuth from "@/hooks/useAuth";
 
 const Header = () => {
   
-
-  const { data: session } = useSession();
-  // Navbar toggle
-
+  const { isLoggedIn, user, loading } = useAuth();
   const [navbarOpen, setNavbarOpen] = useState(false);
+
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
@@ -165,11 +164,12 @@ const Header = () => {
               </div>
                 
                 <div className="flex items-center justify-end pr-16 lg:pr-0">
-                {session ? (
+                {loading && <p>Loading...</p>}
+                {!loading && isLoggedIn ? (
                 <>
                   {/* Profile Icon */}
                   <Link href="/profile" className="relative flex items-center justify-center w-12 h-12 bg-gray-200 rounded-full dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-200">
-                    <Image src={session.user.image} alt="Profile" width={24} height={24}  />
+                    <Image src={user.image} alt="Profile" width={24} height={24}  />
                   </Link>
                 </>
               ) : (

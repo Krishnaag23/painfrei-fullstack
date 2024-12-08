@@ -1,15 +1,16 @@
 import express from "express";
-import passport from "../config/auth.js";
+import passport from "../../config/auth.js";
 import jwt from "jsonwebtoken";
 
 const google_router = express.Router();
 
-router.get(
-  "/google",
+
+google_router.get(
+  "/",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
-router.get(
-  "/google/callback",
+google_router.get(
+  "/callback",
   passport.authenticate("google", { session: false }),
   (req, res) => {
     const token = jwt.sign(

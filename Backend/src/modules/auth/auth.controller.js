@@ -63,4 +63,25 @@ const allowedTo = (...roles) => {
     next();
   });
 };
-export { signUp, signIn, protectedRoutes, allowedTo };
+
+const checkAuth = catchAsyncError(async (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization || !authorization.startsWith("Bearer ")) {
+    return next(new AppError("Authorization token missing or invalid", 401));
+  }
+
+  const token = authorization.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const user = await userModel.findById(decoded.id);
+
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  res.status(200).json({ message: "Authenticated", user });
+});
+
+
+
+
+export { signUp, signIn, protectedRoutes, allowedTo, checkAuth };
