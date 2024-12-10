@@ -15,7 +15,7 @@ const productSchema = new Schema(
     images: {
       type: [String],
     },
-    descripton: {
+    description: {
       type: String,
       maxlength: [100, "Description should be less than or equal to 100"],
       minlength: [10, "Description should be more than or equal to 10"],
@@ -54,32 +54,26 @@ const productSchema = new Schema(
       min: 0,
     },
   },
-  { timestamps: true ,toJSON: { virtuals: true },toObject: { virtuals: true } }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-productSchema.post('init',function(doc){
-
-  if(doc.imgCover && doc.images){
-
-    doc.imgCover = `${process.env.BASE_URL}products/${doc.imgCover}`
-    doc.images = doc.images.map((ele)=>{
-     return `${process.env.BASE_URL}products/${ele}`
-    })
+productSchema.post("init", function (doc) {
+  if (doc.imgCover && doc.images) {
+    doc.imgCover = `${process.env.BASE_URL}products/${doc.imgCover}`;
+    doc.images = doc.images.map((ele) => {
+      return `${process.env.BASE_URL}products/${ele}`;
+    });
   }
-
-  
-})
-
-productSchema.virtual('reviews', {
-  ref: 'review',
-  localField: '_id',
-  foreignField: 'productId',
 });
 
-productSchema.pre(['find','findOne'],function (){
-  this.populate('reviews')
-})
+productSchema.virtual("reviews", {
+  ref: "review",
+  localField: "_id",
+  foreignField: "productId",
+});
+
+productSchema.pre(["find", "findOne"], function () {
+  this.populate("reviews");
+});
 
 export const productModel = model("product", productSchema);
-
-

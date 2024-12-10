@@ -10,9 +10,9 @@ export default function WishlistPage() {
 
   useEffect(() => {
     axios
-      .get(process.env.BACKEND_URL + "wishlist/")
+      .get(process.env.NEXT_PUBLIC_BACKEND_URL + "wishlist/", {headers: { token: ` ${localStorage.getItem('token')}` }})
       .then((response) => {
-        setWishlist(response.data);
+        setWishlist(response.data.getAllUserWishList);
       })
       .catch((error) => {
         setError(error.message);
@@ -21,7 +21,7 @@ export default function WishlistPage() {
 
   const handleRemove = (productId) => {
     axios
-      .delete(process.env.BACKEND_URL + `wishlist/${productId}`)
+      .delete(process.env.NEXT_PUBLIC_BACKEND_URL + `wishlist/${productId}`, {headers: { token: ` ${localStorage.getItem('token')}` }})
       .then((response) => {
         setWishlist(wishlist.filter((item) => item._id !== productId));
       })
@@ -29,7 +29,11 @@ export default function WishlistPage() {
         setError(error.message);
       });
   };
-
+  if (wishlist.length === 0){
+    return <div className="container mx-auto p-4 pt-36">
+        
+      <h1 className="mb-4 text-3xl font-bold">Wishlist</h1><p>Nothing In the Wishlist</p></div>
+  }
   return (
     <div className="container mx-auto p-4 pt-36">
       <h1 className="mb-4 text-3xl font-bold">Wishlist</h1>

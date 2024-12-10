@@ -171,15 +171,15 @@ const { isLoggedIn, user: authUser, loading: authLoading } = useAuth();
         >
           Delete Account
         </button>
-        <Link href="/dashboard/addresses" legacyBehavior>
-          <a className="block bg-blue-600 text-white rounded px-4 py-2 mb-4 text-center">
+        <Link href="/dashboard/addresses"className=" ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9">
+          
             Manage Addresses
-          </a>
+          
         </Link>
-        <Link href="/dashboard/wishlist" legacyBehavior>
-          <a className="block bg-blue-600 text-white rounded px-4 py-2 text-center">
+        <Link href="/dashboard/wishlist" className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-blue-600 mt-4 px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9">
+          
             View Wishlist
-          </a>
+          
         </Link>
       </div>
       

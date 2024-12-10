@@ -23,6 +23,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "src/app/dashboard/page.jsx"],
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "src/app/dashboard/page.jsx", "src/app/dashboard/cart/page.js"],
   "exclude": ["node_modules"]
 }

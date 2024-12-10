@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Product } from "@/types/product";
-import { useCart } from "@/context/CartContext";
+
 
 interface ProductClientProps {
   product: Product;
@@ -15,12 +15,12 @@ interface ProductWithQuantity extends Product {
 
 const ProductClient = ({ product }: ProductClientProps) => {
   const [quantity, setQuantity] = useState(1);
-  const { dispatch } = useCart();
+
   const [loading, setLoading] = useState(false);
 
   const handleAddToCart = () => {
     const productWithQuantity: ProductWithQuantity = { ...product, quantity };
-    dispatch({ type: "ADD_TO_CART", payload: productWithQuantity });
+    
     alert("Product added to cart!");
   };
 
@@ -65,7 +65,7 @@ const ProductClient = ({ product }: ProductClientProps) => {
 
           if (verification.success) {
             alert("Payment Successful!");
-            dispatch({ type: "CLEAR_CART" });
+            
           } else {
             alert("Payment verification failed");
           }

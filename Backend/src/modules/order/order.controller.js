@@ -8,45 +8,59 @@ import { userModel } from "../../../Database/models/user.model.js";
 import crypto from "crypto";
 
 const createRazorpayOrder = catchAsyncError(async (req, res, next) => {
-  const cart = await cartModel.findById(req.params.id);
+  const cart = await cartModel.findOne({ userId: req.params.id });
   if (!cart) return next(new AppError("Cart was not found", 404));
-
-  const totalOrderPrice = cart.totalPriceAfterDiscount
-    ? cart.totalPriceAfterDiscount
-    : cart.totalPrice;
+  console.log(cart);
+  const totalOrderPrice = 
+  // cart.totalPriceAfterDiscount ? cart.totalPriceAfterDiscount :
+     cart.totalPrice;
 
   const options = {
-    amount: totalOrderPrice * 100, 
+    amount: totalOrderPrice * 100,
     currency: "INR",
     receipt: `order_rcptid_${req.params.id}`,
   };
 
   const razorpayOrder = await razorpayInstance.orders.create(options);
 
-  if (!razorpayOrder) return next(new AppError("Error creating Razorpay order", 500));
+  if (!razorpayOrder)
+    return next(new AppError("Error creating Razorpay order", 500));
 
   res.status(200).json({
     success: true,
     razorpayOrderId: razorpayOrder.id,
     amount: options.amount,
+    cartId: cart._id,
     currency: options.currency,
   });
 });
 
 const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
   const { razorpayOrderId, razorpayPaymentId, razorpaySignature } = req.body;
+  // console.log("Received Razorpay Signature:", razorpaySignature);
+  // console.log("Recieved Razorpay Order Id:", razorpayOrderId);
+  // console.log("Recieved Razorpay Payment Id:", razorpayPaymentId)
 
+
+  
   const body = razorpayOrderId + "|" + razorpayPaymentId;
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
+    console.log("Expected Signature:", expectedSignature);
+    console.log("Body String:", body);
+
 
   if (expectedSignature !== razorpaySignature) {
-    return next(new AppError("Invalid signature, payment verification failed", 400));
+    return next(
+      new AppError("Invalid signature, payment verification failed", 400)
+    );
   }
 
-  const cart = await cartModel.findById(req.params.id);
+  let cart = await cartModel.findOne({
+    userId: req.user._id,
+  });
   if (!cart) return next(new AppError("Cart was not found", 404));
 
   const order = new orderModel({
@@ -67,7 +81,6 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
 
   await order.save();
 
-  
   const bulkUpdateOptions = cart.cartItem.map((item) => ({
     updateOne: {
       filter: { _id: item.productId },
@@ -78,12 +91,16 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
 
   await cartModel.findByIdAndDelete(req.params.id);
 
-  res.status(201).json({ success: true, message: "Payment verified and order created", order });
+  res.status(201).json({
+    success: true,
+    message: "Payment verified and order created",
+    order,
+  });
 });
 
-
 const createCashOrder = catchAsyncError(async (req, res, next) => {
-  let cart = await cartModel.findById(req.params.id);
+  const cart = await cartModel.findOne({ userId: req.params.id });
+  if (!cart) return next(new AppError("Cart was not found", 404));
   // console.log(cart);
   let totalOrderPrice = cart.totalPriceAfterDiscount
     ? cart.totalPriceAfterDiscount
@@ -134,13 +151,10 @@ const getAllOrders = catchAsyncError(async (req, res, next) => {
   res.status(200).json({ message: "success", orders });
 });
 
-
-
-
 export {
   createCashOrder,
   getSpecificOrder,
   getAllOrders,
   verifyRazorpayPayment,
-  createRazorpayOrder  
+  createRazorpayOrder,
 };
