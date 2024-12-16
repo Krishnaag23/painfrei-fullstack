@@ -8,6 +8,9 @@ import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 import useAuth from "@/hooks/useAuth";
 
+import placeholder from "public/images/about/profile.png";
+import cartIcon from "public/images/about/shopping.png"
+
 const Header = () => {
   
   const { isLoggedIn, user, loading } = useAuth();
@@ -166,15 +169,18 @@ const Header = () => {
                 <div className="flex items-center justify-end pr-16 lg:pr-0">
                 {loading && <p>Loading...</p>}
                 {!loading && isLoggedIn ? (
-                <>
+                  <>
+                  <Link href="/dashboard/cart" className="relative flex items-center justify-center w-12 h-12 mr-4 rounded-full dark:bg-white transition-all duration-200">
+                    <Image src={cartIcon} alt="Cart" width={36} height={36}  />
+                  </Link>
                   {/* Profile Icon */}
-                  <Link href="/profile" className="relative flex items-center justify-center w-12 h-12 bg-gray-200 rounded-full dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-200">
-                    <Image src={user.image} alt="Profile" width={24} height={24}  />
+                  <Link href="/profile" className="relative flex items-center justify-center w-12 h-12  rounded-full  dark:bg-white  transition-all duration-200">
+                    <Image src={user.image? user.image : placeholder} alt="Profile" width={36} height={36}  />
                   </Link>
                 </>
               ) : (
                 <>
-                  <Link href="/signin" className="hidden px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block">
+                  <Link href="/signin" className=" px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block">
                     Sign In
                   </Link>
                   <Link href="/signup" className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9">
