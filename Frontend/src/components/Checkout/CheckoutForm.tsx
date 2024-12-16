@@ -1,40 +1,54 @@
 'use client';
 
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/useAuth';
+import axios from "axios";
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  address: string;
+  city: string;
+  phone: number;
+  state: string;
+  shippingMethod: 'standard' | 'express';
+}
 
 export default function CheckoutForm() {
   const router = useRouter();
-  const { user} = useAuth();
-  
-  
-
-  const [formData, setFormData] = useState({
+  const { user } = useAuth();
+  const [formData, setFormData] = useState<FormData>({
     name: "",
-    email: "" ,
+    email: "",
     address: '',
     city: '',
     phone: 0,
     state: '',
     shippingMethod: 'standard',
-    
   });
+
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
       setFormData({
         name: user.name,
         email: user.email,
-        address: user.addresses[0].address,
-        city: user.addresses[0].city,
-        phone: parseInt(user.addresses[0].phone),
-        state: formData.state,
-        shippingMethod: 'standard'
-        })
+        address: user.addresses[0]?.street || '',
+        city: user.addresses[0]?.city || '',
+        phone: parseInt(user.addresses[0]?.phone) || 0,
+        state: user.addresses[0]?.state || '',
+        shippingMethod: 'standard',
+      });
     }
-  }, [user])
+  }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
@@ -42,14 +56,89 @@ export default function CheckoutForm() {
   };
 
   const handleShippingMethodChange = (value: string) => {
-    setFormData({ ...formData, shippingMethod: value });
+    setFormData({ ...formData, shippingMethod: value as 'standard' | 'express' });
+  };
+
+  useEffect(() => {
+    const loadRazorpayScript = () => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => resolve(true);
+        script.onerror = () => reject(new Error("Failed to load Razorpay script"));
+        document.body.appendChild(script);
+      });
+    };
+
+    loadRazorpayScript()
+      .then(() => console.log("Razorpay script loaded"))
+      .catch((error) => {
+        setError("Failed to load payment gateway. Please try again later.");
+        console.error(error);
+      });
+  }, []);
+
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}orders/razorpay/${user._id}`,
+        { user },
+        { headers: { token: `${localStorage.getItem("token")}` } },
+      );
+
+      const { razorpayOrderId, amount } = response.data;
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount,
+        currency: "INR",
+        name: "Painfrei Shop",
+        order_id: razorpayOrderId,
+        handler: async (response: any) => {
+          await verifyPayment(response, user._id);
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      if (window.Razorpay) {
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      } else {
+        setError("Razorpay is not available. Please try again.");
+        console.error("Razorpay SDK not loaded");
+      }
+    } catch (error) {
+      setError("Error initiating checkout.");
+      console.error(error);
+    }
+  };
+
+  const verifyPayment = async (response: any, userId: string) => {
+    try {
+      const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}orders/verify-payment/${userId}`,
+        {
+          razorpayOrderId: razorpay_order_id,
+          razorpayPaymentId: razorpay_payment_id,
+          razorpaySignature: razorpay_signature,
+        },
+        { headers: { token: `${localStorage.getItem("token")}` } },
+      );
+      alert("Payment Successful!");
+      router.push("/dashboard/order-confirmed");
+    } catch (error) {
+      setError("Payment verification failed.");
+      console.error(error);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     console.log('Order placed:', formData);
-    router.push('/order-confirmation');
+    handleCheckout();
   };
 
   return (
@@ -61,7 +150,6 @@ export default function CheckoutForm() {
         label="Full Name"
         id="name"
         name="name"
-        
         type="text"
         value={formData.name}
         onChange={handleChange}
@@ -88,7 +176,7 @@ export default function CheckoutForm() {
         value={formData.phone}
         onChange={handleChange}
         required
-        />
+      />
 
       {/* Address */}
       <FormField
@@ -101,7 +189,7 @@ export default function CheckoutForm() {
         required
       />
 
-      {/* City & Country */}
+      {/* City & State */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField
           label="City"
@@ -114,16 +202,14 @@ export default function CheckoutForm() {
         />
         <FormField
           label="State"
-          id="State"
-          name="State"
+          id="state"
+          name="state"
           type="text"
           value={formData.state}
           onChange={handleChange}
           required
         />
       </div>
-
-      
 
       {/* Shipping Method */}
       <div>
@@ -154,7 +240,9 @@ export default function CheckoutForm() {
         </div>
       </div>
 
-     
+      {/* Error Message */}
+      {error && <p className="text-red-500">{error}</p>}
+
       {/* Submit Button */}
       <button
         type="submit"
@@ -172,7 +260,7 @@ interface FormFieldProps {
   id: string;
   name: string;
   type: string;
-  value: string;
+  value: any;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
@@ -201,9 +289,10 @@ function FormField({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="mt-1 w-full border-gray-300 rounded-lg shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500 dark:border-white "
+        className="mt-1 w-full border-gray-300 rounded-lg shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500 dark:border-white"
       />
     </div>
   );
 }
+
  
