@@ -1,13 +1,13 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useState } from "react";
+import useAuth from "@/hooks/useAuth";
 
 const EditProfilePage = () => {
-  const { data: session } = useSession();
+  const {user, isLoggedIn} = useAuth();
   const [form, setForm] = useState({
-    name: session?.user.name || "",
-    email: session?.user.email || "",
+    name: user.name || "",
+    email: user.email || "",
     street: "",
     city: "",
     state: "",
@@ -15,14 +15,14 @@ const EditProfilePage = () => {
     country: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/profile", {
+      const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

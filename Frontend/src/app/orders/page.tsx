@@ -1,16 +1,18 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+
+import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 
 const OrdersPage = () => {
-  const { data: session } = useSession();
+  const {user, isLoggedIn} = useAuth();  
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
+  
   useEffect(() => {
-    if (session) {
-      fetch(`/api/orders?userId=${session.user.id}`)
+    if (isLoggedIn) {
+      fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `orders?userId=${user._id}`, {headers: {Token: `${localStorage.getItem('token')}`}})
         .then((res) => res.json())
         .then((data) => {
           setOrders(data.orders || []);
@@ -21,9 +23,9 @@ const OrdersPage = () => {
           setLoading(false);
         });
     }
-  }, [session]);
+  }, [isLoggedIn]);
 
-  if (!session) {
+  if (!isLoggedIn) {
     return (
       <div className="flex items-center justify-center min-h-screen text-center">
         <h1 className="text-2xl">Please sign in to view your orders.</h1>

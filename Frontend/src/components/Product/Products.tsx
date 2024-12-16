@@ -2,6 +2,7 @@ import SectionTitle from "../Common/SectionTitle";
 import SingleProduct from "./SingleProduct";
 import { Product } from "@/types/product";
 
+
 const Products = ({ products }: { products: Product[] }) => {
   return (
     <section className="bg-gray-light dark:bg-bg-color-dark py-16 md:py-20 lg:py-28">

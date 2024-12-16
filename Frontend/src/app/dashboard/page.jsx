@@ -75,117 +75,138 @@ const { isLoggedIn, user: authUser, loading: authLoading } = useAuth();
   };
 
 
-  if (loading) {
-    return <div>Loading...</div>;
+ if (loading) {
+    return <div className="text-center py-10 pt-36 pb-32 text-lg font-medium">Loading...</div>;
   }
 
   return (
-    <div className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
-      <h1 className="text-2xl font-bold mb-6">User Dashboard</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {updateMessage && <p className="text-green-500">{updateMessage}</p>}
+    <div className="relative z-10 overflow-hidden pb-32 pt-36 ">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-primary mb-8">User Dashboard</h1>
 
-      {/* Profile Information */}
-      <div className="border p-4 rounded-md mb-6">
-        <h2 className="text-xl mb-4">Profile Information</h2>
-        <form onSubmit={handleUpdate}>
-          <div className="mb-4">
-            <label className="block mb-2">Name:</label>
-            <input
-              type="text"
-              value={user.name}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
-              className="block w-full border rounded p-2"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2">Email:</label>
-            <input
-              type="email"
-              value={user.email}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-              className="block w-full border rounded p-2"
-              required
-              disabled
-            />
-          </div>
-          <button
-            type="submit"
-            className="flex w-full items-center justify-center rounded-sm bg-primary px-4 py-2 text-white shadow-submit duration-300 hover:bg-primary/90"
-          >
-            Update Profile
-          </button>
-        </form>
-      </div>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {updateMessage && <p className="text-green-500 mb-4">{updateMessage}</p>}
 
-      {/* Change Password */}
-      <div className="border p-4 rounded-md mb-6">
-        <h2 className="text-xl mb-4">Change Password</h2>
-        <form onSubmit={handleChangePassword}>
-          <div className="mb-4">
-            <label className="block mb-2">Current Password:</label>
-            <input
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              className="block w-full border rounded p-2"
-              required
-            />
+        {/* Profile Information */}
+        <div className="mb-8 ">
+          <div className="border rounded-lg bg-white shadow-lg dark:bg-gray-800 p-6">
+            <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
+            <form onSubmit={handleUpdate}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <input
+                  type="text"
+                  value={user.name}
+                  onChange={(e) => setUser({ ...user, name: e.target.value })}
+                  className="w-full border rounded-lg p-2 dark:bg-gray-700 dark:text-white"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  value={user.email}
+                  disabled
+                  className="w-full border rounded-lg p-2 bg-gray-100 dark:bg-gray-700 dark:text-white"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 shadow-md"
+              >
+                Update Profile
+              </button>
+            </form>
           </div>
-          <div className="mb-4">
-            <label className="block mb-2">New Password:</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="block w-full border rounded p-2"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2">Confirm New Password:</label>
-            <input
-              type="password"
-              value={confirmNewPassword}
-              onChange={(e) => setConfirmNewPassword(e.target.value)}
-              className="block w-full border rounded p-2"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="flex w-full items-center justify-center rounded-sm bg-primary px-4 py-2 text-white shadow-submit duration-300 hover:bg-primary/90"
-          >
-            Change Password
-          </button>
-        </form>
-      </div>
+        </div>
 
-      {/* Account Actions */}
-      <div className="border p-4 rounded-md mb-6">
-        <h2 className="text-xl mb-4">Account Actions</h2>
-        <button 
-          onClick={handleDelete}
-          className="bg-red-600 text-white rounded px-4 py-2 mb-4"
-        >
-          Delete Account
-        </button>
-        <Link href="/dashboard/addresses"className=" ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9">
-          
-            Manage Addresses
-          
-        </Link>
-        <Link href="/dashboard/wishlist" className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-blue-600 mt-4 px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9">
-          
-            View Wishlist
-          
-        </Link>
+        {/* Change Password */}
+        <div className="mb-8">
+          <div className="border rounded-lg bg-white shadow-lg dark:bg-gray-800 p-6">
+            <h2 className="text-xl font-semibold mb-4">Change Password</h2>
+            <form onSubmit={handleChangePassword}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Current Password</label>
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className="w-full border rounded-lg p-2 dark:bg-gray-700 dark:text-white"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">New Password</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full border rounded-lg p-2 dark:bg-gray-700 dark:text-white"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Confirm New Password</label>
+                <input
+                  type="password"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  className="w-full border rounded-lg p-2 dark:bg-gray-700 dark:text-white"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 shadow-md"
+              >
+                Change Password
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Account Actions */}
+        <div className="mb-8">
+          <div className="border rounded-lg bg-white shadow-lg dark:bg-gray-800 p-6">
+            <h2 className="text-xl font-semibold mb-4">Account Actions</h2>
+            <div className="flex flex-wrap gap-4">
+              {/* <button
+                onClick={handleDelete}
+                className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700"
+              >
+                Delete Account
+              </button> */}
+              <Link
+                href="/dashboard/addresses"
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              >
+                Manage Addresses
+              </Link>
+              <Link
+                href="/dashboard/wishlist"
+                className="bg-yellow text-white py-2 px-4 rounded-lg hover:bg-yellow-600"
+              >
+                View Wishlist
+              </Link>
+              <Link
+                href="/dashboard/orders"
+                className="bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600"
+              >
+                Order History
+              </Link>
+              {/* <Link
+                href="/dashboard/activity"
+                className="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600"
+              >
+                View Activity Logs
+              </Link> */}
+            </div>
+          </div>
+        </div>
       </div>
-      
     </div>
-    
   );
 };
 
-export default UserDashboard;
+export default UserDashboard; 

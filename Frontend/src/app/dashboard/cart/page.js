@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useAuth from "@/hooks/useAuth";
 
+
 const Cart = () => {
   const [cart, setCart] = useState(null);
   const [error, setError] = useState("");
@@ -45,29 +46,32 @@ const Cart = () => {
 
   const handleQuantityChange = async (itemId, quantity) => {
     try {
-      const response = await axios.patch(
+      const response = await axios.put(
         process.env.NEXT_PUBLIC_BACKEND_URL + `carts/${itemId}`,
         { quantity },
         { headers: { token: ` ${localStorage.getItem("token")}` } },
       );
+      console.log("This is the response data cart:" + response.data.cart);
       setCart(response.data.cart);
     } catch (err) {
+      console.error(err);
       setError("Failed to update item quantity.");
     }
   };
 
   const handleApplyCoupon = async () => {
-    try {
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
-        { code: couponCode },
-        { headers: { token: ` ${localStorage.getItem("token")}` } },
-      );
-      setCart(response.data.cart);
-      setCouponCode("");
-    } catch (err) {
-      setError("Failed to apply coupon.");
-    }
+    // try {
+    //   const response = await axios.post(
+    //     process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
+    //     { code: couponCode },
+    //     { headers: { token: ` ${localStorage.getItem("token")}` } },
+    //   );
+    //   setCart(response.data.cart);
+    //   setCouponCode("");
+    // } catch (err) {
+    //   setError("Failed to apply coupon.");
+    // }
+    alert("Coming soon!");
   };
 
   if (loading) {

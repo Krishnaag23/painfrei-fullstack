@@ -6,7 +6,11 @@ import Link from "next/link";
 const ProfilePage = () => {
   const { isLoggedIn,user,loading } = useAuth();
 
-  // Redirect if user is not authenticated
+  function signOut() {
+    localStorage.removeItem("token");
+    window.location.href = "/signin";
+  }
+  
   if (!isLoggedIn) {
     return (
       <div className="flex items-center justify-center min-h-screen text-center">
@@ -51,7 +55,7 @@ const ProfilePage = () => {
 
             {/* Sign Out Button */}
             <div className="flex justify-end">
-              <button 
+              <button onClick={() => signOut()} 
                 
                 className="inline-flex items-center justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-white hover:bg-red-700 transition duration-300"
               >
