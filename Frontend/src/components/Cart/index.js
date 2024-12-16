@@ -6,6 +6,7 @@ import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 const CartComponent = () => {
+  
   const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -20,6 +21,7 @@ const CartComponent = () => {
           process.env.NEXT_PUBLIC_BACKEND_URL + "carts/",
           { headers: { token: `${localStorage.getItem("token")}` } },
         );
+        
         setCartItems(response.data.cart.cartItem);
         setTotalPrice(
           response.data.cart.totalPriceAfterDiscount ||
@@ -35,6 +37,7 @@ const CartComponent = () => {
 
     fetchCart();
   }, []);
+
 
   useEffect(() => {
     const loadRazorpayScript = () => {
@@ -64,7 +67,7 @@ const CartComponent = () => {
       );
 
       const { razorpayOrderId, amount } = response.data;
-      console.log("Thisis the response data", response.data);
+      // console.log("Thisis the response data", response.data);
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -110,7 +113,7 @@ const CartComponent = () => {
       // Redirect to confirmation page or show success message
       alert("Payment Successful!");
       // Optionally redirect to orders or a confirmation page
-      router.push("/");
+      router.push("/order-confirmed");
     } catch (error) {
       setError("Payment verification failed.");
       console.error(error);

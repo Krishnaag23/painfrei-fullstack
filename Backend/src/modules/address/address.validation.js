@@ -3,8 +3,9 @@ import Joi from "joi";
 const addAddressValidation = Joi.object({
   city: Joi.string(),
   street:Joi.string(),
+  state:Joi.string(),
+  pin:Joi.string(),
   phone:Joi.string()
-
 });
 
 const deleteAddressValidation = Joi.object({

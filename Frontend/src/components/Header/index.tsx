@@ -167,14 +167,14 @@ const Header = () => {
               </div>
                 
                 <div className="flex items-center justify-end pr-16 lg:pr-0">
-                {loading && <p>Loading...</p>}
+                
                 {!loading && isLoggedIn ? (
                   <>
                   <Link href="/dashboard/cart" className="relative flex items-center justify-center w-12 h-12 mr-4 rounded-full dark:bg-white transition-all duration-200">
                     <Image src={cartIcon} alt="Cart" width={36} height={36}  />
                   </Link>
                   {/* Profile Icon */}
-                  <Link href="/profile" className="relative flex items-center justify-center w-12 h-12  rounded-full  dark:bg-white  transition-all duration-200">
+                  <Link href="/dashboard" className="relative flex items-center justify-center w-12 h-12  rounded-full  dark:bg-white  transition-all duration-200">
                     <Image src={user.image? user.image : placeholder} alt="Profile" width={36} height={36}  />
                   </Link>
                 </>

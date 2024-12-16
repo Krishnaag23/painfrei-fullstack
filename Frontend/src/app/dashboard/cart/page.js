@@ -3,15 +3,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useAuth from "@/hooks/useAuth";
-
+import Breadcrumb from "@/components/Common/Breadcrumb";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [couponCode, setCouponCode] = useState("");
-
-  const { isLoggedIn } = useAuth();
+  const router = useRouter();
+  const { isLoggedIn, user } = useAuth();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -23,6 +24,7 @@ const Cart = () => {
           { headers: { token: ` ${localStorage.getItem("token")}` } },
         );
         setCart(response.data.cart);
+        // console.log("This is the response data cart:" + response.data.cart);
       } catch (err) {
         setError("Failed to load cart items.");
       } finally {
@@ -36,7 +38,7 @@ const Cart = () => {
   const handleRemove = async (itemId) => {
     try {
       const response = await axios.delete(
-        process.env.NEXT_PUBLIC_BACKEND_URL + `carts/${itemId}`,
+        process.env.NEXT_PUBLIC_BACKEND_URL + `carts/${itemId}`, {headers: { token: ` ${localStorage.getItem("token")}` } },
       );
       setCart(response.data.cart);
     } catch (err) {
@@ -73,7 +75,11 @@ const Cart = () => {
     // }
     alert("Coming soon!");
   };
-
+  
+  const handleCheckout = () => {
+     router.push("/dashboard/checkout");
+  }
+  
   if (loading) {
     return <div className="text-center">Loading...</div>;
   }
@@ -92,7 +98,9 @@ const Cart = () => {
   }
 
   return (
-    <div className="relative z-10 mx-auto max-w-3xl overflow-hidden px-4 pb-16 pt-36">
+    <>
+    <Breadcrumb pageName="Orders"/>
+    <div className="relative z-10 mx-auto max-w-3xl overflow-hidden px-4 pb-16">
       <h1 className="mb-6 text-center text-3xl font-bold">Your Cart</h1>
 
       <ul className="space-y-4">
@@ -150,26 +158,19 @@ const Cart = () => {
         {cart.discount > 0 && (
           <p className="text-green-600">Discount Applied: {cart.discount}%</p>
         )}
-        <p>Total After Discount: ${cart.totalPriceAfterDiscount}</p>
 
         <div className="mt-4">
-          <label className="mb-2 block">Apply Coupon:</label>
-          <input
-            type="text"
-            value={couponCode}
-            onChange={(e) => setCouponCode(e.target.value)}
-            className="w-full rounded border border-gray-300 p-2"
-            placeholder="Enter coupon code"
-          />
+          
           <button
             className="mt-2 w-full rounded bg-blue-600 p-2 text-white transition hover:bg-blue-700"
-            onClick={handleApplyCoupon}
+            onClick={handleCheckout}
           >
-            Apply Coupon
+            Proceed to Checkout
           </button>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

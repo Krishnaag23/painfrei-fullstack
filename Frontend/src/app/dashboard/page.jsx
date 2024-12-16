@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link"; 
 import axios from "axios"; 
 import useAuth from "@/hooks/useAuth";
+import Breadcrumb from "@/components/Common/Breadcrumb";
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
@@ -80,9 +81,13 @@ const { isLoggedIn, user: authUser, loading: authLoading } = useAuth();
   }
 
   return (
-    <div className="relative z-10 overflow-hidden pb-32 pt-36 ">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-primary mb-8">User Dashboard</h1>
+    <>
+    <Breadcrumb
+        pageName="Dashboard"
+        description=""
+      />
+    <div className="relative z-10 overflow-hidden pb-32">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">       
 
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {updateMessage && <p className="text-green-500 mb-4">{updateMessage}</p>}
@@ -206,6 +211,7 @@ const { isLoggedIn, user: authUser, loading: authLoading } = useAuth();
         </div>
       </div>
     </div>
+    </>
   );
 };
 

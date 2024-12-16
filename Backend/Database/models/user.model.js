@@ -52,6 +52,8 @@ const userSchema = new Schema(
       {
         city: String,
         street: String,
+        state: String,
+        pin: String,
         phone: String,
       },
     ],
