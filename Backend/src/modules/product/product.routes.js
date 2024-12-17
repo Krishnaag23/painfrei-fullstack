@@ -9,8 +9,15 @@ import {
 } from "./product.validation.js";
 import { uploadMultipleFiles } from "../../../multer/multer.js";
 import { allowedTo, protectedRoutes } from "../auth/auth.controller.js";
+import rateLimit from "express-rate-limiter";
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+});
 
 const productRouter = express.Router();
+productRouter.use(limiter);
 
 let arrFields = [
   { name: "imgCover", maxCount: 1 },

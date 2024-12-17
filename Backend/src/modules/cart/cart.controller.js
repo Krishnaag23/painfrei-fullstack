@@ -21,6 +21,10 @@ function calcTotalPrice(cart) {
 }
 
 const addProductToCart = catchAsyncError(async (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.body.productId)) {
+    return next(new AppError("Invalid product ID", 400));
+  }
+
   const product = await productModel.findById(req.body.productId).select("price");
   if (!product) return next(new AppError("Product not found", 404));
 
@@ -58,6 +62,7 @@ const addProductToCart = catchAsyncError(async (req, res, next) => {
 
 
 const removeProductFromCart = catchAsyncError(async (req, res, next) => {
+  
   const cart = await cartModel.findOneAndUpdate(
     { userId: req.user._id },
     
@@ -106,26 +111,26 @@ const updateProductQuantity = catchAsyncError(async (req, res, next) => {
 });
 
 
-const applyCoupon = catchAsyncError(async (req, res, next) => {
-  const { code } = req.body;
+// const applyCoupon = catchAsyncError(async (req, res, next) => {
+//   const { code } = req.body;
 
-  const coupon = await couponModel.findOne({ code, expires: { $gt: Date.now() } });
-  if (!coupon) return next(new AppError("Invalid or expired coupon", 400));
+//   const coupon = await couponModel.findOne({ code, expires: { $gt: Date.now() } });
+//   if (!coupon) return next(new AppError("Invalid or expired coupon", 400));
 
-  const cart = await cartModel.findOne({ userId: req.user._id });
-  if (!cart) return next(new AppError("Cart not found", 404));
+//   const cart = await cartModel.findOne({ userId: req.user._id });
+//   if (!cart) return next(new AppError("Cart not found", 404));
 
-  cart.discount = coupon.discount;
-  calcTotalPrice(cart);
+//   cart.discount = coupon.discount;
+//   calcTotalPrice(cart);
 
-  await cart.save();
+//   await cart.save();
 
-  res.status(200).json({
-    status: "success",
-    message: "Coupon applied successfully",
-    data: cart,
-  });
-});
+//   res.status(200).json({
+//     status: "success",
+//     message: "Coupon applied successfully",
+//     data: cart,
+//   });
+// });
 
 
 const getLoggedUserCart = catchAsyncError(async (req, res, next) => {

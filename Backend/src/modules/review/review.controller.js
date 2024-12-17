@@ -8,7 +8,7 @@ const addReview = catchAsyncError(async (req, res, next) => {
   req.body.userId = req.user._id;
   let isReviewed = await reviewModel.findOne({
     userId: req.user._id, 
-    productId: req.body.productId,
+    productId: { $eq: req.body.productId }, 
   });
   if (isReviewed) return next(new AppError("You created a review before", 409));
   const addReview = new reviewModel(req.body);
@@ -43,10 +43,14 @@ const getSpecificReview = catchAsyncError(async (req, res, next) => {
 
 const updateReview = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
-  console.log({ user: req.user._id });
+  // console.log({ user: req.user._id });
+  const updateFields = {};
+  if (typeof req.body.rating === 'number') updateFields.rating = req.body.rating;
+  if (typeof req.body.comment === 'string') updateFields.comment = req.body.comment;
+
   const updateReview = await reviewModel.findOneAndUpdate(
     { _id: id, userId: req.user._id },
-    req.body,
+    { $set: updateFields },
     {
       new: true,
     }

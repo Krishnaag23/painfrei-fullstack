@@ -1,7 +1,7 @@
 import express from "express";
 import * as review from "./review.controller.js";
 import { validate } from "../../middlewares/validate.js";
-
+import rateLimit from "express-rate-limiter";
 import { allowedTo, protectedRoutes } from "../auth/auth.controller.js";
 import {
   addReviewValidation,
@@ -11,6 +11,13 @@ import {
 } from "./review.validation.js";
 
 const reviewRouter = express.Router();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+});
+
+reviewRouter.use(limiter);
 
 reviewRouter
   .route("/")

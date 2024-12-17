@@ -27,7 +27,7 @@ const getAllUsers = catchAsyncError(async (req, res, next) => {
 
 const updateUser = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
-  const updateUser = await userModel.findByIdAndUpdate(id, req.body, {
+  const updateUser = await userModel.findByIdAndUpdate(id, { $set: req.body }, {
     new: true,
   });
 
@@ -39,8 +39,8 @@ const updateUser = catchAsyncError(async (req, res, next) => {
 const changeUserPassword = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
   req.body.passwordChangedAt = Date.now();
-  console.log(req.body.passwordChangedAt);
-  const changeUserPassword = await userModel.findByIdAndUpdate(id, req.body, {
+  // console.log(req.body.passwordChangedAt);
+  const changeUserPassword = await userModel.findByIdAndUpdate(id, { $set: req.body }, {
     new: true,
   });
 

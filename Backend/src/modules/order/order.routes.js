@@ -1,8 +1,16 @@
 import express from "express";
 import { allowedTo, protectedRoutes } from "../auth/auth.controller.js";
 import * as order from "../order/order.controller.js";
+import rateLimit from "express-rate-limiter";
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+});
+
 
 const orderRouter = express.Router();
+orderRouter.use(limiter);
 
 orderRouter
   .route("/:id")

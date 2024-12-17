@@ -5,7 +5,11 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const signUp = catchAsyncError(async (req, res, next) => {
-  let isUserExist = await userModel.findOne({ email: req.body.email });
+  let email = req.body.email;
+  if (typeof email !== "string") {
+    return next(new AppError("Invalid email format", 400));
+  }
+  let isUserExist = await userModel.findOne({ email: { $eq: email } });
   if (isUserExist) {
     return next(new AppError("Account is already exist!", 409));
   }

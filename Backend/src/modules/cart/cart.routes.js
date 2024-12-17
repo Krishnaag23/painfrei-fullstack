@@ -2,7 +2,14 @@ import express from "express";
 import { allowedTo, protectedRoutes } from "../auth/auth.controller.js";
 import * as cart from "../cart/cart.controller.js"
 const cartRouter = express.Router();
+import rateLimit from "express-rate-limiter";
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+});
+
+cartRouter.use(limiter);
 cartRouter
   .route("/")
   .post(protectedRoutes, allowedTo("user"), cart.addProductToCart)
