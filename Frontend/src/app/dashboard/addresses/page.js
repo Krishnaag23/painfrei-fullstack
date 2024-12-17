@@ -11,6 +11,7 @@ export default function AddressesPage() {
   const [newAddress, setNewAddress] = useState({
     city: '',
     street: '',
+    state: '',
     phone: '',
   });
 
@@ -18,9 +19,6 @@ export default function AddressesPage() {
     axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + 'address', {headers: { token: ` ${localStorage.getItem('token')}` }})
      .then((response) => {
         setAddresses(response.data.getAllAddresses);
-        // console.log("Response:", response);
-        // console.log("response.getAllAddresses:", response.getAllAddresses);
-        // console.log("response data", response.data);
       })
      .catch((error) => {
         setError(error.message);
@@ -35,6 +33,7 @@ export default function AddressesPage() {
           city: '',
           street: '',
           phone: '',
+          state: '',
         });
       })
      .catch((error) => {
