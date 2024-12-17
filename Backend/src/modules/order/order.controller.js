@@ -40,6 +40,8 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
   // console.log("Received Razorpay Signature:", razorpaySignature);
   // console.log("Recieved Razorpay Order Id:", razorpayOrderId);
   // console.log("Recieved Razorpay Payment Id:", razorpayPaymentId)
+  // console.log("This is the request" , req);
+  console.log("\n \n This is the request body: ", req.body)
 
 
   
@@ -48,8 +50,8 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
-    console.log("Expected Signature:", expectedSignature);
-    console.log("Body String:", body);
+    // console.log("Expected Signature:", expectedSignature);
+    // console.log("Body String:", body);
 
 
   if (expectedSignature !== razorpaySignature) {
@@ -76,8 +78,10 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
     paymentStatus: "paid",
     isPaid: true,
     paidAt: Date.now(),
+    shippingDetails : req.body.shippingDetails,
     shippingAddress: req.body.shippingAddress,
   });
+  console.log("Order : ", order);
 
   await order.save();
 

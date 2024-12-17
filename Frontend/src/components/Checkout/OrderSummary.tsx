@@ -30,14 +30,15 @@ export default function OrderSummary() {
 
   const handleApplyCoupon = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}carts/apply-coupon`,
-        { code: coupon },
-        { headers: { token: `${localStorage.getItem('token')}` } }
-      )
-      setDiscount(response.data.discount)
+    //   const response = await axios.post(
+    //     `${process.env.NEXT_PUBLIC_BACKEND_URL}carts/apply-coupon`,
+    //     { code: coupon },
+    //     { headers: { token: `${localStorage.getItem('token')}` } }
+    //   )
+    //   setDiscount(response.data.discount)
+    setError('Coupon code is not valid.')
     } catch (err) {
-      setError('Failed to apply coupon.')
+      setError('Failed to apply coupon. Contact Developer!')
     }
   }
 
@@ -45,9 +46,7 @@ export default function OrderSummary() {
     return <div>Loading...</div>
   }
 
-  if (error) {
-    return <div className="text-red-500">{error}</div>
-  }
+  
 
   if (!cart || cart.cartItem.length === 0) {
     return <div>Your cart is empty!</div>
@@ -107,7 +106,9 @@ export default function OrderSummary() {
           >
             Apply
           </button>
+          
         </div>
+        {error ? <div className="text-red-500 pt-4">{error}</div> : ""}
       </div>
     </div>
   )

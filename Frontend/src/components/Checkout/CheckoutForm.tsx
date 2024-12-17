@@ -10,16 +10,24 @@ declare global {
     Razorpay: any;
   }
 }
-
-interface FormData {
+interface ShippingDetails {
   name: string;
   email: string;
-  address: string;
+}
+
+interface ShippingAddress {
+  street: string;
   city: string;
   phone: number;
   state: string;
+}
+
+interface FormData extends ShippingDetails, ShippingAddress {
   shippingMethod: 'standard' | 'express';
 }
+
+
+
 
 export default function CheckoutForm() {
   const router = useRouter();
@@ -27,12 +35,13 @@ export default function CheckoutForm() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
-    address: '',
+    street: '',
     city: '',
     phone: 0,
     state: '',
     shippingMethod: 'standard',
   });
+  
 
   const [error, setError] = useState<string | null>(null);
 
@@ -41,7 +50,7 @@ export default function CheckoutForm() {
       setFormData({
         name: user.name,
         email: user.email,
-        address: user.addresses[0]?.street || '',
+        street: user.addresses[0]?.street || '',
         city: user.addresses[0]?.city || '',
         phone: parseInt(user.addresses[0]?.phone) || 0,
         state: user.addresses[0]?.state || '',
@@ -78,7 +87,22 @@ export default function CheckoutForm() {
       });
   }, []);
 
+
+
   const handleCheckout = async () => {
+    
+    const shippingDetails: ShippingDetails = {
+    name: formData.name,
+    email: formData.email,
+  };
+
+  const shippingAddress: ShippingAddress = {
+    street: formData.street,
+    city: formData.city,
+    phone: formData.phone,
+    state: formData.state,
+  };
+    
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}orders/razorpay/${user._id}`,
@@ -95,7 +119,7 @@ export default function CheckoutForm() {
         name: "Painfrei Shop",
         order_id: razorpayOrderId,
         handler: async (response: any) => {
-          await verifyPayment(response, user._id);
+          await verifyPayment(shippingDetails, shippingAddress, response, user._id);
         },
         theme: {
           color: "#3399cc",
@@ -115,7 +139,7 @@ export default function CheckoutForm() {
     }
   };
 
-  const verifyPayment = async (response: any, userId: string) => {
+  const verifyPayment = async (shippingDetails:ShippingDetails, shippingAddress:ShippingAddress, response: any, userId: string) => {
     try {
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
       await axios.post(
@@ -124,11 +148,12 @@ export default function CheckoutForm() {
           razorpayOrderId: razorpay_order_id,
           razorpayPaymentId: razorpay_payment_id,
           razorpaySignature: razorpay_signature,
+          shippingDetails,
+          shippingAddress          
         },
         { headers: { token: `${localStorage.getItem("token")}` } },
       );
-      alert("Payment Successful!");
-      router.push("/dashboard/order-confirmed");
+      router.push("/dashboard/order-confirmation");
     } catch (error) {
       setError("Payment verification failed.");
       console.error(error);
@@ -184,7 +209,7 @@ export default function CheckoutForm() {
         id="address"
         name="address"
         type="text"
-        value={formData.address}
+        value={formData.street}
         onChange={handleChange}
         required
       />

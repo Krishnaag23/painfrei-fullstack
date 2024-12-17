@@ -17,8 +17,13 @@ const orderSchema = new Schema({
       totalProductDiscount: Number,
     },
   ],
+  shippingDetails: {
+    name: String,
+    email: String,
+  },
   shippingAddress: {
     street: String,
+    state: String,
     city: String,
     phone: Number,
   },
