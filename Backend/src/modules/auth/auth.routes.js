@@ -1,6 +1,6 @@
 import express from "express";
 import * as auth from "./auth.controller.js";
-import rateLimit from "express-rate-limiter";
+import rateLimit from "express-rate-limit";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes

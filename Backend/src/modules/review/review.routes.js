@@ -1,7 +1,7 @@
 import express from "express";
 import * as review from "./review.controller.js";
 import { validate } from "../../middlewares/validate.js";
-import rateLimit from "express-rate-limiter";
+import rateLimit from "express-rate-limit";
 import { allowedTo, protectedRoutes } from "../auth/auth.controller.js";
 import {
   addReviewValidation,

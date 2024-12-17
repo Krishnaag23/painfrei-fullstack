@@ -6,7 +6,7 @@ import {
 } from "./wishlist.validation.js";
 import { allowedTo, protectedRoutes } from "../auth/auth.controller.js";
 import * as wishlist from "../wishlist/wishlist.controller.js";
-import rateLimit from "express-rate-limiter";
+import rateLimit from "express-rate-limit";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes

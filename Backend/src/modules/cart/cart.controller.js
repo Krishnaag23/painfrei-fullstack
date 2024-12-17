@@ -159,7 +159,7 @@ export {
   addProductToCart,
   removeProductFromCart,
   updateProductQuantity,
-  applyCoupon,
+  // applyCoupon,
   getLoggedUserCart,
   deleteLoggedUserCart,
 };
