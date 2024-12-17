@@ -396,12 +396,6 @@ const UserDashboard = () => {
               <h2 className="mb-4 text-xl font-semibold">Account Actions</h2>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/dashboard/addresses"
-                  className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                >
-                  Manage Addresses
-                </Link>
-                <Link
                   href="/dashboard/wishlist"
                   className="hover:bg-yellow-600 rounded-lg bg-yellow px-4 py-2 text-white"
                 >

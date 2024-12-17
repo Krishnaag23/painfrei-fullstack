@@ -10,7 +10,7 @@ const Video = () => {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <section className="relative z-10 py-16 md:py-20 lg:py-28 bg-main bg-opacity-50">
+    <section className="relative z-10 py-16 md:py-20 lg:py-28 bg-main dark:bg-transparent bg-opacity-50">
       <div className="container">
         {/* <SectionTitle
           title="We are Ready to Help You Find Relief"
