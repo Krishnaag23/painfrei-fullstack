@@ -39,7 +39,6 @@ const updateUser = catchAsyncError(async (req, res, next) => {
 const changeUserPassword = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
   req.body.passwordChangedAt = Date.now();
-  console.log(req.body.passwordChangedAt);
   const changeUserPassword = await userModel.findByIdAndUpdate(id, req.body, {
     new: true,
   });
