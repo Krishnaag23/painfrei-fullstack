@@ -17,7 +17,7 @@ export default function OrderSummary() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}carts/`,
           { headers: { token: `${localStorage.getItem('token')}` } }
         )
-        setCart(response.data.cart)
+        setCart(response.data.data)
       } catch (err) {
         setError('Failed to load cart items.')
       } finally {

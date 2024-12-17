@@ -3,122 +3,158 @@ import { AppError } from "../../utils/AppError.js";
 import { cartModel } from "./../../../Database/models/cart.model.js";
 import { productModel } from "../../../Database/models/product.model.js";
 import { couponModel } from "./../../../Database/models/coupon.model.js";
+import mongoose from "mongoose";
+
 
 function calcTotalPrice(cart) {
   let totalPrice = 0;
-  cart.cartItem.forEach((element) => {
-    totalPrice += element.quantity * element.price;
+  cart.cartItem.forEach((item) => {
+    totalPrice += item.quantity * item.price;
   });
-
   cart.totalPrice = totalPrice;
+
+  if (cart.discount) {
+    cart.totalPriceAfterDiscount = totalPrice - (totalPrice * cart.discount) / 100;
+  } else {
+    cart.totalPriceAfterDiscount = totalPrice;
+  }
 }
 
 const addProductToCart = catchAsyncError(async (req, res, next) => {
-  let productId = await productModel
-    .findById(req.body.productId)
-    .select("price");
-  if (!productId) return next(new AppError("Product was not found", 404));
-  req.body.price = productId.price;
-  let isCartExist = await cartModel.findOne({
-    userId: req.user._id,
-  });
+  const product = await productModel.findById(req.body.productId).select("price");
+  if (!product) return next(new AppError("Product not found", 404));
 
-  if (!isCartExist) {
-    let result = new cartModel({
-      userId: req.user._id,
-      cartItem: [req.body],
-    });
-    calcTotalPrice(result);
-    await result.save();
-    return res.status(201).json({ message: "success", result });
-  }
-  console.log(isCartExist.cartItem);
-
-  let item = isCartExist.cartItem.find((element) => {
-    return element.productId == req.body.productId;
-  });
-  if (item) {
-    item.quantity += req.body.quantity || 1;
-  } else {
-    isCartExist.cartItem.push(req.body);
-  }
-  calcTotalPrice(isCartExist);
-
-  if (isCartExist.discount) {
-    isCartExist.totalPriceAfterDiscount =
-      isCartExist.totalPrice -
-      (isCartExist.totalPrice * isCartExist.discount) / 100;
-  }
-  await isCartExist.save();
-  res.status(201).json({ message: "success", result: isCartExist });
-});
-
-const removeProductFromCart = catchAsyncError(async (req, res, next) => {
-  let result = await cartModel.findOneAndUpdate(
-    { userId: req.user._id },
-    { $pull: { cartItem: { _id: req.params.id } } },
-    { new: true }
-  );
-  !result && next(new AppError("Item was not found"), 404);
-  calcTotalPrice(result);
-  if (result.discount) {
-    result.totalPriceAfterDiscount =
-      result.totalPrice - (result.totalPrice * result.discount) / 100;
-  }
-  result && res.status(200).json({ message: "success", cart: result });
-});
-
-const updateProductQuantity = catchAsyncError(async (req, res, next) => {
-  let product = await productModel.findById(req.params.id);
-  if (!product) return next(new AppError("Product was not found"), 404);
-
-  let isCartExist = await cartModel.findOne({ userId: req.user._id });
-
-  let item = isCartExist.cartItem.find((elm) => elm.productId == req.params.id);
-  if (item) {
-    item.quantity = req.body.quantity;
-  }
-  calcTotalPrice(isCartExist);
-
-  if (isCartExist.discount) {
-    isCartExist.totalPriceAfterDiscount =
-      isCartExist.totalPrice -
-      (isCartExist.totalPrice * isCartExist.discount) / 100;
-  }
-  await isCartExist.save();
-
-  res.status(201).json({ message: "success", cart: isCartExist });
-});
-
-const applyCoupon = catchAsyncError(async (req, res, next) => {
-  let coupon = await couponModel.findOne({
-    code: req.body.code,
-    expires: { $gt: Date.now() },
-  });
+  req.body.price = product.price;
 
   let cart = await cartModel.findOne({ userId: req.user._id });
 
-  cart.totalPriceAfterDiscount =
-    cart.totalPrice - (cart.totalPrice * coupon.discount) / 100;
+  
+  if (!cart) {
+    cart = await cartModel.create({
+      userId: req.user._id,
+      cartItem: [req.body],
+    });
+  } else {
+    
+    const existingItem = cart.cartItem.find((item) => item.productId.toString() === req.body.productId);
+    if (existingItem) {
+      existingItem.quantity += req.body.quantity || 1;
+    } else {
+      cart.cartItem.push(req.body);
+    }
+  }
+
+  calcTotalPrice(cart);
+  await cart.save();
+
+  
+
+  res.status(201).json({
+    status: "success",
+    message: "Product added to cart",
+    data: cart,
+  });
+});
+
+
+const removeProductFromCart = catchAsyncError(async (req, res, next) => {
+  const cart = await cartModel.findOneAndUpdate(
+    { userId: req.user._id },
+    
+    { $pull: { cartItem: { productId: new mongoose.Types.ObjectId(req.params.id) } } },
+    { new: true }
+  );
+  // console.log("Cart data before remove: ",cart);
+  // console.log("product id : ",req.params.id);
+  if (!cart) return next(new AppError("Cart or item not found", 404));
+
+  calcTotalPrice(cart);
+  await cart.save();
+
+  // console.log("Cart data after remove: ",cart);
+
+  res.status(200).json({
+    status: "success",
+    message: "Product removed from cart",
+    data: cart,
+  });
+});
+
+
+
+const updateProductQuantity = catchAsyncError(async (req, res, next) => {
+  const { quantity } = req.body;
+
+  if (!quantity || quantity < 1) return next(new AppError("Quantity must be at least 1", 400));
+
+  const cart = await cartModel.findOne({ userId: req.user._id });
+  if (!cart) return next(new AppError("Cart not found", 404));
+
+  const item = cart.cartItem.find((item) => item.productId.toString() === req.params.id);
+  if (!item) return next(new AppError("Product not found in cart", 404));
+
+  item.quantity = quantity;
+
+  calcTotalPrice(cart);
+  await cart.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Product quantity updated",
+    data: cart,
+  });
+});
+
+
+const applyCoupon = catchAsyncError(async (req, res, next) => {
+  const { code } = req.body;
+
+  const coupon = await couponModel.findOne({ code, expires: { $gt: Date.now() } });
+  if (!coupon) return next(new AppError("Invalid or expired coupon", 400));
+
+  const cart = await cartModel.findOne({ userId: req.user._id });
+  if (!cart) return next(new AppError("Cart not found", 404));
 
   cart.discount = coupon.discount;
+  calcTotalPrice(cart);
 
   await cart.save();
 
-  res.status(201).json({ message: "success", cart });
+  res.status(200).json({
+    status: "success",
+    message: "Coupon applied successfully",
+    data: cart,
+  });
 });
 
-const getLoggedUserCart = catchAsyncError(async (req,res,next)=>{
 
-  let cartItems = await cartModel.findOne({userId:req.user._id}).populate('cartItem.productId')
+const getLoggedUserCart = catchAsyncError(async (req, res, next) => {
+  const cart = await cartModel.findOne({ userId: req.user._id }).populate("cartItem.productId");
+  if (!cart) return next(new AppError("Cart not found", 404));
 
-  res.status(200).json({message:"success",cart : cartItems})
-})
+  res.status(200).json({
+    status: "success",
+    message: "Cart fetched successfully",
+    data: cart,
+  });
+});
+
+const deleteLoggedUserCart = catchAsyncError(async (req, res, next) => {
+  const cart = await cartModel.findOneAndDelete({ userId: req.user._id });
+  if (!cart) return next(new AppError("Cart not found", 404));
+
+  res.status(200).json({
+    status: "success",
+    message: "Cart deleted successfully",
+    data: null,
+  });
+});
 
 export {
   addProductToCart,
   removeProductFromCart,
   updateProductQuantity,
   applyCoupon,
-  getLoggedUserCart
+  getLoggedUserCart,
+  deleteLoggedUserCart,
 };
