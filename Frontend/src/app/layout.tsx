@@ -6,6 +6,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { Inter } from "next/font/google";
 import "node_modules/react-modal-video/css/modal-video.css";
 import "../styles/index.css";
+import { Toaster } from 'react-hot-toast';
+
+
 
 
 
@@ -23,9 +26,10 @@ export default function RootLayout({
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-
+      
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <Providers>
+          <Toaster position="top-center" />
           <Header />
           {children}
           <Footer />

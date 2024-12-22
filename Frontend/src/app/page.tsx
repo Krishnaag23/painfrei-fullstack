@@ -10,42 +10,56 @@ import Video from "@/components/Video";
 import { Metadata } from "next";
 import Products from "@/components/Product/Products";
 import { Product } from "@/types/product";
-import productsData from "@/data/products.json"
-
-function getProducts(): Product[] {
-  return productsData.products;
-}
-
- 
-  
-
+import ProductList from "@/components/Product/ProductList";
 
 export const metadata: Metadata = {
   title: "Painfrei Care & Wellness",
   description: "Website for pain relief devices",
- 
 };
 
-export default function Home() {
-  const products = getProducts();
+// Utility function to fetch products
+async function getProducts(): Promise<Product[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}products/`);
 
-  
-      
-  
+    // Check if the response is OK
+    if (!response.ok) {
+      console.error(`Failed to fetch products: ${response.statusText}`);
+      return [];
+    }
+
+    const data: any = await response.json();
+    const productarray : Product[] = data.getAllProducts;
+    
+    // console.log(productarray)
+    if (!Array.isArray(productarray)) {
+      console.error("Fetched products data is not an array.");
+      return [];
+    }
+
+    return productarray;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+}
+
+// Main Home Component
+export default async function Home() {
+  const products = await getProducts();
+
   return (
     <>
       <ScrollUp />
       <Hero />
       <Video />
       <Features />
-      
       <Brands />
       <AboutSectionOne />
       <AboutSectionTwo />
       <Testimonials />
-      {/* <Pricing /> */}
-      {/* <Blog /> */}
-      <Products products={products} />
+      <ProductList />
+      {/* <Products products={products} /> */}
       <div id="contact">
         <Contact />
       </div>

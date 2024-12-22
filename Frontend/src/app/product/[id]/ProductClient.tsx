@@ -1,9 +1,7 @@
 "use client";
-
 import Image from "next/image";
 import { useState } from "react";
 import { Product } from "@/types/product";
-
 
 interface ProductClientProps {
   product: Product;
@@ -12,16 +10,26 @@ interface ProductWithQuantity extends Product {
   quantity: number;
 }
 
-
 const ProductClient = ({ product }: ProductClientProps) => {
   const [quantity, setQuantity] = useState(1);
-
   const [loading, setLoading] = useState(false);
 
-  const handleAddToCart = () => {
-    const productWithQuantity: ProductWithQuantity = { ...product, quantity };
-    
-    alert("Product added to cart!");
+  const handleAddToCart = async () => {
+    try {
+      const response = await fetch("/api/cart/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId: product.id, quantity }),
+      });
+      if (response.ok) {
+        alert("Product added to cart!");
+      } else {
+        alert("Failed to add product to cart.");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert("Something went wrong!");
+    }
   };
 
   const initializeRazorpay = () => {
@@ -53,7 +61,7 @@ const ProductClient = ({ product }: ProductClientProps) => {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: "INR",
-        name: "Painfrei",
+        name: "Your Store",
         description: `Purchase of ${product.title}`,
         order_id: orderData.id,
         handler: async (response: any) => {
@@ -65,7 +73,6 @@ const ProductClient = ({ product }: ProductClientProps) => {
 
           if (verification.success) {
             alert("Payment Successful!");
-            
           } else {
             alert("Payment verification failed");
           }
@@ -76,17 +83,15 @@ const ProductClient = ({ product }: ProductClientProps) => {
       const paymentObject = new (window as any).Razorpay(options);
       paymentObject.open();
     } catch (error) {
+      console.error("Payment Error:", error);
       alert("An error occurred during payment");
-      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    
     <div className="container mx-auto pb-[120px] pt-[180px]">
-      
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="relative aspect-square w-full overflow-hidden rounded-lg">
           <Image src={product.image} alt={product.title} fill className="object-cover" />
