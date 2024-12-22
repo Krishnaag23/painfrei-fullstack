@@ -1,5 +1,5 @@
 "use client";
-import { signIn } from "next-auth/react";
+
 import Link from "next/link";
 import { useState } from "react";
 
@@ -16,7 +16,7 @@ const SigninPage = () => {
     setLoading(true);
     setSuccessMessage(null);
     try {
-      const res = await fetch("http://localhost:5000/api/v1/auth/signin", {
+      const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -36,18 +36,8 @@ const SigninPage = () => {
       
     }
   };
-
-  const handleGoogleSignIn = async () => {
-    setError(null);
-    setSuccessMessage(null);
-
-    const result = await signIn("google", { redirect: false });
-
-    if (result?.error) {
-      setError("Google sign-in failed. Please try again.");
-    } else {
-      setSuccessMessage("Signing in with Google... Redirecting...");      
-    }
+  const handlegoogleLogin = () => {
+    window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "auth/google"; 
   };
 
   return (
@@ -68,7 +58,7 @@ const SigninPage = () => {
                   <p style={{ color: "green" }}>{successMessage}</p>
                 )}
                 <button
-                  onClick={handleGoogleSignIn}
+                  onClick={handlegoogleLogin}
                   className="border-stroke mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
                 >
                   <span className="mr-3">

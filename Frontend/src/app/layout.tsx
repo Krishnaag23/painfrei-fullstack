@@ -29,8 +29,9 @@ export default function RootLayout({
       
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <Providers>
-          <Toaster position="top-center" />
+          
           <Header />
+          <Toaster position="top-center" />
           {children}
           <Footer />
           <ScrollToTop />

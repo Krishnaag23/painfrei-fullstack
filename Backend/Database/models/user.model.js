@@ -62,7 +62,10 @@ const userSchema = new Schema(
 );
 
 
-userSchema.pre("save", function () {
+userSchema.pre("save", function (next) {
+  if (this.provider === "google" && !this.password) {
+    return next();
+  }
   this.password = bcrypt.hashSync(this.password, 8);
 });
 

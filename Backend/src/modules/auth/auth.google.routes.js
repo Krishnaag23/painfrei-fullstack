@@ -19,7 +19,8 @@ google_router.get(
       { expiresIn: "7d" }
     );
 
-    res.json({ message: "Login successful", token });
+    res.redirect(`${process.env.FRONTEND_URL}/?token=${token}`);
+    
   }
 );
 

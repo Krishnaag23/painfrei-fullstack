@@ -16,7 +16,7 @@ const useAuth = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/v1/auth/check", {
+        const response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+"auth/check", {
           headers: { Authorization: `Bearer ${token}` },
         });
 

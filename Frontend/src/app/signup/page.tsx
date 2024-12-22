@@ -16,14 +16,14 @@ const SignupPage = () => {
     setError(null); 
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/v1/auth/signup', {
+      const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
       });
 
       if (!res.ok) {
-        console.log(res)
+        // console.log(res)
         const data = await res.json();
         throw new Error(data.error); 
       }
@@ -37,7 +37,7 @@ const SignupPage = () => {
 
   
   const handlegoogleLogin = () => {
-    window.location.href = "http://localhost:5000/api/v1/auth/google/"; 
+    window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "auth/google"; 
   };
 
   return (

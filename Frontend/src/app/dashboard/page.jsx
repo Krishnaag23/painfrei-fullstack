@@ -146,6 +146,10 @@ const UserDashboard = () => {
       }
     }
   };
+  const signOut =  () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  }
 
   if (loading) {
     return (
@@ -407,6 +411,10 @@ const UserDashboard = () => {
                 >
                   Order History
                 </Link>
+                <button onClick={signOut}
+                className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600">
+                  Sign Out
+                </button>
               </div>
             </div>
           </div>
