@@ -8,7 +8,9 @@ import {
   deleteReviewValidation,
   getSpecificReviewValidation,
   updateReviewValidation,
+  getReviewsByProductIdValidation
 } from "./review.validation.js";
+
 
 const reviewRouter = express.Router();
 
@@ -44,5 +46,6 @@ reviewRouter
     validate(deleteReviewValidation),
     review.deleteReview
   );
+  reviewRouter.route("/product/:productId").get(validate(getReviewsByProductIdValidation), review.getReviewsByProductId);
 
 export default reviewRouter;

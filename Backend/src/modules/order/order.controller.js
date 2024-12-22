@@ -10,7 +10,7 @@ import crypto from "crypto";
 const createRazorpayOrder = catchAsyncError(async (req, res, next) => {
   const cart = await cartModel.findOne({ userId: req.params.id });
   if (!cart) return next(new AppError("Cart was not found", 404));
-  console.log(cart);
+  // console.log(cart);
   const totalOrderPrice = 
   // cart.totalPriceAfterDiscount ? cart.totalPriceAfterDiscount :
      cart.totalPrice;
@@ -41,7 +41,7 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
   // console.log("Recieved Razorpay Order Id:", razorpayOrderId);
   // console.log("Recieved Razorpay Payment Id:", razorpayPaymentId)
   // console.log("This is the request" , req);
-  console.log("\n \n This is the request body: ", req.body)
+  // console.log("\n \n This is the request body: ", req.body)
 
 
   
@@ -81,7 +81,7 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
     shippingDetails : req.body.shippingDetails,
     shippingAddress: req.body.shippingAddress,
   });
-  console.log("Order : ", order);
+  // console.log("Order : ", order);
 
   await order.save();
 
@@ -110,7 +110,7 @@ const createCashOrder = catchAsyncError(async (req, res, next) => {
     ? cart.totalPriceAfterDiscount
     : cart.totalPrice;
 
-  console.log(cart.cartItem);
+  // console.log(cart.cartItem);
   const order = new orderModel({
     userId: req.user._id,
     cartItem: cart.cartItem,
@@ -140,7 +140,7 @@ const createCashOrder = catchAsyncError(async (req, res, next) => {
 });
 
 const getSpecificOrder = catchAsyncError(async (req, res, next) => {
-  console.log(req.user._id);
+  // console.log(req.user._id);
 
   let order = await orderModel
     .findOne({ userId: req.user._id })

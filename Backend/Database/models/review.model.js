@@ -25,8 +25,8 @@ const reviewSchema = new Schema(
   { timestamps: true }
 );
 
-reviewSchema.pre(['find','findOne'],function (){
-  this.populate('userId','name -_id')
-})
+reviewSchema.pre(["find", "findOne"], function () {
+  this.populate("userId", "name _id");
+});
 
 export const reviewModel = model("review", reviewSchema);

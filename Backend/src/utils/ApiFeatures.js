@@ -70,7 +70,7 @@ export class ApiFeatures {
     if (this.queryString.fields) {
       // console.log(this.queryString.fields);
       let fields = this.queryString.fields.split(",").join(" ");
-      console.log(fields);
+      // console.log(fields);
       // this.mongooseQuery.select(fields);
     }
     return this;

@@ -10,6 +10,7 @@ const addReview = catchAsyncError(async (req, res, next) => {
     userId: req.user._id, 
     productId: { $eq: req.body.productId }, 
   });
+  
   if (isReviewed) return next(new AppError("You created a review before", 409));
   const addReview = new reviewModel(req.body);
   await addReview.save();
@@ -26,17 +27,30 @@ const getAllReviews = catchAsyncError(async (req, res, next) => {
     .sort();
   const PAGE_NUMBER = apiFeature.queryString.page * 1 || 1;
   const getAllReviews = await apiFeature.mongooseQuery;
+  // console.log("This is get all reviews:",getAllReviews);
   res
     .status(201)
     .json({ page: PAGE_NUMBER, message: "success", getAllReviews });
 });
+
+const getReviewsByProductId = catchAsyncError(async (req, res, next) => {
+  const { productId } = req.params;
+
+  const reviews = await reviewModel.find({ productId });
+  if (!reviews || reviews.length === 0) {
+    return next(new AppError("No reviews found for this product", 404));
+  }
+
+  res.status(200).json({ message: "success", reviews });
+});
+
 
 const getSpecificReview = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
   // console.log(id);
 
   let result = await reviewModel.findById(id);
-
+  // console.log(result);
   !result && next(new AppError("Review was not found", 404));
   result && res.status(200).json({ message: "success", result });
 });
@@ -45,8 +59,11 @@ const updateReview = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
   // console.log({ user: req.user._id });
   const updateFields = {};
-  if (typeof req.body.rating === 'number') updateFields.rating = req.body.rating;
-  if (typeof req.body.comment === 'string') updateFields.comment = req.body.comment;
+  if (typeof req.body.rate=== 'number') updateFields.rate = req.body.rate;
+  if (typeof req.body.text === 'string') updateFields.text = req.body.text;
+  
+  //degub
+  // console.log("This the update field:",updateFields)
 
   const updateReview = await reviewModel.findOneAndUpdate(
     { _id: id, userId: req.user._id },
@@ -56,7 +73,7 @@ const updateReview = catchAsyncError(async (req, res, next) => {
     }
   );
 
-  console.log(updateReview);
+  // console.log(updateReview);
 
   updateReview && res.status(201).json({ message: "success", updateReview });
 
@@ -76,4 +93,5 @@ export {
   getSpecificReview,
   updateReview,
   deleteReview,
+  getReviewsByProductId
 };

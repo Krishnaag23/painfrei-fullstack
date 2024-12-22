@@ -19,7 +19,7 @@ const OrderHistory = () => {
         } else {
           setOrders([fetchedOrders]); 
         }
-        console.log("This is the response data orders: " + response.data.order);
+        // console.log("This is the response data orders: " + response.data.order);
       } catch (err) {
         setError('Failed to load orders.');
         console.error(err);

@@ -20,9 +20,14 @@ const deleteReviewValidation = Joi.object({
   id: Joi.string().hex().length(24).required(),
 });
 
+const getReviewsByProductIdValidation = Joi.object({
+  productId: Joi.string().hex().length(24).required(),
+});
+
 export {
   addReviewValidation,
   getSpecificReviewValidation,
   updateReviewValidation,
   deleteReviewValidation,
+  getReviewsByProductIdValidation
 };
