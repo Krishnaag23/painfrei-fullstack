@@ -206,8 +206,8 @@ export default function CheckoutForm() {
       {/* Address */}
       <FormField
         label="Address"
-        id="address"
-        name="address"
+        id="street"
+        name="street"
         type="text"
         value={formData.street}
         onChange={handleChange}

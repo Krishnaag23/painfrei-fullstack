@@ -162,7 +162,7 @@ const UserDashboard = () => {
   return (
     <>
       <Breadcrumb pageName="Dashboard" description="" />
-      <div className="relative z-10 overflow-hidden pb-32">
+      <div className="relative z-10 overflow-hidden pb-32 bg-main bg-opacity-40 dark:bg-transparent">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {error && <p className="mb-4 text-red-500">{error}</p>}
           {updateMessage && (
