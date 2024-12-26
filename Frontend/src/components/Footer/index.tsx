@@ -27,8 +27,8 @@ const Footer = () => {
                   />
                 </Link>
                 <p className="mb-9 text-base leading-relaxed text-body-color dark:text-body-color-dark">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Integer lobortis.
+                 Experience the perfect blend of technology and Ayurveda with Painfrei.  
+  Trusted solutions for natural, targeted pain relief, designed with care for your well-being. 
                 </p>
                 <div className="flex items-center">
                   <a

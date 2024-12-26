@@ -42,7 +42,7 @@ const ProductPage = ({ params }) => {
   const fetchAllReviews = async () => {
     try {
       setCurrentUserID(user._id);
-      console.log(currentUserID);
+      // console.log(currentUserID);
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}review/product/${params.id}`,
       );

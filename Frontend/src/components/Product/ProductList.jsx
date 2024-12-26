@@ -31,13 +31,14 @@ const ProductList = () => {
   }
 
   return (
+    <div className='bg-main bg-opacity-40 dark:bg-transparent'>
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold text-center mb-8">Our Products</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <Link key={product._id} href={`/product/${product._id}`}>
-            <div className="group border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-transform transform hover:scale-105">
-              <div className="relative h-48">
+            <div className="group border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-transform transform hover:scale-105 bg-white\">
+              <div className="relative h-48 ">
                 <img
                   src={product.imgCover}
                   alt={product.title}
@@ -45,8 +46,8 @@ const ProductList = () => {
                 />
               </div>
               <div className="p-4">
-                <h2 className="text-lg font-semibold text-gray-800 truncate">{product.title}</h2>
-                <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+                <h2 className="text-lg font-semibold text-gray-800 truncate dark:text-white">{product.title}</h2>
+                <p className="text-sm text-gray-600 mt-2 line-clamp-2 dark:text-white">{product.description}</p>
                 <div className="mt-4 flex items-center justify-between">
                   <p className="text-primary font-bold text-lg">
                     ₹{product.priceAfterDiscount || product.price}
@@ -63,6 +64,7 @@ const ProductList = () => {
           </Link>
         ))}
       </div>
+    </div>
     </div>
   );
 };
