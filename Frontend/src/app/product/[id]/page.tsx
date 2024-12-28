@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import axios from "axios";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
@@ -35,10 +36,6 @@ const ProductPage = ({ params }) => {
     fetchProduct();
   }, [params.id]);
 
-  useEffect(() => {
-    fetchAllReviews();
-  }, [user]);
-
   const fetchAllReviews = async () => {
     try {
       setCurrentUserID(user._id);
@@ -54,6 +51,10 @@ const ProductPage = ({ params }) => {
       toast.error("Failed to fetch reviews");
     }
   };
+
+  useEffect(() => {
+    fetchAllReviews();
+  }, [user]);
 
   const handleUpdateReview = async (e) => {
     e.preventDefault();
@@ -161,7 +162,7 @@ const ProductPage = ({ params }) => {
             Product Not Found
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
-            The product you're looking for doesn't exist.
+            The product you&apos;re looking for doesn&apos;t exist.
           </p>
         </div>
       </div>
@@ -204,7 +205,7 @@ const ProductPage = ({ params }) => {
             {/* Product Images */}
             <div className="space-y-4">
               <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-xl">
-                <img
+                <Image
                   src={product.images[selectedImage] || product.imgCover}
                   alt={product.title}
                   className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
@@ -222,7 +223,7 @@ const ProductPage = ({ params }) => {
                           : "hover:ring-2 hover:ring-primary/90 dark:hover:ring-blue-300"
                       }`}
                   >
-                    <img
+                    <Image
                       src={image}
                       alt={`Product ${idx + 1}`}
                       className="h-20 w-full object-cover sm:h-24"

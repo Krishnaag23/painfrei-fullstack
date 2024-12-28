@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useAuth from "@/hooks/useAuth";
+import Image from "next/image";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import { useRouter } from "next/navigation";
 
@@ -117,7 +118,7 @@ const Cart = () => {
               className="flex items-center justify-between rounded-lg border border-gray-300 p-4 shadow-md"
             >
               <div className="flex items-center">
-                <img
+                <Image
                   src={item.productId.imgCover}
                   alt={item.productId.title}
                   className="h-16 w-16 rounded object-cover"
