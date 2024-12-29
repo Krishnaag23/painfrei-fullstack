@@ -162,7 +162,7 @@ const Cart = () => {
 
         <div className="mt-6 rounded-lg border p-6 shadow-md">
           <h2 className="mb-4 text-xl font-semibold">Cart Summary</h2>
-          <p>Total Price: ${cart.totalPrice}</p>
+          <p>Total Price: ₹{cart.totalPrice}</p>
           {cart.discount > 0 && (
             <p className="text-green-600">
               Discount Applied: {cart.discount}%

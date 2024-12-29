@@ -249,7 +249,7 @@ export default function CheckoutForm() {
               onChange={() => handleShippingMethodChange('standard')}
               className="form-radio"
             />
-            <span>Standard Shipping ($5.99)</span>
+            <span>Standard Shipping (₹100)</span>
           </label>
           <label className="flex items-center space-x-2">
             <input
@@ -260,7 +260,7 @@ export default function CheckoutForm() {
               onChange={() => handleShippingMethodChange('express')}
               className="form-radio"
             />
-            <span>Express Shipping ($14.99)</span>
+            <span>Express Shipping (₹200)</span>
           </label>
         </div>
       </div>

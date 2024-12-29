@@ -19,7 +19,7 @@ const ProductPage = ({ params }) => {
 
   const { user } = useAuth();
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
@@ -64,7 +64,7 @@ const ProductPage = ({ params }) => {
     }
   }, [user, params.id]);
 
-  const handleUpdateReview = async (e) => {
+   const handleUpdateReview = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
