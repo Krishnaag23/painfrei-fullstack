@@ -16,6 +16,7 @@
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
+    "disqus-react": "^1.1.5",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "framer-motion": "^11.15.0",

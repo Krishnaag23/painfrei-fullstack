@@ -4,16 +4,15 @@ import { cartModel } from "../../../Database/models/cart.model.js";
 import { productModel } from "../../../Database/models/product.model.js";
 import { orderModel } from "../../../Database/models/order.model.js";
 import { razorpayInstance } from "../../utils/razorpay.js";
-import { userModel } from "../../../Database/models/user.model.js";
 import crypto from "crypto";
 
 const createRazorpayOrder = catchAsyncError(async (req, res, next) => {
   const cart = await cartModel.findOne({ userId: req.params.id });
   if (!cart) return next(new AppError("Cart was not found", 404));
   // console.log(cart);
-  const totalOrderPrice = 
-  // cart.totalPriceAfterDiscount ? cart.totalPriceAfterDiscount :
-     cart.totalPrice;
+  const totalOrderPrice =
+    // cart.totalPriceAfterDiscount ? cart.totalPriceAfterDiscount :
+    cart.totalPrice;
 
   const options = {
     amount: totalOrderPrice * 100,
@@ -43,16 +42,13 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
   // console.log("This is the request" , req);
   // console.log("\n \n This is the request body: ", req.body)
 
-
-  
   const body = razorpayOrderId + "|" + razorpayPaymentId;
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
-    // console.log("Expected Signature:", expectedSignature);
-    // console.log("Body String:", body);
-
+  // console.log("Expected Signature:", expectedSignature);
+  // console.log("Body String:", body);
 
   if (expectedSignature !== razorpaySignature) {
     return next(
@@ -78,7 +74,7 @@ const verifyRazorpayPayment = catchAsyncError(async (req, res, next) => {
     paymentStatus: "paid",
     isPaid: true,
     paidAt: Date.now(),
-    shippingDetails : req.body.shippingDetails,
+    shippingDetails: req.body.shippingDetails,
     shippingAddress: req.body.shippingAddress,
   });
   // console.log("Order : ", order);
