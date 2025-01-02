@@ -45,6 +45,8 @@ const ProductList = () => {
                   <Image
                     src={product.imgCover}
                     alt={product.title}
+                    width={500}
+                    height={500}
                     className="h-full w-full object-cover transition-opacity group-hover:opacity-90"
                   />
                 </div>

@@ -9,11 +9,13 @@ import passport from "passport";
 
 dotenv.config();
 const app = express();
+const origin =
+  process.env.NODE_ENV === "development" ? "*" : "https://www.painfrei.com";
 app.use(
   cors({
-    origin: "https://www.painfrei.com",
+    origin: origin,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "token"],
   })
 );
 const port = process.env.PORT || 5000;

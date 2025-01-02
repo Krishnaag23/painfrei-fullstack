@@ -108,6 +108,13 @@ const ProductPage = ({ params }) => {
   };
 
   const handleAddToCart = async () => {
+    if (!user) {
+      toast.error("Please Signin to add to cart");
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1000);
+      return;
+    }
     try {
       setIsAddingToCart(true);
       await axios.post(
@@ -120,6 +127,7 @@ const ProductPage = ({ params }) => {
       );
       toast.success("Product added to cart");
     } catch (error) {
+      console.log("Error adding to cart:", error);
       toast.error(error.response?.data?.message || "Failed to add to cart");
     } finally {
       setIsAddingToCart(false);
@@ -194,7 +202,7 @@ const ProductPage = ({ params }) => {
             <li>/</li>
             <li>
               <a
-                href="/products"
+                href="/product"
                 className="hover:text-primary dark:hover:text-primary/90"
               >
                 Products
@@ -216,6 +224,8 @@ const ProductPage = ({ params }) => {
                 <Image
                   src={product.images[selectedImage] || product.imgCover}
                   alt={product.title}
+                  width={500}
+                  height={500}
                   className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
                 />
               </div>
@@ -234,6 +244,8 @@ const ProductPage = ({ params }) => {
                     <Image
                       src={image}
                       alt={`Product ${idx + 1}`}
+                      width={100}
+                      height={100}
                       className="h-20 w-full object-cover sm:h-24"
                     />
                   </button>
