@@ -1,4 +1,3 @@
-
 import express from "express";
 
 import { dbConnection } from "./Database/dbConnection.js";
@@ -10,11 +9,13 @@ import passport from "passport";
 
 dotenv.config();
 const app = express();
-app.use(cors({
-    origin: 'https://www.painfrei.com', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'] 
-}));
+app.use(
+  cors({
+    origin: "https://www.painfrei.com",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -24,6 +25,6 @@ app.use(express.static("uploads"));
 
 main(app);
 dbConnection();
-app.listen(process.env.PORT, () =>
+app.listen(process.env.PORT, "0.0.0.0", () =>
   console.log(`Example app listening on port ${port}!`)
 );
