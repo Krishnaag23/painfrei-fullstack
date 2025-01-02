@@ -34,7 +34,7 @@ const getAllProducts = catchAsyncError(async (req, res, next) => {
 });
 const getSpecificProduct = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
-  const getSpecificProduct = await productModel.findByIdAndUpdate(id);
+ const getSpecificProduct = await productModel.findByIdAndUpdate(id);
   res.status(201).json({ message: "success", getSpecificProduct });
 });
 

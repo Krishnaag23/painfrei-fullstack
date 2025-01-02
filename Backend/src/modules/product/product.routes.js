@@ -49,6 +49,6 @@ productRouter
     validate(deleteProductValidation),
     product.deleteProduct
   )
-  .get(validate(getSpecificProductValidation), product.getSpecificProduct);
+  .get( validate(getSpecificProductValidation), product.getSpecificProduct);
 
 export default productRouter;

@@ -4,3 +4,4 @@ module.exports = {
   generateRobotsTxt: true,
   sitemapSize: 5000,
 };
+
