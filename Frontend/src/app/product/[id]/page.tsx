@@ -26,9 +26,11 @@ const ProductPage = ({ params }) => {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}products/${params.id}`,
         );
         setProduct(data.getSpecificProduct);
-        setLoading(false);
       } catch (error) {
-        toast.error("Failed to load product");
+        if (error.response?.status !== 404) {
+          toast.error("Failed to load product");
+        }
+      } finally {
         setLoading(false);
       }
     };
@@ -37,24 +39,30 @@ const ProductPage = ({ params }) => {
   }, [params.id]);
 
   const fetchAllReviews = async () => {
+    if (!user) return; // Add this check
+
     try {
-      setCurrentUserID(user._id);
-      // console.log(currentUserID);
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}review/product/${params.id}`,
       );
-      setProduct((prev: any) => ({
+      setProduct((prev) => ({
         ...prev,
         reviews: data.reviews,
       }));
+      setCurrentUserID(user._id);
     } catch (error) {
-      toast.error("Failed to fetch reviews");
+      // Only show error if it's not a 404
+      if (error.response?.status !== 404) {
+        toast.error("Failed to fetch reviews");
+      }
     }
   };
 
   useEffect(() => {
-    fetchAllReviews();
-  }, [user]);
+    if (user && params.id) {
+      fetchAllReviews();
+    }
+  }, [user, params.id]);
 
   const handleUpdateReview = async (e) => {
     e.preventDefault();

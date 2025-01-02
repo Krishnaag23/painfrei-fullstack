@@ -71,7 +71,7 @@ const Header = () => {
                   className="dark:hidden"
                 />
                 <Image
-                  src="/images/logo/logo-pan_dark.png"
+                  src="/images/logo/logo-pan_dark-Photoroom.png"
                   alt="logo"
                   width={990}
                   height={220}

@@ -9,7 +9,7 @@ const testimonialData: Testimonial[] = [
     designation: "Age 42",
     content:
       "I was having back pain since 10 year and used many medications but they have impact for hardly 10 mins and I am scared of repetitive use. After using this device I felt instant relief.",
-    image: "/images/testimonials/",
+    image: "/images/testimonials/RaviPanday.jpeg",
     star: 5,
   },
   {
@@ -18,7 +18,7 @@ const testimonialData: Testimonial[] = [
     designation: "Age 25",
     content:
       "I have used Painfrei. During my periods, I used it for my period cramps. I had instant relief but there is a need to work upon glue part it is sticky.",
-    image: "/images/testimonials/",
+    image: "/images/testimonials/Sanskriti Sharma.jpg",
     star: 4,
   },
   {
@@ -27,20 +27,16 @@ const testimonialData: Testimonial[] = [
     designation: "Age 21",
     content:
       "I am judo athlete I usually have muscle cramp and twisted legs. I used the device and it feels like magic, My leg my pain is almost gone for a while.",
-    image: "/images/testimonials/",
+    image: "/images/testimonials/GauravPal.png",
     star: 5,
   },
 ];
 
 const Testimonials = () => {
   return (
-    <section className="dark:bg-bg-color-dark bg-main relative z-10 py-16 md:py-20 lg:py-28">
+    <section className="relative z-10 bg-main py-16 dark:bg-bg-color-dark md:py-20 lg:py-28">
       <div className="container">
-        <SectionTitle
-          title="What Our Users Says"
-          paragraph=""
-          center
-        />
+        <SectionTitle title="What Our Users Says" paragraph="" center />
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {testimonialData.map((testimonial) => (
@@ -85,7 +81,7 @@ const Testimonials = () => {
               y2="459.865"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#06413C"/>
+              <stop stopColor="#06413C" />
               <stop offset="1" stopColor="#06413C" stopOpacity="0" />
             </linearGradient>
             <linearGradient

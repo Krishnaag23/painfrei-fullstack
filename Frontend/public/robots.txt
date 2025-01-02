@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://painfrei.com
+
+# Sitemaps
+Sitemap: https://painfrei.com/sitemap.xml
