@@ -24,7 +24,7 @@ const SingleTestimonial = ({ testimonial }: { testimonial: Testimonial }) => {
       <div className="rounded-lg bg-high bg-opacity-20 p-8 shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-dark dark:bg-opacity-80">
         <div className="mb-5 flex items-center space-x-1">{ratingIcons}</div>
         <p className="mb-8 border-b border-body-color border-opacity-10 pb-8 text-base leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-white">
-          "{content}"
+          &quot{content}&quot
         </p>
         <div className="flex items-center">
           <div className="relative mr-4 h-[50px] w-full max-w-[50px] overflow-hidden rounded-full">
@@ -34,7 +34,9 @@ const SingleTestimonial = ({ testimonial }: { testimonial: Testimonial }) => {
             <h3 className="mb-1 text-lg font-semibold text-dark dark:text-white">
               {name}
             </h3>
-            <p className="text-sm text-body-color dark:text-white">{designation}</p>
+            <p className="text-sm text-body-color dark:text-white">
+              {designation}
+            </p>
           </div>
         </div>
       </div>
@@ -43,4 +45,3 @@ const SingleTestimonial = ({ testimonial }: { testimonial: Testimonial }) => {
 };
 
 export default SingleTestimonial;
-
