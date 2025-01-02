@@ -35,3 +35,19 @@
 html {
   scroll-behavior: smooth !important;
 }
+
+.hero-text-shadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero-button-glow {
+  box-shadow: 0 0 20px rgba(11, 125, 72, 0.5);
+}
+
+.hero-background-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 235, 234, 0.8) 0%,
+    rgba(170, 224, 205, 0.8) 100%
+  );
+}

@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import SectionTitle from "../Common/SectionTitle";
 
@@ -19,17 +18,20 @@ const AboutSectionOne = () => {
   );
 
   return (
-    <section id="about" className="pt-16 md:pt-20 lg:pt-28 bg-main dark:bg-transparent bg-opacity-40">
+    <section
+      id="about"
+      className="bg-gradient-to-b from-main to-white pt-16 dark:from-gray-dark dark:to-gray-900 md:pt-20 lg:pt-28"
+    >
       <div className="container">
         <div className="border-b border-body-color/[.15] pb-16 dark:border-white/[.15] md:pb-20 lg:pb-28">
-          <div className="-mx-4 flex flex-wrap items-center">
+          <div className="flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
                 title="Crafted for Pain Relief Solutions"
                 paragraph="Painfreí offers effective relief from chronic back pain, menstrual pain, and muscle cramps by integrating modern technology with traditional Ayurvedic principles."
                 mb="44px"
               />
-              <div className="mb-12 max-w-[570px] lg:mb-0" data-wow-delay=".15s">
+              <div className="mb-12 max-w-[570px] lg:mb-0">
                 <div className="mx-[-12px] flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
                     <List text="Dual Mechanism for Comprehensive Relief" />
@@ -50,13 +52,13 @@ const AboutSectionOne = () => {
                   src="/images/about/pain-light.png"
                   alt="about-image"
                   fill
-                  className="mx-auto max-w-full drop-shadow-three dark:hidden dark:drop-shadow-none lg:mr-0"
+                  className="mx-auto max-w-full rounded-lg object-cover object-center shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 dark:hidden dark:drop-shadow-none lg:mr-0"
                 />
                 <Image
                   src="/images/about/pain3.jpeg"
                   alt="about-image"
                   fill
-                  className="mx-auto hidden max-w-full drop-shadow-three dark:block dark:drop-shadow-none lg:mr-0"
+                  className="mx-auto hidden max-w-full rounded-lg object-cover object-center shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 dark:block dark:drop-shadow-none lg:mr-0"
                 />
               </div>
             </div>

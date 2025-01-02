@@ -91,7 +91,7 @@ const Contact = () => {
               ? formErrors.message
               : "Validation error",
       );
-      
+
       setValid(true);
       setLoading(false);
 
@@ -106,9 +106,8 @@ const Contact = () => {
       if (response.status === 201) {
         toast.success("Your message has been sent successfully!");
         setFormData({ name: "", email: "", message: "" });
-      }
-      else{
-        toast.error(response.data.message)
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
       toast.error(

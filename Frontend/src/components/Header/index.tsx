@@ -9,10 +9,9 @@ import menuData from "./menuData";
 import useAuth from "@/hooks/useAuth";
 
 import placeholder from "public/images/about/profile.png";
-import cartIcon from "public/images/about/shopping.png"
+import cartIcon from "public/images/about/shopping.png";
 
 const Header = () => {
-  
   const { isLoggedIn, user, loading } = useAuth();
   const [navbarOpen, setNavbarOpen] = useState(false);
 
@@ -50,7 +49,7 @@ const Header = () => {
       <header
         className={`header left-0 top-0 z-40 flex w-full items-center ${
           sticky
-            ? "dark:bg-gray-dark dark:shadow-sticky-dark fixed z-[9999] bg-main !bg-opacity-80 shadow-sticky backdrop-blur-sm transition"
+            ? "fixed z-[9999] bg-main !bg-opacity-80 shadow-sticky backdrop-blur-sm transition dark:bg-gray-dark dark:shadow-sticky-dark"
             : "absolute   "
         }`}
       >
@@ -64,7 +63,7 @@ const Header = () => {
                 } `}
               >
                 <Image
-                  src="/images/logo/logo-pan.png"
+                  src="/images/logo/logo-pan-rmbg.png"
                   alt="logo"
                   width={990}
                   height={220}
@@ -165,32 +164,47 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
-                
-                <div className="flex items-center justify-end pr-16 lg:pr-0">
-                
+
+              <div className="flex items-center justify-end pr-16 lg:pr-0">
                 {!loading && isLoggedIn ? (
                   <>
-                  <Link href="/dashboard/cart" className="relative flex items-center justify-center w-12 h-12 mr-4 rounded-full dark:bg-white transition-all duration-200">
-                    <Image src={cartIcon} alt="Cart" width={36} height={36}  />
-                  </Link>
-                  {/* Profile Icon */}
-                  <Link href="/dashboard" className="relative flex items-center justify-center w-12 h-12  rounded-full  dark:bg-white  transition-all duration-200">
-                    <Image src={user.image? user.image : placeholder} alt="Profile" width={36} height={36}  />
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link href="/signin" className=" px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block">
-                    Sign In
-                  </Link>
-                  <Link href="/signup" className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9">
-                    Sign Up
-                  </Link>
-                </>
-              )}
-                
+                    <Link
+                      href="/dashboard/cart"
+                      className="relative mr-4 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 dark:bg-white"
+                    >
+                      <Image src={cartIcon} alt="Cart" width={36} height={36} />
+                    </Link>
+                    {/* Profile Icon */}
+                    <Link
+                      href="/dashboard"
+                      className="relative flex h-12 w-12 items-center justify-center  rounded-full  transition-all  duration-200 dark:bg-white"
+                    >
+                      <Image
+                        src={user.image ? user.image : placeholder}
+                        alt="Profile"
+                        width={36}
+                        height={36}
+                      />
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/signin"
+                      className=" px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="ease-in-up hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white shadow-btn transition duration-300 hover:bg-opacity-90 hover:shadow-btn-hover md:block md:px-9 lg:px-6 xl:px-9"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
+
                 <div>
-                  
                   <ThemeToggler />
                 </div>
               </div>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <>
       <footer className="relative z-10 bg-main pt-16 dark:bg-gray-dark md:pt-20 lg:pt-24">
@@ -27,8 +28,9 @@ const Footer = () => {
                   />
                 </Link>
                 <p className="mb-9 text-base leading-relaxed text-body-color dark:text-body-color-dark">
-                 Experience the perfect blend of technology and Ayurveda with Painfrei.  
-  Trusted solutions for natural, targeted pain relief, designed with care for your well-being. 
+                  Experience the perfect blend of technology and Ayurveda with
+                  Painfrei. Trusted solutions for natural, targeted pain relief,
+                  designed with care for your well-being.
                 </p>
                 <div className="flex items-center">
                   <a
@@ -215,7 +217,7 @@ const Footer = () => {
           <div className="h-px w-full bg-gradient-to-r from-transparent via-[#D2D8E183] to-transparent dark:via-[#959CB183]"></div>
           <div className="py-8">
             <p className="text-center text-base text-body-color dark:text-white">
-             © Painfrei Care & Wellness 2024 
+              © Painfrei Care & Wellness {currentYear}. All rights reserved.
             </p>
           </div>
         </div>

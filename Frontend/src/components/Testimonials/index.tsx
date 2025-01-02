@@ -34,9 +34,13 @@ const testimonialData: Testimonial[] = [
 
 const Testimonials = () => {
   return (
-    <section className="relative z-10 bg-main py-16 dark:bg-bg-color-dark md:py-20 lg:py-28">
+    <section className="relative z-10 bg-gradient-to-b from-main to-white py-16 dark:from-gray-dark dark:to-gray-900 md:py-20 lg:py-28">
       <div className="container">
-        <SectionTitle title="What Our Users Says" paragraph="" center />
+        <SectionTitle
+          title="What Our Users Say"
+          paragraph="Real experiences from people who have found relief with Painfreí"
+          center
+        />
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {testimonialData.map((testimonial) => (
