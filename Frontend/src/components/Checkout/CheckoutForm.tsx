@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 declare global {
   interface Window {
@@ -33,6 +34,7 @@ interface FormData extends ShippingDetails, ShippingAddress {
 export default function CheckoutForm() {
   const router = useRouter();
   const { user } = useAuth();
+  const newId = uuidv4();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -113,13 +115,12 @@ export default function CheckoutForm() {
     };
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}preorder/${user._id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}preorder/${newId}`,
         {
           shippingDetails,
           shippingAddress,
           order,
         },
-        { headers: { token: `${localStorage.getItem("token")}` } },
       );
       router.push("/dashboard/order-confirmation");
     } catch (error) {
