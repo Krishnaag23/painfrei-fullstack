@@ -1,7 +1,7 @@
 "use client";
 import TagButton from "@/components/Blog/TagButton";
 import Image from "next/image";
-import { DiscussionEmbed } from "disqus-react";
+
 
 const BlogDetailsPage = () => {
   const disqusShortname = "painfrei";
