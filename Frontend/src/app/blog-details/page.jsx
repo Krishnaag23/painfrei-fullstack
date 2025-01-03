@@ -338,7 +338,7 @@ const BlogDetailsPage = () => {
               </div>
             </div>
           </div>
-          <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
+          {/* <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} /> */}
         </div>
       </section>
     </>
