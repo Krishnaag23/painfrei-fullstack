@@ -165,7 +165,7 @@ const Header = () => {
                 </nav>
               </div>
 
-              <div className="flex items-center justify-end pr-16 lg:pr-0">
+              {/* <div className="flex items-center justify-end pr-16 lg:pr-0">
                 {!loading && isLoggedIn ? (
                   <>
                     <Link
@@ -174,7 +174,7 @@ const Header = () => {
                     >
                       <Image src={cartIcon} alt="Cart" width={36} height={36} />
                     </Link>
-                    {/* Profile Icon */}
+                    
                     <Link
                       href="/dashboard"
                       className="relative flex h-12 w-12 items-center justify-center  rounded-full  transition-all  duration-200 dark:bg-white"
@@ -204,10 +204,10 @@ const Header = () => {
                   </>
                 )}
 
-                <div>
+                <div> */}
                   <ThemeToggler />
-                </div>
-              </div>
+                {/* </div>
+              </div> */}
             </div>
           </div>
         </div>

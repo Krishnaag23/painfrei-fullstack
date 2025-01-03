@@ -56,7 +56,7 @@ const ProductList = () => {
                 <div className="group overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-gray-800">
                   <div className="relative h-48 overflow-hidden">
                     <Image
-                      src={product.imgCover}
+                      src="/images/product/painfrei-oil.png"
                       alt={product.title}
                       layout="fill"
                       objectFit="cover"
@@ -65,14 +65,19 @@ const ProductList = () => {
                   </div>
                   <div className="p-4">
                     <h3 className="mb-2 text-xl font-semibold text-gray-800 dark:text-white">
-                      {product.title}
+                      Pain Relief Oil
                     </h3>
                     <p className="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
-                      {product.description}
+                      Experience the soothing properties of Painfrei Pain Relief
+                      Oil, meticulously crafted to provide effective relief from
+                      various aches and discomforts. Infused with a unique blend
+                      of modern and Ayurvedic ingredients, our oil harnesses the
+                      healing power of nature to promote wellness and restore
+                      balance in your life.
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-lg font-bold text-primary">
-                        ₹{product.priceAfterDiscount || product.price}
+                        ₹649.00
                       </span>
                       <motion.button
                         whileHover={{ scale: 1.05 }}

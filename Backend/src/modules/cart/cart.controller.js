@@ -5,7 +5,6 @@ import { productModel } from "../../../Database/models/product.model.js";
 import { couponModel } from "./../../../Database/models/coupon.model.js";
 import mongoose from "mongoose";
 
-
 function calcTotalPrice(cart) {
   let totalPrice = 0;
   cart.cartItem.forEach((item) => {
@@ -14,7 +13,8 @@ function calcTotalPrice(cart) {
   cart.totalPrice = totalPrice;
 
   if (cart.discount) {
-    cart.totalPriceAfterDiscount = totalPrice - (totalPrice * cart.discount) / 100;
+    cart.totalPriceAfterDiscount =
+      totalPrice - (totalPrice * cart.discount) / 100;
   } else {
     cart.totalPriceAfterDiscount = totalPrice;
   }
@@ -25,22 +25,25 @@ const addProductToCart = catchAsyncError(async (req, res, next) => {
     return next(new AppError("Invalid product ID", 400));
   }
 
-  const product = await productModel.findById(req.body.productId).select("price");
+  const product = await productModel
+    .findById(req.body.productId)
+    .select("price");
   if (!product) return next(new AppError("Product not found", 404));
 
   req.body.price = product.price;
+  if (req.user._id) {
+    let cart = await cartModel.findOne({ userId: req.user._id });
+  }
 
-  let cart = await cartModel.findOne({ userId: req.user._id });
-
-  
   if (!cart) {
     cart = await cartModel.create({
       userId: req.user._id,
       cartItem: [req.body],
     });
   } else {
-    
-    const existingItem = cart.cartItem.find((item) => item.productId.toString() === req.body.productId);
+    const existingItem = cart.cartItem.find(
+      (item) => item.productId.toString() === req.body.productId
+    );
     if (existingItem) {
       existingItem.quantity += req.body.quantity || 1;
     } else {
@@ -51,8 +54,6 @@ const addProductToCart = catchAsyncError(async (req, res, next) => {
   calcTotalPrice(cart);
   await cart.save();
 
-  
-
   res.status(201).json({
     status: "success",
     message: "Product added to cart",
@@ -60,13 +61,15 @@ const addProductToCart = catchAsyncError(async (req, res, next) => {
   });
 });
 
-
 const removeProductFromCart = catchAsyncError(async (req, res, next) => {
-  
   const cart = await cartModel.findOneAndUpdate(
     { userId: req.user._id },
-    
-    { $pull: { cartItem: { productId: new mongoose.Types.ObjectId(req.params.id) } } },
+
+    {
+      $pull: {
+        cartItem: { productId: new mongoose.Types.ObjectId(req.params.id) },
+      },
+    },
     { new: true }
   );
   // console.log("Cart data before remove: ",cart);
@@ -85,17 +88,18 @@ const removeProductFromCart = catchAsyncError(async (req, res, next) => {
   });
 });
 
-
-
 const updateProductQuantity = catchAsyncError(async (req, res, next) => {
   const { quantity } = req.body;
 
-  if (!quantity || quantity < 1) return next(new AppError("Quantity must be at least 1", 400));
+  if (!quantity || quantity < 1)
+    return next(new AppError("Quantity must be at least 1", 400));
 
   const cart = await cartModel.findOne({ userId: req.user._id });
   if (!cart) return next(new AppError("Cart not found", 404));
 
-  const item = cart.cartItem.find((item) => item.productId.toString() === req.params.id);
+  const item = cart.cartItem.find(
+    (item) => item.productId.toString() === req.params.id
+  );
   if (!item) return next(new AppError("Product not found in cart", 404));
 
   item.quantity = quantity;
@@ -109,7 +113,6 @@ const updateProductQuantity = catchAsyncError(async (req, res, next) => {
     data: cart,
   });
 });
-
 
 // const applyCoupon = catchAsyncError(async (req, res, next) => {
 //   const { code } = req.body;
@@ -132,9 +135,10 @@ const updateProductQuantity = catchAsyncError(async (req, res, next) => {
 //   });
 // });
 
-
 const getLoggedUserCart = catchAsyncError(async (req, res, next) => {
-  const cart = await cartModel.findOne({ userId: req.user._id }).populate("cartItem.productId");
+  const cart = await cartModel
+    .findOne({ userId: req.user._id })
+    .populate("cartItem.productId");
   if (!cart) return next(new AppError("Cart not found", 404));
 
   res.status(200).json({

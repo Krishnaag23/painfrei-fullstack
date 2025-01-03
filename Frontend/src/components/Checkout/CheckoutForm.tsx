@@ -14,6 +14,10 @@ interface ShippingDetails {
   name: string;
   email: string;
 }
+interface OrderDetails {
+  quantity: string;
+  productId: string;
+}
 
 interface ShippingAddress {
   street: string;
@@ -96,6 +100,11 @@ export default function CheckoutForm() {
       email: formData.email,
     };
 
+    const order: OrderDetails = {
+      quantity: localStorage.getItem("quantity"),
+      productId: localStorage.getItem("productId"),
+    };
+
     const shippingAddress: ShippingAddress = {
       street: formData.street,
       city: formData.city,
@@ -108,6 +117,7 @@ export default function CheckoutForm() {
         {
           shippingDetails,
           shippingAddress,
+          order,
         },
         { headers: { token: `${localStorage.getItem("token")}` } },
       );

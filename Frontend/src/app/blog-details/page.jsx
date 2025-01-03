@@ -1,16 +1,17 @@
 "use client";
 import TagButton from "@/components/Blog/TagButton";
 import Image from "next/image";
+import { DiscussionEmbed } from "disqus-react";
 
 const BlogDetailsPage = () => {
-  // const disqusShortname = "Painfrei Care & Wellness";
+  const disqusShortname = "painfrei";
 
-  // const disqusConfig = {
-  //   url: "http://localhost:3000",
-  //   identifier: "123",
-  //   title: "Blogs",
-  // };
-  
+  const disqusConfig = {
+    url: "http://localhost:3000",
+    identifier: "123",
+    title: "Blogs",
+  };
+
   return (
     <>
       <section className="bg-gradient-to-b from-white to-main pb-[120px] pt-[150px] dark:from-gray-dark dark:to-gray-800">
@@ -337,6 +338,7 @@ const BlogDetailsPage = () => {
               </div>
             </div>
           </div>
+          <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
         </div>
       </section>
     </>

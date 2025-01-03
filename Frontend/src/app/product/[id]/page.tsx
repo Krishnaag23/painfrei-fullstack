@@ -19,7 +19,7 @@ const ProductPage = ({ params }) => {
 
   const { user } = useAuth();
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(
@@ -64,7 +64,7 @@ const ProductPage = ({ params }) => {
     }
   }, [user, params.id]);
 
-   const handleUpdateReview = async (e) => {
+  const handleUpdateReview = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
@@ -108,13 +108,13 @@ const ProductPage = ({ params }) => {
   };
 
   const handleAddToCart = async () => {
-    if (!user) {
-      toast.error("Please Signin to add to cart");
-      setTimeout(() => {
-        window.location.href = "/signin";
-      }, 1000);
-      return;
-    }
+    // if (!user) {
+    //   toast.error("Please Signin to add to cart");
+    //   setTimeout(() => {
+    //     window.location.href = "/signin";
+    //   }, 1000);
+    //   return;
+    // }
     try {
       setIsAddingToCart(true);
       await axios.post(
@@ -155,6 +155,12 @@ const ProductPage = ({ params }) => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to add review");
     }
+  };
+  const handlePreOrder = async () => {
+    localStorage.setItem("productId", params.id);
+    localStorage.setItem("quantity", quantity.toString());
+
+    window.location.href = "/dashboard/checkout";
   };
 
   if (loading) {
@@ -210,7 +216,7 @@ const ProductPage = ({ params }) => {
             </li>
             <li>/</li>
             <li className="font-medium text-gray-900 dark:text-gray-100">
-              {product.title}
+              Pain Relief Oil
             </li>
           </ol>
         </nav>
@@ -222,14 +228,14 @@ const ProductPage = ({ params }) => {
             <div className="space-y-4">
               <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-xl">
                 <Image
-                  src={product.images[selectedImage] || product.imgCover}
-                  alt={product.title}
+                  src="/images/product/painfrei-oil.png"
+                  alt="Painfrei Oil"
                   width={500}
                   height={500}
                   className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
                 />
               </div>
-              <div className="grid grid-cols-4 gap-4">
+              {/* <div className="grid grid-cols-4 gap-4">
                 {product.images.map((image, idx) => (
                   <button
                     key={idx}
@@ -249,8 +255,8 @@ const ProductPage = ({ params }) => {
                       className="h-20 w-full object-cover sm:h-24"
                     />
                   </button>
-                ))}
-              </div>
+                ))} 
+               </div> */}
             </div>
 
             {/* Product Details */}
@@ -260,7 +266,12 @@ const ProductPage = ({ params }) => {
                   {product.title}
                 </h1>
                 <p className="leading-relaxed text-gray-600 dark:text-gray-300">
-                  {product.description}
+                  Experience the soothing properties of Painfrei Pain Relief
+                  Oil, meticulously crafted to provide effective relief from
+                  various aches and discomforts. Infused with a unique blend of
+                  modern and Ayurvedic ingredients, our oil harnesses the
+                  healing power of nature to promote wellness and restore
+                  balance in your life.
                 </p>
               </div>
 
@@ -268,7 +279,7 @@ const ProductPage = ({ params }) => {
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
                     <p className="text-3xl font-bold text-primary dark:text-primary/90">
-                      ₹{product.priceAfterDiscount || product.price}
+                      ₹649.00
                     </p>
                     {/* {product.priceAfterDiscount && (
                       <p className="text-lg text-gray-500 line-through dark:text-gray-400">
@@ -317,7 +328,7 @@ const ProductPage = ({ params }) => {
                 </div>
 
                 <button
-                  onClick={handleAddToCart}
+                  onClick={handlePreOrder}
                   disabled={isAddingToCart || product.quantity === 0}
                   className="w-full transform rounded-xl bg-primary px-8 py-4 
                            font-medium text-white transition-all hover:bg-primary/90 
@@ -325,7 +336,7 @@ const ProductPage = ({ params }) => {
                            disabled:cursor-not-allowed disabled:bg-gray-300 
                            dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
                 >
-                  {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}
+                  {isAddingToCart ? "Pre ordering" : "Pre Order Now"}
                 </button>
               </div>
             </div>

@@ -46,7 +46,7 @@ const Hero = () => {
     <section
       ref={heroRef}
       id="home"
-      className="relative z-10 flex h-screen items-center justify-center bg-gradient-to-b from-main to-white pt-16 dark:from-gray-dark dark:to-gray-900 bg-opacity-50"
+      className="relative z-10 flex h-screen items-center justify-center bg-opacity-50 bg-gradient-to-b from-main to-white pt-16 dark:from-gray-dark dark:to-gray-900"
     >
       <div className="container mx-auto px-4">
         <div className="text-center">
@@ -67,7 +67,7 @@ const Hero = () => {
           </p>
           <div ref={ctaRef}>
             <Link
-              href="#contact"
+              href="/product"
               className="hero-button-glow inline-block rounded-full bg-primary px-8 py-4 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:bg-primary/80 hover:shadow-lg"
             >
               Get Started

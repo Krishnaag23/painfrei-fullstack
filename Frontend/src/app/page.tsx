@@ -14,6 +14,7 @@ import { Product } from "@/types/product";
 import ProductList from "@/components/Product/ProductList";
 import { useEffect } from "react";
 import TokenHandler from "@/components/tokenHandler";
+import FAQ from "@/components/FAQ";
 
 export const metadata: Metadata = {
   title: "Painfrei Care & Wellness",
@@ -36,6 +37,7 @@ export default async function Home() {
       <AboutSectionTwo />
       <Testimonials />
       <ProductList />
+      <FAQ /> 
       {/* <Products products={products} /> */}
       <div id="contact">
         <Contact />
