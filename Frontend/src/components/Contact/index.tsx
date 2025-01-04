@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import NewsLatterBox from "./NewsLatterBox";
 import toast from "react-hot-toast";
+import SocialLinks from "./SocialLinks";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -122,9 +123,10 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="overflow-hidden bg-main py-16 dark:bg-transparent md:py-20 lg:py-28"
+      className="overflow-hidden bg-main  py-16 dark:bg-transparent md:py-20 lg:py-8"
     >
       <div className="container">
+        <SocialLinks />
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
             <div

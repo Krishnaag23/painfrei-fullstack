@@ -222,20 +222,23 @@ const ProductPage = ({ params }) => {
         </nav>
 
         {/* Product Section */}
-        <div className="rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-            {/* Product Images */}
-            <div className="space-y-4">
-              <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-xl">
-                <Image
-                  src="/images/product/painfrei-oil.png"
-                  alt="Painfrei Oil"
-                  width={500}
-                  height={500}
-                  className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
-                />
-              </div>
-              {/* <div className="grid grid-cols-4 gap-4">
+        {/* Painfrei Device id*/}
+        {params.id === "9577c2ac834547236c297681" ? (
+          <>
+            <div className="rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+                {/* Product Images */}
+                <div className="space-y-4">
+                  <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-xl">
+                    <Image
+                      src="/images/product/painfrei-device.png"
+                      alt="Painfrei Oil"
+                      width={500}
+                      height={500}
+                      className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
+                    />
+                  </div>
+                  {/* <div className="grid grid-cols-4 gap-4">
                 {product.images.map((image, idx) => (
                   <button
                     key={idx}
@@ -257,37 +260,37 @@ const ProductPage = ({ params }) => {
                   </button>
                 ))} 
                </div> */}
-            </div>
+                </div>
 
-            {/* Product Details */}
-            <div className="space-y-6">
-              <div>
-                <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
-                  {product.title}
-                </h1>
-                <p className="leading-relaxed text-gray-600 dark:text-gray-300">
-                  Experience the soothing properties of Painfrei Pain Relief
-                  Oil, meticulously crafted to provide effective relief from
-                  various aches and discomforts. Infused with a unique blend of
-                  modern and Ayurvedic ingredients, our oil harnesses the
-                  healing power of nature to promote wellness and restore
-                  balance in your life.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <p className="text-3xl font-bold text-primary dark:text-primary/90">
-                      ₹649.00
+                {/* Product Details */}
+                <div className="space-y-6">
+                  <div>
+                    <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
+                      {product.title}
+                    </h1>
+                    <p className="leading-relaxed text-gray-600 dark:text-gray-300">
+                      Experience the future of pain relief with our upcoming
+                      Painfrei Device. Designed with cutting-edge technology and
+                      innovative features, this device aims to provide effective
+                      and convenient pain management solutions. Stay tuned for
+                      its launch and be among the first to experience
+                      unparalleled relief and comfort.
                     </p>
-                    {/* {product.priceAfterDiscount && (
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-1">
+                        <p className="text-3xl font-bold text-primary dark:text-primary/90">
+                          ₹4000.00
+                        </p>
+                        {/* {product.priceAfterDiscount && (
                       <p className="text-lg text-gray-500 line-through dark:text-gray-400">
                         ₹{product.price}
                       </p>
                     )} */}
-                  </div>
-                  <div className="text-right">
+                      </div>
+                      {/* <div className="text-right">
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       Stock Status
                     </p>
@@ -300,48 +303,173 @@ const ProductPage = ({ params }) => {
                     >
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
-                  </div>
-                </div>
+                  </div> */}
+                    </div>
 
-                <div className="flex flex-wrap items-center gap-4">
-                  <div className="flex items-center space-x-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Quantity:
-                    </label>
-                    <select
-                      value={quantity}
-                      onChange={(e) => setQuantity(Number(e.target.value))}
-                      className="rounded-md border-gray-300 bg-white 
+                    <div className="flex flex-wrap items-center gap-4">
+                      <div className="flex items-center space-x-2">
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Quantity:
+                        </label>
+                        <select
+                          value={quantity}
+                          onChange={(e) => setQuantity(Number(e.target.value))}
+                          className="rounded-md border-gray-300 bg-white 
                                px-4 py-2 text-gray-900 focus:border-primary
                                focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
                                dark:focus:border-primary/90 dark:focus:ring-primary/90"
-                    >
-                      {[...Array(Math.min(10, product.quantity))].map(
-                        (_, i) => (
-                          <option key={i + 1} value={i + 1}>
-                            {i + 1}
-                          </option>
-                        ),
-                      )}
-                    </select>
-                  </div>
-                </div>
+                        >
+                          {[...Array(Math.min(10, product.quantity))].map(
+                            (_, i) => (
+                              <option key={i + 1} value={i + 1}>
+                                {i + 1}
+                              </option>
+                            ),
+                          )}
+                        </select>
+                      </div>
+                    </div>
 
-                <button
-                  onClick={handlePreOrder}
-                  disabled={isAddingToCart || product.quantity === 0}
-                  className="w-full transform rounded-xl bg-primary px-8 py-4 
+                    <button
+                      onClick={handlePreOrder}
+                      disabled={true}
+                      className="w-full transform rounded-xl bg-primary px-8 py-4 
                            font-medium text-white transition-all hover:bg-primary/90 
                            focus:ring-4 focus:ring-blue-200 active:scale-95
                            disabled:cursor-not-allowed disabled:bg-gray-300 
                            dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
-                >
-                  {isAddingToCart ? "Pre ordering" : "Pre Order Now"}
-                </button>
+                    >
+                      {isAddingToCart ? "Coming Soon" : "Coming Soon"}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            <div className="rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+                {/* Product Images */}
+                <div className="space-y-4">
+                  <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-xl">
+                    <Image
+                      src="/images/product/painfrei-oil.png"
+                      alt="Painfrei Oil"
+                      width={500}
+                      height={500}
+                      className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
+                    />
+                  </div>
+                  {/* <div className="grid grid-cols-4 gap-4">
+                {product.images.map((image, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    className={`relative overflow-hidden rounded-lg transition-all
+                      ${
+                        selectedImage === idx
+                          ? "scale-105 transform ring-2 ring-primary dark:ring-primary/90"
+                          : "hover:ring-2 hover:ring-primary/90 dark:hover:ring-blue-300"
+                      }`}
+                  >
+                    <Image
+                      src={image}
+                      alt={`Product ${idx + 1}`}
+                      width={100}
+                      height={100}
+                      className="h-20 w-full object-cover sm:h-24"
+                    />
+                  </button>
+                ))} 
+               </div> */}
+                </div>
+
+                {/* Product Details */}
+                <div className="space-y-6">
+                  <div>
+                    <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
+                      {product.title}
+                    </h1>
+                    <p className="leading-relaxed text-gray-600 dark:text-gray-300">
+                      Experience the soothing properties of Painfrei Pain Relief
+                      Oil, meticulously crafted to provide effective relief from
+                      various aches and discomforts. Infused with a unique blend
+                      of modern and Ayurvedic ingredients, our oil harnesses the
+                      healing power of nature to promote wellness and restore
+                      balance in your life.
+                    </p>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-1">
+                        <p className="text-3xl font-bold text-primary dark:text-primary/90">
+                          ₹649.00
+                        </p>
+                        {/* {product.priceAfterDiscount && (
+                      <p className="text-lg text-gray-500 line-through dark:text-gray-400">
+                        ₹{product.price}
+                      </p>
+                    )} */}
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Stock Status
+                        </p>
+                        <p
+                          className={`font-medium ${
+                            product.quantity > 0
+                              ? "text-green-600 dark:text-green-400"
+                              : "text-red-600 dark:text-red-400"
+                          }`}
+                        >
+                          {product.quantity > 0 ? "In Stock" : "Out of Stock"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-4">
+                      <div className="flex items-center space-x-2">
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Quantity:
+                        </label>
+                        <select
+                          value={quantity}
+                          onChange={(e) => setQuantity(Number(e.target.value))}
+                          className="rounded-md border-gray-300 bg-white 
+                               px-4 py-2 text-gray-900 focus:border-primary
+                               focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
+                               dark:focus:border-primary/90 dark:focus:ring-primary/90"
+                        >
+                          {[...Array(Math.min(10, product.quantity))].map(
+                            (_, i) => (
+                              <option key={i + 1} value={i + 1}>
+                                {i + 1}
+                              </option>
+                            ),
+                          )}
+                        </select>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handlePreOrder}
+                      disabled={isAddingToCart || product.quantity === 0}
+                      className="w-full transform rounded-xl bg-primary px-8 py-4 
+                           font-medium text-white transition-all hover:bg-primary/90 
+                           focus:ring-4 focus:ring-blue-200 active:scale-95
+                           disabled:cursor-not-allowed disabled:bg-gray-300 
+                           dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
+                    >
+                      {isAddingToCart ? "Pre ordering" : "Pre Order Now"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Reviews Section */}
         <div className="mt-12 rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
