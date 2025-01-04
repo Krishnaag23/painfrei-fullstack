@@ -17,8 +17,9 @@ const faqData: FAQItem[] = [
   {
     question: "How does Painfrei work?",
     answer:
-      "Painfrei employs a dual-action mechanism. It integrates low TENS (Transcutaneous Electrical Nerve Stimulation) technology with Ayurvedic gel patches to provide targeted pain relief, stimulate natural healing processes, and reduce discomfort effectively.",
+      "Painfrei Standard Device is the first of its kind, designed not only to relieve pain but also to aid in recovery. It employs a dual-action mechanism that integrates low TENS (Transcutaneous Electrical Nerve Stimulation) technology with Ayurvedic gel patches infused with antimicrobial properties. This combination provides targeted pain relief, stimulates natural healing processes, reduces discomfort effectively, and promotes faster recovery.",
   },
+
   {
     question: "Is Painfrei safe to use?",
     answer:
@@ -41,8 +42,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "Where can I purchase Painfrei products?",
-    answer:
-      "Painfrei products are available for pre-order on this website.",
+    answer: "Painfrei products are available for pre-order on this website.",
   },
 ];
 
