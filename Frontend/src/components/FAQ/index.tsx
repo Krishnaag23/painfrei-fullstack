@@ -17,7 +17,7 @@ const faqData: FAQItem[] = [
   {
     question: "How does Painfrei work?",
     answer:
-      "Painfrei Standard Device is the first of its kind, designed not only to relieve pain but also to aid in recovery. It employs a dual-action mechanism that integrates low TENS (Transcutaneous Electrical Nerve Stimulation) technology with Ayurvedic gel patches infused with antimicrobial properties. This combination provides targeted pain relief, stimulates natural healing processes, reduces discomfort effectively, and promotes faster recovery.",
+      "Painfrei Standard Device is the first of its kind, designed not only to relieve pain but also to aid in recovery. It employs a dual-action mechanism that integrates low TENS (Transcutaneous Electrical Nerve Stimulation) technology with antimicrobial gel patches. This combination provides targeted pain relief, stimulates natural healing processes, reduces discomfort effectively, and promotes faster recovery.",
   },
 
   {
