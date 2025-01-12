@@ -225,7 +225,8 @@ export default function CheckoutForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Order placed:", formData);
-    if (isDeliverable) {
+    console.log("isDeliverable:", isDeliverable);
+    if (isDeliverable === "true") {
       handleCheckout();
     } else {
       handlePreOrder();
