@@ -47,8 +47,11 @@ export default function CheckoutForm() {
   });
 
   const [error, setError] = useState<string | null>(null);
+  const [isDeliverable, setIsDeliverable] = useState<string | null>(null);
 
   useEffect(() => {
+    const isDeliverable = localStorage.getItem("isDeliverable");
+    setIsDeliverable(isDeliverable);
     if (user) {
       setFormData({
         name: user.name,
@@ -227,7 +230,6 @@ export default function CheckoutForm() {
       handlePreOrder();
     }
   };
-  const isDeliverable = localStorage.getItem("isDeliverable");
 
   return (
     <form
