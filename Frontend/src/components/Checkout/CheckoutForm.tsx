@@ -50,8 +50,6 @@ export default function CheckoutForm() {
   const [isDeliverable, setIsDeliverable] = useState<string | null>(null);
 
   useEffect(() => {
-    const isDeliverable = localStorage.getItem("isDeliverable");
-    setIsDeliverable(isDeliverable);
     if (user) {
       setFormData({
         name: user.name,
@@ -64,7 +62,10 @@ export default function CheckoutForm() {
       });
     }
   }, [user]);
-
+  useEffect(() => {
+    const isDelivery = localStorage.getItem("isDeliverable");
+    setIsDeliverable(isDelivery);
+  }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value =
       e.target.type === "checkbox"
