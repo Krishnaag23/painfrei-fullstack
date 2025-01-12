@@ -167,7 +167,8 @@ export default function CheckoutForm() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount,
         currency: "INR",
-        name: "Painfrei Shop",
+        name: "Painfrei Care & Wellness",
+        description: "Payment for your order of Pain Relief Oil",
         order_id: razorpayOrderId,
         handler: async (response: any) => {
           await verifyPayment(
