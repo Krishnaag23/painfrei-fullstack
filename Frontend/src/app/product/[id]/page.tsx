@@ -152,9 +152,9 @@ const ProductPage = ({ params }) => {
       toast.error("Please check delivery availability before proceeding.");
       return;
     }
-    if(!isDeliverable){
+    if (!isDeliverable) {
       handlePreOrder();
-      return
+      return;
     }
     if (!user) {
       toast("Please Login to add to cart");
@@ -163,6 +163,7 @@ const ProductPage = ({ params }) => {
       }, 1000);
       return;
     }
+    localStorage.setItem("isDeliverable", isDeliverable);
     try {
       setIsAddingToCart(true);
       await axios.post(
@@ -209,6 +210,7 @@ const ProductPage = ({ params }) => {
   };
   const handlePreOrder = async () => {
     localStorage.setItem("productId", params.id);
+    localStorage.setItem("isDeliverable", isDeliverable);
     localStorage.setItem("quantity", quantity.toString());
 
     window.location.href = "/dashboard/checkout";
@@ -389,8 +391,8 @@ const ProductPage = ({ params }) => {
                           }`}
                         >
                           {isDeliverable && savedPinCode
-                            ? `Hooray! We deliver to ${savedPinCode}.`
-                            : `Oops! We currently don't deliver to ${savedPinCode}. However, you can still preorder, and we'll notify you once delivery becomes available in your area. .`}
+                            ? `Hooray! We deliver to ${savedPinCode}. Add to cart now!`
+                            : `Oops! We currently don't deliver to ${savedPinCode}. However, you can still preorder, and we'll notify you once delivery becomes available in your area.`}
                         </div>
                       )}
                     </div>
@@ -404,7 +406,10 @@ const ProductPage = ({ params }) => {
                            disabled:cursor-not-allowed disabled:bg-gray-300 
                            dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
                     >
-                      {isAddingToCart ? "Processing" : "Add to cart"}
+                      {!isDeliverable && savedPinCode
+                        ? "Preorder Now"
+                        : "Add to cart"}
+                      {/* {isAddingToCart ? "Processing" : "Add to cart"} */}
                     </button>
                   </div>
                 </div>

@@ -221,9 +221,13 @@ export default function CheckoutForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Order placed:", formData);
-    handleCheckout();
-    // handlePreOrder();
+    if (isDeliverable) {
+      handleCheckout();
+    } else {
+      handlePreOrder();
+    }
   };
+  const isDeliverable = localStorage.getItem("isDeliverable");
 
   return (
     <form
@@ -335,7 +339,7 @@ export default function CheckoutForm() {
         type="submit"
         className="w-full rounded-lg bg-blue-600 py-2 font-medium text-white transition hover:bg-blue-700"
       >
-        Pre Order
+        {isDeliverable === "true" ? "Place Order" : "Pre-Order"}
       </button>
     </form>
   );
