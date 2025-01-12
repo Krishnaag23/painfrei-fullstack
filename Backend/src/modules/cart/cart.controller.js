@@ -31,9 +31,8 @@ const addProductToCart = catchAsyncError(async (req, res, next) => {
   if (!product) return next(new AppError("Product not found", 404));
 
   req.body.price = product.price;
-  if (req.user._id) {
-    let cart = await cartModel.findOne({ userId: req.user._id });
-  }
+
+  let cart = await cartModel.findOne({ userId: req.user._id });
 
   if (!cart) {
     cart = await cartModel.create({
@@ -114,26 +113,29 @@ const updateProductQuantity = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// const applyCoupon = catchAsyncError(async (req, res, next) => {
-//   const { code } = req.body;
+const applyCoupon = catchAsyncError(async (req, res, next) => {
+  const { code } = req.body;
 
-//   const coupon = await couponModel.findOne({ code, expires: { $gt: Date.now() } });
-//   if (!coupon) return next(new AppError("Invalid or expired coupon", 400));
+  const coupon = await couponModel.findOne({
+    code,
+    expires: { $gt: Date.now() },
+  });
+  if (!coupon) return next(new AppError("Invalid or expired coupon", 400));
 
-//   const cart = await cartModel.findOne({ userId: req.user._id });
-//   if (!cart) return next(new AppError("Cart not found", 404));
+  const cart = await cartModel.findOne({ userId: req.user._id });
+  if (!cart) return next(new AppError("Cart not found", 404));
 
-//   cart.discount = coupon.discount;
-//   calcTotalPrice(cart);
+  cart.discount = coupon.discount;
+  calcTotalPrice(cart);
 
-//   await cart.save();
+  await cart.save();
 
-//   res.status(200).json({
-//     status: "success",
-//     message: "Coupon applied successfully",
-//     data: cart,
-//   });
-// });
+  res.status(200).json({
+    status: "success",
+    message: "Coupon applied successfully",
+    data: cart,
+  });
+});
 
 const getLoggedUserCart = catchAsyncError(async (req, res, next) => {
   const cart = await cartModel
@@ -163,7 +165,7 @@ export {
   addProductToCart,
   removeProductFromCart,
   updateProductQuantity,
-  // applyCoupon,
+  applyCoupon,
   getLoggedUserCart,
   deleteLoggedUserCart,
 };

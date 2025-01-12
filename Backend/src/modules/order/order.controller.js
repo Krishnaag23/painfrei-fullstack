@@ -10,9 +10,9 @@ const createRazorpayOrder = catchAsyncError(async (req, res, next) => {
   const cart = await cartModel.findOne({ userId: req.params.id });
   if (!cart) return next(new AppError("Cart was not found", 404));
   // console.log(cart);
-  const totalOrderPrice =
-    // cart.totalPriceAfterDiscount ? cart.totalPriceAfterDiscount :
-    cart.totalPrice;
+  const totalOrderPrice = cart.totalPriceAfterDiscount
+    ? cart.totalPriceAfterDiscount
+    : cart.totalPrice;
 
   const options = {
     amount: totalOrderPrice * 100,

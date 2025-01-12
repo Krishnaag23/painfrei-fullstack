@@ -95,7 +95,7 @@ const ProductList = () => {
                   </>
                 ) : (
                   <>
-                    <div className="group overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-gray-800">
+                    {/* <div className="group overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-gray-800">
                       <div className="relative h-48 overflow-hidden">
                         <Image
                           src="/images/product/painfrei-device.png"
@@ -128,7 +128,7 @@ const ProductList = () => {
                           </motion.button>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </>
                 )}
               </Link>

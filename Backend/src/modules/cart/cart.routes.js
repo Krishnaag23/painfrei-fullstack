@@ -15,9 +15,9 @@ cartRouter
   .post(protectedRoutes, allowedTo("user"), cart.addProductToCart)
   .get(protectedRoutes, allowedTo("user"), cart.getLoggedUserCart);
 
-// cartRouter
-//   .route("/apply-coupon")
-//   .post(protectedRoutes, allowedTo("user"), cart.applyCoupon);
+cartRouter
+  .route("/apply-coupon")
+  .post(protectedRoutes, allowedTo("user"), cart.applyCoupon);
 
 cartRouter
   .route("/:id")

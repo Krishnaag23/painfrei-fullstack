@@ -108,13 +108,13 @@ const ProductPage = ({ params }) => {
   };
 
   const handleAddToCart = async () => {
-    // if (!user) {
-    //   toast.error("Please Signin to add to cart");
-    //   setTimeout(() => {
-    //     window.location.href = "/signin";
-    //   }, 1000);
-    //   return;
-    // }
+    if (!user) {
+      toast("Please Login to add to cart");
+      setTimeout(() => {
+        window.location.href = "/signup";
+      }, 1000);
+      return;
+    }
     try {
       setIsAddingToCart(true);
       await axios.post(
@@ -126,6 +126,9 @@ const ProductPage = ({ params }) => {
         { headers: { token: `${localStorage.getItem("token")}` } },
       );
       toast.success("Product added to cart");
+      setTimeout(() => {
+        window.location.href = "/dashboard/cart";
+      }, 1000);
     } catch (error) {
       console.log("Error adding to cart:", error);
       toast.error(error.response?.data?.message || "Failed to add to cart");
@@ -454,7 +457,7 @@ const ProductPage = ({ params }) => {
                     </div>
 
                     <button
-                      onClick={handlePreOrder}
+                      onClick={handleAddToCart}
                       disabled={isAddingToCart || product.quantity === 0}
                       className="w-full transform rounded-xl bg-primary px-8 py-4 
                            font-medium text-white transition-all hover:bg-primary/90 
@@ -462,7 +465,7 @@ const ProductPage = ({ params }) => {
                            disabled:cursor-not-allowed disabled:bg-gray-300 
                            dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
                     >
-                      {isAddingToCart ? "Pre ordering" : "Pre Order Now"}
+                      {isAddingToCart ? "Processing" : "Add to cart"}
                     </button>
                   </div>
                 </div>

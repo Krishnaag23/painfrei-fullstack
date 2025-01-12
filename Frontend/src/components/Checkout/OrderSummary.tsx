@@ -54,8 +54,8 @@ export default function OrderSummary() {
     (sum: number, item: any) => sum + item.price * item.quantity,
     0,
   );
-  const shipping = 500; // Set as fixed for now
-  const total = subtotal - (subtotal * discount) / 100;
+  // const shipping = 500; // Set as fixed for now
+  // const total = subtotal - (subtotal * discount) / 100;
 
   return (
     <div className="rounded-lg bg-gray-50 p-6 shadow-md dark:bg-black">
@@ -84,10 +84,10 @@ export default function OrderSummary() {
         </div>
       )}
       <div className="mb-4 flex justify-between font-semibold">
-        <span>Total</span>
-        <span>₹{total.toFixed(2)}</span>
+        {/*<span>Total</span>
+        <span>₹{total.toFixed(2)}</span> */} 
       </div>
-      <div className="mb-4">
+      {/*<div className="mb-4">
         <label
           htmlFor="coupon"
           className="mb-2 block text-sm font-medium text-gray-700"
@@ -112,7 +112,7 @@ export default function OrderSummary() {
           </button>
         </div>
         {error ? <div className="pt-4 text-red-500">{error}</div> : ""}
-      </div>
+      </div> */}
     </div>
   );
 }

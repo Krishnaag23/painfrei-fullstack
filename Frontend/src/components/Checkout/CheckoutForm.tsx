@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import toast from "react-hot-toast";
 
 declare global {
   interface Window {
@@ -76,25 +77,25 @@ export default function CheckoutForm() {
     });
   };
 
-  // useEffect(() => {
-  //   const loadRazorpayScript = () => {
-  //     return new Promise((resolve, reject) => {
-  //       const script = document.createElement("script");
-  //       script.src = "https://checkout.razorpay.com/v1/checkout.js";
-  //       script.onload = () => resolve(true);
-  //       script.onerror = () =>
-  //         reject(new Error("Failed to load Razorpay script"));
-  //       document.body.appendChild(script);
-  //     });
-  //   };
+  useEffect(() => {
+    const loadRazorpayScript = () => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => resolve(true);
+        script.onerror = () =>
+          reject(new Error("Failed to load Razorpay script"));
+        document.body.appendChild(script);
+      });
+    };
 
-  //   loadRazorpayScript()
-  //     .then(() => console.log("Razorpay script loaded"))
-  //     .catch((error) => {
-  //       setError("Failed to load payment gateway. Please try again later.");
-  //       console.error(error);
-  //     });
-  // }, []);
+    loadRazorpayScript()
+      .then(() => console.log("Razorpay script loaded"))
+      .catch((error) => {
+        setError("Failed to load payment gateway. Please try again later.");
+        console.error(error);
+      });
+  }, []);
 
   const handlePreOrder = async () => {
     const shippingDetails: ShippingDetails = {
@@ -130,6 +131,13 @@ export default function CheckoutForm() {
   };
 
   const handleCheckout = async () => {
+    if (!user) {
+      toast("Please login to place order.");
+      setTimeout(() => {
+        router.push("/signin");
+      }, 2000);
+      return;
+    }
     const shippingDetails: ShippingDetails = {
       name: formData.name,
       email: formData.email,
@@ -213,8 +221,8 @@ export default function CheckoutForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Order placed:", formData);
-    // handleCheckout();
-    handlePreOrder();
+    handleCheckout();
+    // handlePreOrder();
   };
 
   return (

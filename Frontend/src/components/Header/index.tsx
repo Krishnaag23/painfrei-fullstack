@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
@@ -14,10 +14,30 @@ import cartIcon from "public/images/about/shopping.png";
 const Header = () => {
   const { isLoggedIn, user, loading } = useAuth();
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const menuRef = useRef(null); // To detect clicks outside the menu
 
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
+
+  // Close the menu when clicking outside
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setNavbarOpen(false);
+    }
+  };
+
+  // Close the menu on navigation
+  const closeNavbarOnNavigation = () => {
+    setNavbarOpen(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   // Sticky Navbar
   const [sticky, setSticky] = useState(false);
@@ -30,9 +50,12 @@ const Header = () => {
   };
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
-  });
+    return () => {
+      window.removeEventListener("scroll", handleStickyNavbar);
+    };
+  }, []);
 
-  // submenu handler
+  // Submenu handler
   const [openIndex, setOpenIndex] = useState(-1);
   const handleSubmenu = (index) => {
     if (openIndex === index) {
@@ -50,7 +73,7 @@ const Header = () => {
         className={`header left-0 top-0 z-40 flex w-full items-center ${
           sticky
             ? "fixed z-[9999] bg-main !bg-opacity-80 shadow-sticky backdrop-blur-sm transition dark:bg-gray-dark dark:shadow-sticky-dark"
-            : "absolute   "
+            : "absolute"
         }`}
       >
         <div className="container">
@@ -60,7 +83,7 @@ const Header = () => {
                 href="/"
                 className={`header-logo block w-full ${
                   sticky ? "py-6 lg:py-2" : "py-8"
-                } `}
+                }`}
               >
                 <Image
                   src="/images/logo/logo-pan-rmbg.png"
@@ -79,7 +102,7 @@ const Header = () => {
               </Link>
             </div>
             <div className="flex w-full items-center justify-between px-4">
-              <div>
+              <div ref={menuRef}>
                 <button
                   onClick={navbarToggleHandler}
                   id="navbarToggler"
@@ -116,6 +139,7 @@ const Header = () => {
                         {menuItem.path ? (
                           <Link
                             href={menuItem.path}
+                            onClick={closeNavbarOnNavigation} // Close menu on link click
                             className={`flex py-2 text-base lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
                               usePathName === menuItem.path
                                 ? "text-primary dark:text-white"
@@ -151,6 +175,7 @@ const Header = () => {
                                 <Link
                                   href={submenuItem.path}
                                   key={index}
+                                  onClick={closeNavbarOnNavigation} // Close menu on submenu link click
                                   className="block rounded py-2.5 text-sm text-dark hover:text-primary dark:text-white/70 dark:hover:text-white lg:px-3"
                                 >
                                   {submenuItem.title}
@@ -166,7 +191,7 @@ const Header = () => {
               </div>
 
               <div className="flex items-center justify-end pr-16 lg:pr-0">
-                {/* {!loading && isLoggedIn ? (
+                {!loading && isLoggedIn ? (
                   <>
                     <Link
                       href="/dashboard/cart"
@@ -188,8 +213,21 @@ const Header = () => {
                     </Link>
                   </>
                 ) : (
-                  <></>
-                )} */}
+                  <>
+                    <Link
+                      href="/signin"
+                      className=" px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="ease-in-up hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white shadow-btn transition duration-300 hover:bg-opacity-90 hover:shadow-btn-hover md:block md:px-9 lg:px-6 xl:px-9"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
 
                 <div>
                   <ThemeToggler />

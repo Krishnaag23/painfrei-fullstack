@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 
 import { useState } from "react";
-
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -11,33 +10,35 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); 
+    setError(null);
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "auth/signup",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        },
+      );
 
       if (!res.ok) {
         // console.log(res)
         const data = await res.json();
-        throw new Error(data.error); 
+        throw new Error(data.error);
       }
 
-      
-      window.location.href = '/signin';
+      window.location.href = "/product";
     } catch (err) {
-      setError(err.message); 
+      setError(err.message);
     }
-  }; 
+  };
 
-  
   const handlegoogleLogin = () => {
-    window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "auth/google"; 
+    window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "auth/google";
+    
   };
 
   return (
@@ -46,14 +47,17 @@ const SignupPage = () => {
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px]">
+              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 shadow-three dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   Create your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
                   It’s totally free and super easy
                 </p>
-                <button className="border-stroke dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none" onClick={handlegoogleLogin}>
+                <button
+                  className="border-stroke mb-6 flex w-full items-center justify-center rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
+                  onClick={handlegoogleLogin}
+                >
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -102,7 +106,6 @@ const SignupPage = () => {
                     <label
                       htmlFor="name"
                       className="mb-3 block text-sm text-dark dark:text-white"
-                      
                     >
                       {" "}
                       Full Name{" "}
@@ -113,7 +116,7 @@ const SignupPage = () => {
                       placeholder="Enter your full name"
                       onChange={(e) => setName(e.target.value)}
                       required
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="border-stroke w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
                   <div className="mb-8">
@@ -130,7 +133,7 @@ const SignupPage = () => {
                       placeholder="Enter your Email"
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="border-stroke w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
                   <div className="mb-8">
@@ -147,7 +150,7 @@ const SignupPage = () => {
                       placeholder="Enter your Password"
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="border-stroke w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
                   <div className="mb-8 flex">
@@ -155,7 +158,7 @@ const SignupPage = () => {
                       htmlFor="checkboxLabel"
                       className="flex cursor-pointer select-none text-sm font-medium text-body-color"
                     >
-                      <div className="relative">
+                      {/* <div className="relative">
                         <input
                           type="checkbox"
                           id="checkboxLabel"
@@ -179,8 +182,8 @@ const SignupPage = () => {
                             </svg>
                           </span>
                         </div>
-                      </div>
-                      <span>
+                      </div> */}
+                      {/* <span>
                         By creating account means you agree to the
                         <a href="#0" className="text-primary hover:underline">
                           {" "}
@@ -191,12 +194,12 @@ const SignupPage = () => {
                           {" "}
                           Privacy Policy{" "}
                         </a>
-                      </span>
+                      </span> */}
                     </label>
                   </div>
                   <div className="mb-6">
                     {error && <p className="error">{error}</p>}
-                    <button className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
+                    <button className="flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white shadow-submit duration-300 hover:bg-primary/90 dark:shadow-submit-dark">
                       Sign up
                     </button>
                   </div>
