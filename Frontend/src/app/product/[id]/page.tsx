@@ -16,9 +16,25 @@ const ProductPage = ({ params }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingReview, setEditingReview] = useState(null);
   const [currentUserID, setCurrentUserID] = useState(null);
+  const [pinCode, setPinCode] = useState("");
+  const [isDeliverable, setIsDeliverable] = useState(null);
+  const [savedPinCode, setSavedPinCode] = useState("");
 
   const { user } = useAuth();
-
+  const deliverablePinCodes = [
+    208002, 209401, 208011, 208003, 209401, 208009, 208009, 208002, 208017,
+    208001, 209217, 208017, 209401, 208027, 208027, 209401, 209401, 209402,
+    209305, 209214, 209305, 209402, 209305, 209214, 208024, 209304, 208001,
+    209304, 209217, 208007, 208008, 209305, 208008, 208003, 209214, 209214,
+    208013, 208001, 208001, 208012, 209214, 209214, 208001, 208013, 208001,
+    208001, 209304, 208007, 209214, 209401, 209401, 208006, 208006, 208002,
+    208001, 208007, 209401, 209214, 208007, 209402, 208001, 208002, 208005,
+    208016, 208026, 208005, 209217, 208010, 209214, 209402, 208012, 209304,
+    208014, 208001, 208024, 209214, 209214, 208017, 209402, 208004, 208001,
+    208001, 208001, 209402, 208021, 209214, 209214, 208021, 208012, 208017,
+    208017, 208011, 208007, 209401, 209402, 209402, 209402, 209402, 209214,
+    208004,
+  ];
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -38,6 +54,30 @@ const ProductPage = ({ params }) => {
     fetchProduct();
   }, [params.id]);
 
+  useEffect(() => {
+    const storedPinCode = localStorage.getItem("userPinCode");
+    if (storedPinCode) {
+      setSavedPinCode(storedPinCode);
+      setIsDeliverable(deliverablePinCodes.includes(parseInt(storedPinCode)));
+    }
+  }, []);
+
+  const handleCheckDelivery = () => {
+    if (pinCode.trim() === "") {
+      alert("Please enter a pin code.");
+      return;
+    }
+    const deliverable = deliverablePinCodes.includes(parseInt(pinCode));
+    setIsDeliverable(deliverable);
+    localStorage.setItem("userPinCode", pinCode); // Save the pin code in local storage
+    setSavedPinCode(pinCode);
+  };
+  const handleClearSavedPin = () => {
+    localStorage.removeItem("userPinCode");
+    setSavedPinCode("");
+    setIsDeliverable(null);
+    setPinCode("");
+  };
   const fetchAllReviews = async () => {
     if (!user) return; // Add this check
 
@@ -108,6 +148,14 @@ const ProductPage = ({ params }) => {
   };
 
   const handleAddToCart = async () => {
+    if (!savedPinCode) {
+      toast.error("Please check delivery availability before proceeding.");
+      return;
+    }
+    if(!isDeliverable){
+      handlePreOrder();
+      return
+    }
     if (!user) {
       toast("Please Login to add to cart");
       setTimeout(() => {
@@ -227,128 +275,7 @@ const ProductPage = ({ params }) => {
         {/* Product Section */}
         {/* Painfrei Device id*/}
         {params.id === "9577c2ac834547236c297681" ? (
-          <>
-            <div className="rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
-              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-                {/* Product Images */}
-                <div className="space-y-4">
-                  <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-xl">
-                    <Image
-                      src="/images/product/painfrei-device.png"
-                      alt="Painfrei Oil"
-                      width={500}
-                      height={500}
-                      className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
-                    />
-                  </div>
-                  {/* <div className="grid grid-cols-4 gap-4">
-                {product.images.map((image, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`relative overflow-hidden rounded-lg transition-all
-                      ${
-                        selectedImage === idx
-                          ? "scale-105 transform ring-2 ring-primary dark:ring-primary/90"
-                          : "hover:ring-2 hover:ring-primary/90 dark:hover:ring-blue-300"
-                      }`}
-                  >
-                    <Image
-                      src={image}
-                      alt={`Product ${idx + 1}`}
-                      width={100}
-                      height={100}
-                      className="h-20 w-full object-cover sm:h-24"
-                    />
-                  </button>
-                ))} 
-               </div> */}
-                </div>
-
-                {/* Product Details */}
-                <div className="space-y-6">
-                  <div>
-                    <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
-                      {product.title}
-                    </h1>
-                    <p className="leading-relaxed text-gray-600 dark:text-gray-300">
-                      Experience the future of pain relief with our upcoming
-                      Painfrei Device. Designed with cutting-edge technology and
-                      innovative features, this device aims to provide effective
-                      and convenient pain management solutions. Stay tuned for
-                      its launch and be among the first to experience
-                      unparalleled relief and comfort.
-                    </p>
-                  </div>
-
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-1">
-                        <p className="text-3xl font-bold text-primary dark:text-primary/90">
-                          ₹4000.00
-                        </p>
-                        {/* {product.priceAfterDiscount && (
-                      <p className="text-lg text-gray-500 line-through dark:text-gray-400">
-                        ₹{product.price}
-                      </p>
-                    )} */}
-                      </div>
-                      {/* <div className="text-right">
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Stock Status
-                    </p>
-                    <p
-                      className={`font-medium ${
-                        product.quantity > 0
-                          ? "text-green-600 dark:text-green-400"
-                          : "text-red-600 dark:text-red-400"
-                      }`}
-                    >
-                      {product.quantity > 0 ? "In Stock" : "Out of Stock"}
-                    </p>
-                  </div> */}
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-4">
-                      <div className="flex items-center space-x-2">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                          Quantity:
-                        </label>
-                        <select
-                          value={quantity}
-                          onChange={(e) => setQuantity(Number(e.target.value))}
-                          className="rounded-md border-gray-300 bg-white 
-                               px-4 py-2 text-gray-900 focus:border-primary
-                               focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
-                               dark:focus:border-primary/90 dark:focus:ring-primary/90"
-                        >
-                          {[...Array(Math.min(10, product.quantity))].map(
-                            (_, i) => (
-                              <option key={i + 1} value={i + 1}>
-                                {i + 1}
-                              </option>
-                            ),
-                          )}
-                        </select>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={handlePreOrder}
-                      disabled={true}
-                      className="w-full transform rounded-xl bg-primary px-8 py-4 
-                           font-medium text-white transition-all hover:bg-primary/90 
-                           focus:ring-4 focus:ring-blue-200 active:scale-95
-                           disabled:cursor-not-allowed disabled:bg-gray-300 
-                           dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
-                    >
-                      {isAddingToCart ? "Coming Soon" : "Coming Soon"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
+          <></>
         ) : (
           <>
             <div className="rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
@@ -364,28 +291,6 @@ const ProductPage = ({ params }) => {
                       className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
                     />
                   </div>
-                  {/* <div className="grid grid-cols-4 gap-4">
-                {product.images.map((image, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`relative overflow-hidden rounded-lg transition-all
-                      ${
-                        selectedImage === idx
-                          ? "scale-105 transform ring-2 ring-primary dark:ring-primary/90"
-                          : "hover:ring-2 hover:ring-primary/90 dark:hover:ring-blue-300"
-                      }`}
-                  >
-                    <Image
-                      src={image}
-                      alt={`Product ${idx + 1}`}
-                      width={100}
-                      height={100}
-                      className="h-20 w-full object-cover sm:h-24"
-                    />
-                  </button>
-                ))} 
-               </div> */}
                 </div>
 
                 {/* Product Details */}
@@ -454,6 +359,40 @@ const ProductPage = ({ params }) => {
                           )}
                         </select>
                       </div>
+                    </div>
+                    {/* Delivery Check Section */}
+                    <div className="mb-8 rounded-lg  p-6 shadow-lg dark:bg-gray-800">
+                      <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                        Check Delivery Availability
+                      </h2>
+                      <div className="flex flex-wrap items-center gap-4">
+                        <input
+                          type="text"
+                          placeholder="Enter your pin code"
+                          className="flex-1 rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+                          value={pinCode}
+                          onChange={(e) => setPinCode(e.target.value)}
+                        />
+                        <button
+                          onClick={handleCheckDelivery}
+                          className="rounded-lg bg-primary px-6 py-2.5 text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/30 dark:focus:ring-primary/50"
+                        >
+                          Check
+                        </button>
+                      </div>
+                      {isDeliverable !== null && (
+                        <div
+                          className={`mt-4 rounded-lg p-4 text-center ${
+                            isDeliverable
+                              ? "bg-green-100 dark:bg-green-900 dark:text-green-300 text-primary"
+                              : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                          }`}
+                        >
+                          {isDeliverable && savedPinCode
+                            ? `Hooray! We deliver to ${savedPinCode}.`
+                            : `Oops! We currently don't deliver to ${savedPinCode}. However, you can still preorder, and we'll notify you once delivery becomes available in your area. .`}
+                        </div>
+                      )}
                     </div>
 
                     <button
