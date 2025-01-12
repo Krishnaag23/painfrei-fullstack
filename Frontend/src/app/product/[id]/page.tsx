@@ -5,6 +5,7 @@ import axios from "axios";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
 import useAuth from "@/hooks/useAuth";
+import TokenHandler from "@/components/tokenHandler";
 
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
@@ -188,6 +189,10 @@ const ProductPage = ({ params }) => {
 
   const handleAddReview = async (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("Please login to add a review");
+      return;
+    }
     try {
       await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}review/`,
@@ -246,6 +251,7 @@ const ProductPage = ({ params }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <TokenHandler />
       <div className="mx-auto max-w-7xl px-4 py-8 pt-36 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="mb-8">

@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 const google_router = express.Router();
 
-
 google_router.get(
   "/",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -19,8 +18,9 @@ google_router.get(
       { expiresIn: "7d" }
     );
 
-    res.redirect(`${process.env.FRONTEND_URL}/?token=${token}`);
-    
+    res.redirect(
+      `${process.env.FRONTEND_URL}/product/675596a8f4f20366005ce1e1/?token=${token}`
+    );
   }
 );
 
