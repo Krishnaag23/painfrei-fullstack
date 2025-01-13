@@ -6,6 +6,7 @@ import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
@@ -15,7 +16,75 @@ const Cart = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const router = useRouter();
   const { isLoggedIn } = useAuth();
+  const [instagramClicked, setInstagramClicked] = useState(false);
+  const [secondDiscountClicked, setSecondDiscountClicked] = useState(false);
 
+  const [instagramClicks, setInstagramClicks] = useState(0);
+
+  // Handle Instagram Click
+  const handleInstagramClick = async () => {
+    try {
+      setError("");
+      setInstagramClicks((prev) => prev + 1);
+      window.open(
+        "https://www.instagram.com/the_painfrei_guy/",
+        "_blank",
+        "noopener,noreferrer",
+      );
+    } catch (error) {
+      setError("Failed to apply coupon, Retry again.");
+
+      setTimeout(() => {
+        toast.error("Failed to apply coupon, Retry again.");
+      }, 2000);
+      return;
+    }
+    if (instagramClicks < 1) {
+      setError("Failed to apply coupon, Retry again.");
+      setTimeout(() => {
+        toast.error("Failed to apply coupon, Retry again.");
+      }, 10000);
+      return;
+    } else {
+      try {
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
+          { code: "Pain20" },
+          { headers: { token: `${localStorage.getItem("token")}` } },
+        );
+        setCart(response.data.cart);
+        setCouponCode("");
+        await fetchCart();
+        setInstagramClicked(true);
+
+        setSuccessMsg("Coupon applied successfully!");
+      } catch {
+        setError("Failed to apply coupon.");
+      }
+    }
+  };
+
+  const handleSecondDiscount = async () => {
+    try {
+      setSecondDiscountClicked(true);
+      window.open(
+        "https://www.instagram.com/painfreicare/",
+        "_blank",
+        "noopener,noreferrer",
+      );
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
+        { code: "Extra-relief-25" },
+        { headers: { token: `${localStorage.getItem("token")}` } },
+      );
+      setCart(response.data.cart);
+
+      setSuccessMsg("Extra 5% discount applied!");
+      await fetchCart();
+    } catch (error) {
+      setError("Failed to apply additional discount.");
+    }
+  };
   // Fetch Cart Data from Backend
   const fetchCart = async () => {
     setLoading(true);
@@ -170,11 +239,100 @@ const Cart = () => {
           <h2 className="mb-4 text-lg font-semibold sm:text-xl">
             Cart Summary
           </h2>
+          <div className="space-y-4">
+            {/* First Discount Section */}
+            <div className="rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 p-4 shadow-md transition-all hover:shadow-lg">
+              <div className="flex flex-col items-center space-y-3 sm:flex-row sm:justify-between sm:space-y-0">
+                <div className="flex items-center space-x-2">
+                  <svg
+                    className="h-6 w-6 text-pink-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-800 sm:text-base">
+                    Get Early Bird Discount!
+                  </span>
+                </div>
+                <button
+                  onClick={handleInstagramClick}
+                  disabled={instagramClicked}
+                  className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full ${
+                    instagramClicked
+                      ? "bg-green-500 text-white"
+                      : "bg-gradient-to-br from-purple-600 to-pink-500"
+                  } p-0.5 font-medium focus:outline-none focus:ring-4 focus:ring-purple-200`}
+                >
+                  <span
+                    className={`relative rounded-full px-5 py-2.5 transition-all duration-75 ease-in ${
+                      instagramClicked
+                        ? "bg-green-500 text-white"
+                        : "bg-white text-gray-900 group-hover:bg-opacity-0 group-hover:text-white"
+                    }`}
+                  >
+                    {instagramClicked ? "✓ Followed" : "Follow on Instagram"}
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Second Discount Section - Shows only after first click */}
+            {instagramClicked && !secondDiscountClicked && (
+              <div className="animate-fadeIn rounded-lg bg-gradient-to-r from-blue-100 to-purple-100 p-4 shadow-md transition-all hover:shadow-lg">
+                <div className="flex flex-col items-center space-y-3 sm:flex-row sm:justify-between sm:space-y-0">
+                  <div className="flex items-center space-x-2">
+                    <svg
+                      className="h-6 w-6 text-purple-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span className="text-sm font-medium text-gray-800 sm:text-base">
+                      Unlock Extra 5% Off!
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleSecondDiscount}
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-0.5 font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-200"
+                  >
+                    <span className="relative rounded-full bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 group-hover:text-white">
+                      Like Our Latest Post
+                    </span>
+                  </button>
+                </div>
+                <p className="mt-2 text-center text-xs text-gray-600">
+                  *Like our latest post to get an additional 5% discount
+                </p>
+              </div>
+            )}
+
+            {/* Success Message for Second Discount */}
+            {secondDiscountClicked && (
+              <div className="rounded-lg bg-main p-4 text-center text-primary">
+                <p className="font-medium">
+                  Extra 5% discount successfully applied! 🎉
+                </p>
+              </div>
+            )}
+          </div>
 
           {cart.discount > 0 && (
             <p className="text-primary">Discount Applied: {cart.discount}%</p>
           )}
-
           <div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
             <input
               type="text"
@@ -190,7 +348,6 @@ const Cart = () => {
               Apply Coupon
             </button>
           </div>
-
           <button
             onClick={handleCheckout}
             className="mt-4 w-full rounded bg-blue-600 p-2 text-sm text-white hover:bg-blue-700 sm:text-base"

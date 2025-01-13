@@ -38,7 +38,6 @@ const SignupPage = () => {
 
   const handlegoogleLogin = () => {
     window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "auth/google";
-    
   };
 
   return (
@@ -94,7 +93,7 @@ const SignupPage = () => {
                   Sign in with Google
                 </button>
 
-                <div className="mb-8 flex items-center justify-center">
+                {/* <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                   <p className="w-full px-5 text-center text-base font-medium text-body-color">
                     Or, register with your email
@@ -157,8 +156,8 @@ const SignupPage = () => {
                     <label
                       htmlFor="checkboxLabel"
                       className="flex cursor-pointer select-none text-sm font-medium text-body-color"
-                    >
-                      {/* <div className="relative">
+                    > */}
+                {/* <div className="relative">
                         <input
                           type="checkbox"
                           id="checkboxLabel"
@@ -183,7 +182,7 @@ const SignupPage = () => {
                           </span>
                         </div>
                       </div> */}
-                      {/* <span>
+                {/* <span>
                         By creating account means you agree to the
                         <a href="#0" className="text-primary hover:underline">
                           {" "}
@@ -195,7 +194,7 @@ const SignupPage = () => {
                           Privacy Policy{" "}
                         </a>
                       </span> */}
-                    </label>
+                {/* </label>
                   </div>
                   <div className="mb-6">
                     {error && <p className="error">{error}</p>}
@@ -203,7 +202,7 @@ const SignupPage = () => {
                       Sign up
                     </button>
                   </div>
-                </form>
+                </form> */}
                 <p className="text-center text-base font-medium text-body-color">
                   Already using Painfrei?{" "}
                   <Link href="/signin" className="text-primary hover:underline">
