@@ -105,6 +105,37 @@ const ProductPage = ({ params }) => {
     }
   }, [user, params.id]);
 
+  useEffect(() => {
+    const quantity = Number(localStorage.getItem("quantity"));
+    const productId = localStorage.getItem("productId");
+
+    if (quantity && productId && user) {
+      setLoading(true);
+      setIsAddingToCart(true);
+      try {
+        axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}carts/`,
+          {
+            productId,
+            quantity,
+          },
+          { headers: { token: `${localStorage.getItem("token")}` } },
+        );
+
+        setTimeout(() => {
+          window.location.href = "/dashboard/cart";
+        }, 1000);
+      } catch (error) {
+        console.log("Error adding to cart:", error);
+        toast.error(error.response?.data?.message || "Failed to add to cart");
+      } finally {
+        localStorage.removeItem("quantity");
+        localStorage.removeItem("productId");
+        setIsAddingToCart(false);
+      }
+    }
+  }, [user]);
+
   const handleUpdateReview = async (e) => {
     e.preventDefault();
     try {
@@ -153,6 +184,9 @@ const ProductPage = ({ params }) => {
       toast.error("Please check delivery availability before proceeding.");
       return;
     }
+    localStorage.setItem("isDeliverable", isDeliverable);
+    localStorage.setItem("quantity", quantity.toString());
+    localStorage.setItem("productId", params.id);
     if (!isDeliverable) {
       handlePreOrder();
       return;

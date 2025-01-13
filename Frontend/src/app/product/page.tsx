@@ -17,7 +17,7 @@ const Product = () => {
         description=""
       />
 
-      <section className="pb-[120px] pt-[px] bg-main bg-opacity-40 dark:bg-transparent">
+      <section className="pb-[120px] pt-[px] bg-gradient-to-b from-white to-main bg-opacity-40 dark:bg-transparent">
         <div className="container">
           <div className="-mx-4 flex flex-wrap justify-center">
             <ProductList />

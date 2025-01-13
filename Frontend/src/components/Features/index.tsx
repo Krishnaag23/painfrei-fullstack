@@ -75,7 +75,7 @@ const Features = () => {
     <section
       ref={sectionRef}
       id="features"
-      className="bg-gradient-to-b from-white to-main py-20 dark:from-gray-900 dark:to-gray-dark lg:py-28"
+      className="bg-gradient-to-b from-main to-white py-20 dark:from-gray-900 dark:to-gray-dark lg:py-28"
     >
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">

@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 import useAuth from "@/hooks/useAuth";
-
+import TokenHandler from "../tokenHandler";
 import placeholder from "public/images/about/profile.png";
 import cartIcon from "public/images/about/shopping.png";
 
@@ -69,6 +69,7 @@ const Header = () => {
 
   return (
     <>
+      <TokenHandler />
       <header
         className={`header left-0 top-0 z-40 flex w-full items-center ${
           sticky

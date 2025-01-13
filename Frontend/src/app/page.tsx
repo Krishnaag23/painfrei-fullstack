@@ -1,4 +1,3 @@
-
 import AboutSectionOne from "@/components/About/AboutSectionOne";
 import AboutSectionTwo from "@/components/About/AboutSectionTwo";
 import Brands from "@/components/Brands";
@@ -21,23 +20,21 @@ export const metadata: Metadata = {
   description: "Website for pain relief devices",
 };
 
-
 export default async function Home() {
-    
-
   return (
     <>
       <ScrollUp />
       <TokenHandler />
       <Hero />
+      <ProductList />
       {/* <Video /> */}
       <Features />
       {/* <Brands /> */}
       <AboutSectionOne />
       <AboutSectionTwo />
       <Testimonials />
-      <ProductList />
-      <FAQ /> 
+
+      <FAQ />
       {/* <Products products={products} /> */}
       <div id="contact">
         <Contact />

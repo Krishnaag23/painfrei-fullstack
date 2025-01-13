@@ -34,7 +34,7 @@ const testimonialData: Testimonial[] = [
 
 const Testimonials = () => {
   return (
-    <section className="relative z-10 bg-gradient-to-b from-main to-white py-16 dark:from-gray-dark dark:to-gray-900 md:py-20 lg:py-28">
+    <section className="relative z-10 bg-gradient-to-b from-white to-main py-16 dark:from-gray-dark dark:to-gray-900 md:py-20 lg:py-28">
       <div className="container">
         <SectionTitle
           title="What Our Users Say"

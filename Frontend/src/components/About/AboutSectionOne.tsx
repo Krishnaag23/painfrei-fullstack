@@ -20,7 +20,7 @@ const AboutSectionOne = () => {
   return (
     <section
       id="about"
-      className="bg-gradient-to-b from-main to-white pt-16 dark:from-gray-dark dark:to-gray-900 md:pt-20 lg:pt-28"
+      className="bg-gradient-to-b from-white to-main pt-16 dark:from-gray-dark dark:to-gray-900 md:pt-20 lg:pt-28"
     >
       <div className="container">
         <div className="border-b border-body-color/[.15] pb-16 dark:border-white/[.15] md:pb-20 lg:pb-28">
