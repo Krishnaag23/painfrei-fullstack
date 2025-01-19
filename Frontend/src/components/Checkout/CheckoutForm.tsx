@@ -127,6 +127,8 @@ export default function CheckoutForm() {
           order,
         },
       );
+      localStorage.removeItem("quantity");
+      localStorage.removeItem("productId");
       router.push("/dashboard/order-confirmation");
     } catch (error) {
       setError("Error placing order.");

@@ -65,6 +65,7 @@ const Cart = () => {
   };
 
   const handleSecondDiscount = async () => {
+    setLoading(true);
     try {
       setSecondDiscountClicked(true);
       window.open(
@@ -77,10 +78,12 @@ const Cart = () => {
         { code: "Extra-relief-25" },
         { headers: { token: `${localStorage.getItem("token")}` } },
       );
+
       setCart(response.data.cart);
 
       setSuccessMsg("Extra 5% discount applied!");
       await fetchCart();
+      setLoading(false);
     } catch (error) {
       setError("Failed to apply additional discount.");
     }
@@ -158,6 +161,9 @@ const Cart = () => {
 
   // Proceed to Checkout
   const handleCheckout = () => {
+    console.log("Cart: ", cart);
+    localStorage.setItem("quantity", cart.cartItem[0].productId.quantity);
+    localStorage.setItem("productID", cart.cartItem[0].productId.id);
     router.push("/dashboard/checkout");
   };
 
@@ -239,6 +245,19 @@ const Cart = () => {
           <h2 className="mb-4 text-lg font-semibold sm:text-xl">
             Cart Summary
           </h2>
+
+          {/* Stylish Total Price Section */}
+          <div className="mb-6 flex items-center justify-between rounded-lg bg-main  p-4 shadow-lg">
+            <span className="text-lg font-semibold text-gray-800 sm:text-xl">
+              Total Price:
+            </span>
+            <span className="text-green-600 text-2xl font-bold sm:text-3xl">
+              ₹
+              {cart.totalPriceAfterDiscount
+                ? cart.totalPriceAfterDiscount
+                : cart.totalPrice}
+            </span>
+          </div>
           <div className="space-y-4">
             {/* First Discount Section */}
             <div className="rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 p-4 shadow-md transition-all hover:shadow-lg">
@@ -273,7 +292,7 @@ const Cart = () => {
                   <span
                     className={`relative rounded-full px-5 py-2.5 transition-all duration-75 ease-in ${
                       instagramClicked
-                        ? "bg-green-500 text-white"
+                        ? "bg-primary text-white"
                         : "bg-white text-gray-900 group-hover:bg-opacity-0 group-hover:text-white"
                     }`}
                   >
@@ -285,11 +304,11 @@ const Cart = () => {
 
             {/* Second Discount Section - Shows only after first click */}
             {instagramClicked && !secondDiscountClicked && (
-              <div className="animate-fadeIn rounded-lg bg-gradient-to-r from-blue-100 to-purple-100 p-4 shadow-md transition-all hover:shadow-lg">
-                <div className="flex flex-col items-center space-y-3 sm:flex-row sm:justify-between sm:space-y-0">
-                  <div className="flex items-center space-x-2">
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="animate-fadeIn w-11/12 max-w-md rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 p-6 shadow-lg sm:w-full">
+                  <div className="flex flex-col items-center space-y-4 text-center">
                     <svg
-                      className="h-6 w-6 text-purple-500"
+                      className="h-12 w-12 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -301,22 +320,28 @@ const Cart = () => {
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span className="text-sm font-medium text-gray-800 sm:text-base">
-                      Unlock Extra 5% Off!
-                    </span>
+                    <h2 className="text-xl font-semibold text-white">
+                      Follow Us for an Extra 5% Off!
+                    </h2>
+                    <p className="text-sm text-white">
+                      Follow our page to unlock an additional discount on your
+                      order.
+                    </p>
+                    <button
+                      onClick={handleSecondDiscount}
+                      className="relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-6 py-3 font-medium text-purple-600 shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-purple-200"
+                    >
+                      <span className="relative">Follow Now</span>
+                    </button>
                   </div>
                   <button
-                    onClick={handleSecondDiscount}
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-0.5 font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-200"
+                    onClick={() => setInstagramClicked(false)}
+                    className="absolute right-4 top-4 text-white hover:text-gray-300"
+                    aria-label="Close"
                   >
-                    <span className="relative rounded-full bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 group-hover:text-white">
-                      Like Our Latest Post
-                    </span>
+                    ✕
                   </button>
                 </div>
-                <p className="mt-2 text-center text-xs text-gray-600">
-                  *Like our latest post to get an additional 5% discount
-                </p>
               </div>
             )}
 
@@ -331,7 +356,9 @@ const Cart = () => {
           </div>
 
           {cart.discount > 0 && (
-            <p className="text-primary">Discount Applied: {cart.discount}%</p>
+            <p className="pt-2 text-primary">
+              Discount Applied: {cart.discount}%
+            </p>
           )}
           <div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
             <input

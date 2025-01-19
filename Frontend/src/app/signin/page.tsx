@@ -97,7 +97,7 @@ const SigninPage = () => {
                   Sign in with Google
                 </button>
 
-                <div className="mb-8 flex items-center justify-center">
+                {/* <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                   <p className="w-full px-5 text-center text-base font-medium text-body-color">
                     Or, sign in with your email
@@ -183,7 +183,7 @@ const SigninPage = () => {
                       Sign in
                     </button>
                   </div>
-                </form>
+                </form> */}
                 <p className="text-center text-base font-medium text-body-color">
                   Don’t you have an account?{" "}
                   <Link href="/signup" className="text-primary hover:underline">
