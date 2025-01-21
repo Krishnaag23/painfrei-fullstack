@@ -6,14 +6,12 @@ import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 const CartComponent = () => {
-  
   const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const router = useRouter();
-
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -21,7 +19,6 @@ const CartComponent = () => {
           process.env.NEXT_PUBLIC_BACKEND_URL + "carts/",
           { headers: { token: `${localStorage.getItem("token")}` } },
         );
-        
         setCartItems(response.data.cart.cartItem);
         setTotalPrice(
           response.data.cart.totalPriceAfterDiscount ||
@@ -34,10 +31,8 @@ const CartComponent = () => {
         setLoading(false);
       }
     };
-
     fetchCart();
   }, []);
-
 
   useEffect(() => {
     const loadRazorpayScript = () => {
@@ -52,7 +47,6 @@ const CartComponent = () => {
         document.body.appendChild(script);
       });
     };
-
     loadRazorpayScript().then(() => {
       console.log("Razorpay script loaded");
     });
@@ -65,10 +59,7 @@ const CartComponent = () => {
         { user },
         { headers: { token: `${localStorage.getItem("token")}` } },
       );
-
       const { razorpayOrderId, amount } = response.data;
-      // console.log("Thisis the response data", response.data);
-
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount,
@@ -119,11 +110,8 @@ const CartComponent = () => {
       console.error(error);
     }
   };
-
   if (loading) return <div>Loading...</div>;
-
   if (error) return <div className="text-red-500">{error}</div>;
-
   return (
     <div>
       <h1 className="text-3xl font-bold">Your Cart</h1>
@@ -151,5 +139,4 @@ const CartComponent = () => {
     </div>
   );
 };
-
 export default CartComponent;

@@ -27,7 +27,7 @@ const AboutSectionOne = () => {
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
-                title="Crafted for Pain Relief Solutions"
+                title="Crafted Solutions for Pain Relief"
                 paragraph="Painfreí offers effective relief from chronic back pain, menstrual pain, and muscle cramps by integrating modern technology with traditional Ayurvedic principles."
                 mb="44px"
               />

@@ -6,6 +6,7 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-hot-toast";
 import useAuth from "@/hooks/useAuth";
 import TokenHandler from "@/components/tokenHandler";
+import FAQ from "@/components/FAQ";
 
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
@@ -314,13 +315,11 @@ const ProductPage = ({ params }) => {
           </ol>
         </nav>
 
-        {/* Product Section */}
-        {/* Painfrei Device id*/}
         {params.id === "9577c2ac834547236c297681" ? (
           <></>
         ) : (
           <>
-            <div className="rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
+            <div className="container mx-auto rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
                 {/* Product Images */}
                 <div className="space-y-4">
@@ -330,7 +329,7 @@ const ProductPage = ({ params }) => {
                       alt="Painfrei Oil"
                       width={500}
                       height={500}
-                      className="h-[400px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[500px]"
+                      className="h-[300px] w-full transform object-cover transition-transform hover:scale-105 sm:h-[400px] md:h-[500px]"
                     />
                   </div>
                 </div>
@@ -338,10 +337,10 @@ const ProductPage = ({ params }) => {
                 {/* Product Details */}
                 <div className="space-y-6">
                   <div>
-                    <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
+                    <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl lg:text-4xl">
                       {product.title}
                     </h1>
-                    <p className="leading-relaxed text-gray-600 dark:text-gray-300">
+                    <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
                       Experience the soothing properties of Painfrei Pain Relief
                       Oil, meticulously crafted to provide effective relief from
                       various aches and discomforts. Infused with a unique blend
@@ -352,16 +351,12 @@ const ProductPage = ({ params }) => {
                   </div>
 
                   <div className="space-y-6">
-                    <div className="flex items-center justify-between">
+                    {/* Pricing and Stock Status */}
+                    <div className="flex flex-wrap items-center justify-between">
                       <div className="space-y-1">
-                        <p className="text-3xl font-bold text-primary dark:text-primary/90">
+                        <p className="text-xl font-bold text-primary dark:text-primary/90 sm:text-2xl">
                           ₹649.00
                         </p>
-                        {/* {product.priceAfterDiscount && (
-                      <p className="text-lg text-gray-500 line-through dark:text-gray-400">
-                        ₹{product.price}
-                      </p>
-                    )} */}
                       </div>
                       <div className="text-right">
                         <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -379,6 +374,7 @@ const ProductPage = ({ params }) => {
                       </div>
                     </div>
 
+                    {/* Quantity Selector */}
                     <div className="flex flex-wrap items-center gap-4">
                       <div className="flex items-center space-x-2">
                         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -387,10 +383,7 @@ const ProductPage = ({ params }) => {
                         <select
                           value={quantity}
                           onChange={(e) => setQuantity(Number(e.target.value))}
-                          className="rounded-md border-gray-300 bg-white 
-                               px-4 py-2 text-gray-900 focus:border-primary
-                               focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
-                               dark:focus:border-primary/90 dark:focus:ring-primary/90"
+                          className="rounded-md border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:border-primary/90 dark:focus:ring-primary/90"
                         >
                           {[...Array(Math.min(10, product.quantity))].map(
                             (_, i) => (
@@ -402,26 +395,28 @@ const ProductPage = ({ params }) => {
                         </select>
                       </div>
                     </div>
+
                     {/* Delivery Check Section */}
-                    <div className="mb-8 rounded-lg  p-6 shadow-lg dark:bg-gray-800">
-                      <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">
+                    <div className="rounded-lg p-6 shadow-lg dark:bg-gray-800">
+                      <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100 sm:text-xl">
                         Check Delivery Availability
                       </h2>
-                      <div className="flex flex-wrap items-center gap-4">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                         <input
                           type="text"
-                          placeholder="Enter your pin code"
-                          className="flex-1 rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+                          placeholder="Pin Code"
+                          className="w-full flex-1 rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
                           value={pinCode}
                           onChange={(e) => setPinCode(e.target.value)}
                         />
                         <button
                           onClick={handleCheckDelivery}
-                          className="rounded-lg bg-primary px-6 py-2.5 text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/30 dark:focus:ring-primary/50"
+                          className="w-full rounded-lg bg-primary px-6 py-2.5 text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/30 dark:focus:ring-primary/50 sm:w-auto"
                         >
                           Check
                         </button>
                       </div>
+
                       {isDeliverable !== null && (
                         <div
                           className={`mt-4 rounded-lg p-4 text-center ${
@@ -437,19 +432,15 @@ const ProductPage = ({ params }) => {
                       )}
                     </div>
 
+                    {/* Add to Cart Button */}
                     <button
                       onClick={handleAddToCart}
                       disabled={isAddingToCart || product.quantity === 0}
-                      className="w-full transform rounded-xl bg-primary px-8 py-4 
-                           font-medium text-white transition-all hover:bg-primary/90 
-                           focus:ring-4 focus:ring-blue-200 active:scale-95
-                           disabled:cursor-not-allowed disabled:bg-gray-300 
-                           dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
+                      className="w-full transform rounded-xl bg-primary px-6 py-3 font-medium text-white transition-all hover:bg-primary/90 focus:ring-4 focus:ring-blue-200 active:scale-95 disabled:cursor-not-allowed disabled:bg-gray-300 dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
                     >
                       {!isDeliverable && savedPinCode
                         ? "Preorder Now"
                         : "Add to cart"}
-                      {/* {isAddingToCart ? "Processing" : "Add to cart"} */}
                     </button>
                   </div>
                 </div>
@@ -458,6 +449,7 @@ const ProductPage = ({ params }) => {
           </>
         )}
 
+        <FAQ />
         {/* Reviews Section */}
         <div className="mt-12 rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
           <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-gray-100">

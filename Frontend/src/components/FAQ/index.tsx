@@ -54,7 +54,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-main to-white py-16 dark:from-gray-dark dark:to-gray-900">
+    <section className="bg-main rounded-xl mt-8 py-16 dark:from-gray-dark dark:to-gray-900">
       <div className="container mx-auto px-4">
         <h2 className="mb-12 text-center text-3xl font-bold text-gray-800 dark:text-white">
           Frequently Asked Questions

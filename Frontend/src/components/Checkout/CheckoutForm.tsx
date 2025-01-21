@@ -24,7 +24,7 @@ interface OrderDetails {
 interface ShippingAddress {
   street: string;
   city: string;
-  phone: number;
+  phone: string;
   state: string;
 }
 
@@ -41,7 +41,7 @@ export default function CheckoutForm() {
     email: "",
     street: "",
     city: "",
-    phone: 0,
+    phone: "",
     state: "",
     shippingMethod: "standard",
   });
@@ -56,7 +56,7 @@ export default function CheckoutForm() {
         email: user.email,
         street: user.addresses[0]?.street || "",
         city: user.addresses[0]?.city || "",
-        phone: parseInt(user.addresses[0]?.phone) || 0,
+        phone: user.addresses[0]?.phone || "",
         state: user.addresses[0]?.state || "",
         shippingMethod: "standard",
       });
@@ -270,10 +270,12 @@ export default function CheckoutForm() {
         label="Phone Number"
         id="phone"
         name="phone"
-        type="number"
+        type="tel"
         value={formData.phone}
         onChange={handleChange}
+        placeholder="9876543210"
         required
+        pattern="^[1-9]\d{9}$" // Pattern for Indian numbers
       />
 
       {/* Address */}
@@ -362,6 +364,8 @@ interface FormFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
+  pattern?: string;
+  title?: string;
 }
 
 function FormField({
@@ -373,6 +377,8 @@ function FormField({
   onChange,
   placeholder,
   required,
+  pattern,
+  title,
 }: FormFieldProps) {
   return (
     <div>
@@ -390,6 +396,8 @@ function FormField({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
+        pattern={pattern}
+        title={title}
         className="mt-1 w-full rounded-lg border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-white"
       />
     </div>

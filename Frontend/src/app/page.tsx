@@ -34,7 +34,7 @@ export default async function Home() {
       <AboutSectionTwo />
       <Testimonials />
 
-      <FAQ />
+      {/* <FAQ /> */}
       {/* <Products products={products} /> */}
       <div id="contact">
         <Contact />

@@ -4,75 +4,40 @@ const featuresData: Feature[] = [
   {
     id: 1,
     icon: (
-      <svg width="40" height="41" viewBox="0 0 40 41" className="fill-current">
-        <path
-          opacity="1"
-          d="M37.7778 40.2223H24C22.8954 40.2223 22 39.3268 22 38.2223V20.0001C22 18.8955 22.8954 18.0001 24 18.0001H37.7778C38.8823 18.0001 39.7778 18.8955 39.7778 20.0001V38.2223C39.7778 39.3268 38.8823 40.2223 37.7778 40.2223Z"
-          fill="#D0476E"
-        />
-        <path
-          d="M23.2222 0C22.6699 0 22.2222 0.447715 22.2222 1V12.3333C22.2222 12.8856 22.6699 13.3333 23.2222 13.3333H39C39.5523 13.3333 40 12.8856 40 12.3333V0.999999C40 0.447714 39.5523 0 39 0H23.2222ZM0 39C0 39.5523 0.447715 40 1 40H16.7778C17.3301 40 17.7778 39.5523 17.7778 39V27.6667C17.7778 27.1144 17.3301 26.6667 16.7778 26.6667H1C0.447716 26.6667 0 27.1144 0 27.6667V39ZM0 21.2222C0 21.7745 0.447715 22.2222 1 22.2222H16.7778C17.3301 22.2222 17.7778 21.7745 17.7778 21.2222V0.999999C17.7778 0.447714 17.3301 0 16.7778 0H1C0.447716 0 0 0.447715 0 1V21.2222Z"
-          fill="#D0476E"
-        />
+      <svg
+        fill="#D0476E"
+        height="800px"
+        width="800px"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 304.367 304.367"
+      >
+        <g>
+          <path d="M176.352,195.932c-11.553,4.32-22.803,5.328-35.088,5.398C152.004,205.964,167.781,204.229,176.352,195.932z" />
+          <path d="M127.322,177.169c-4.744,11.383-11.705,20.285-20.057,29.295C117.984,201.792,127.516,189.083,127.322,177.169z" />
+          <path
+            d="M302.411,61.366c1.497-1.589,2.19-3.772,1.886-5.932c-0.305-2.161-1.575-4.066-3.453-5.178l-42.909-25.41
+		c-1.878-1.111-4.16-1.309-6.2-0.537c-2.041,0.772-3.621,2.429-4.294,4.505l-12.016,37.084l-38.096,57.436H7.184
+		c-3.968,0-7.184,3.216-7.184,7.185c0,56.395,31.871,105.479,78.542,130.209v1.627c0,10.037,8.132,18.168,18.162,18.168h101.114
+		c10.037,0,18.168-8.131,18.168-18.168v-1.631c46.668-24.73,78.536-73.813,78.536-130.205c0-3.969-3.216-7.185-7.184-7.185h-29.307
+		l17.641-33.602L302.411,61.366z M187.432,211.385c-10.293,8.678-23.803,11.227-36.441,6.615c-9.01-3.291-15.613-9.93-17.678-12.014
+		c0,0-3.688,2.938-8.172,4.775c-14.219,5.828-21.699,3.342-21.699,3.342s-1.465-1.969-4.512-9.869
+		c-4.738-12.795,1.021-27.912,12.408-34.961c5.725-3.545,12.193-4.904,17.098-9.914c3.346-3.52,5.506-8.021,5.205-12.963
+		c-0.125-2.049-0.475-4.098-0.727-6.133c7.658,11.787,14.023,24.91,13.26,39.387c-0.072,1.389-0.221,2.752-0.432,4.098
+		c7.211-5.23,16.781-7.215,25.439-4.879c6.881,1.857,12.545,5.93,20.047,5.686c7.424-0.242,11.492-4.514,15.873-9.779
+		C203.738,188.427,198.516,202.046,187.432,211.385z"
+          />
+        </g>
       </svg>
     ),
-    title: "Comprehensive Pain Relief",
+    title: "Power of Ayurveda",
     paragraph:
-      "Our device offers targeted pain relief by leveraging the power of low TENS technology combined with Ayurvedic healing methods. Designed to relieve discomfort quickly and effectively, it helps restore balance to your body's natural processes.",
+      "Embrace the ancient wisdom of Ayurveda, which incorporates time-honored healing methods to alleviate pain and promote overall well-being. By utilizing natural ingredients known for their anti-inflammatory and analgesic properties, we support your body's innate healing processes.",
   },
   {
     id: 2,
     icon: (
       // Using the second SVG from your template
-      <svg width="40" height="40" viewBox="0 0 40 40" className="fill-current">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          id="Ayurveda"
-        >
-          <g fill="#D0476E" className="color000000 svgShape">
-            <path
-              d="M1.76 14.58a14.5 14.5 0 1 0 29 0v-.5h-29zM30.44 6.64a2.55 2.55 0 0 0 .32-1.22 2.52 2.52 0 0 0-1.27-2.19 2.47 2.47 0 0 0-3.36.88l-7.12 9h7.25z"
-              fill="#D0476E"
-              className="color000000 svgShape"
-            ></path>
-          </g>
-        </svg>
-      </svg>
-    ),
-    title: "Blend of Technology and Ayurveda",
-    paragraph:
-      "Combining modern technology with the ancient wisdom of Ayurveda, our device offers a holistic approach to pain relief. The fusion of these two powerful systems brings you a solution that is both effective and natural.",
-  },
-  {
-    id: 3,
-    icon: (
-      // Continue with next SVG
-      <svg width="40" height="40" viewBox="0 0 64 64" className="fill-current">
-        <g fill="#D0476E">
-          <path d="M47 50H21v2H47v5a3 3 0 0 1-3 3H20a3 3 0 0 1-3-3V49H15v8a5.006 5.006 0 0 0 5 5H44a5.006 5.006 0 0 0 5-5V49H47zM17 12H43V10H17V7a3 3 0 0 1 3-3H44a3 3 0 0 1 3 3V19h2V7a5.006 5.006 0 0 0-5-5H20a5.006 5.006 0 0 0-5 5V19h2z"></path>
-          <rect width="2" height="2" x="31" y="55"></rect>
-          <rect width="2" height="2" x="24" y="6"></rect>
-          <rect width="2" height="2" x="28" y="6"></rect>
-          <path d="M19 15v4h2V16h3V14H20A1 1 0 0 0 19 15zM53 21H21a1 1 0 0 0-1 1v2H11a1 1 0 0 0-1 1V48.94a1 1 0 0 0 1.7.71L17.411 44H43a1 1 0 0 0 1-1V41h2.589L52.3 46.65a1 1 0 0 0 1.7-.71V22A1 1 0 0 0 53 21zM42 42H17a1 1 0 0 0-.7.29L12 46.543V26h8V40a1 1 0 0 0 1 1H42zm10 1.543L47.7 39.29A1 1 0 0 0 47 39H22V23H52z"></path>
-          <rect width="2" height="2" x="24" y="26"></rect>
-          <rect width="22" height="2" x="28" y="26"></rect>
-          <rect width="26" height="2" x="24" y="30"></rect>
-          <rect width="26" height="2" x="24" y="34"></rect>
-          <rect width="2" height="2" x="14" y="29"></rect>
-          <rect width="5" height="2" x="14" y="33"></rect>
-          <rect width="5" height="2" x="14" y="37"></rect>
-        </g>
-      </svg>
-    ),
-    title: "Smart App Integration",
-    paragraph:
-      "With seamless smart app integration, control and monitor your pain relief experience from the convenience of your phone. Track progress, customize settings, and get the most out of your device with personalized control features.",
-  },
-  {
-    id: 4,
-    icon: (
-      // Continue with next SVG
       <svg
         width="40"
         height="42"
@@ -85,54 +50,14 @@ const featuresData: Feature[] = [
         ></path>
       </svg>
     ),
-    title: "Natural Healing",
+    title: "Instant Pain Relief",
     paragraph:
-      "Harness the healing power of Ayurveda, with ingredients that have been used for centuries to relieve pain, reduce inflammation, and support the body's natural ability to heal.",
+      "Experience immediate relief from discomfort through our innovative Pain Relief Oil that combines latest technology with Ayurvedic principles. This synergy provides fast-acting alleviation of various pains, including muscle aches, joint discomfort, and menstrual cramps, helping you regain comfort swiftly.",
   },
   {
-    id: 5,
+    id: 3,
     icon: (
       // Continue with next SVG
-      <svg
-        width="40"
-        height="40"
-        viewBox="0 0 128 128"
-        className="fill-current"
-      >
-        <path
-          fill="#D0476E"
-          d="M56.9,71C56.9,71,56.9,71.1,56.9,71C56.9,71.1,56.9,71.1,56.9,71c0.6,0.6,1.6,1.1,2.8,0.9
-		c0.2,0,45.2-12.7,48.9-13.7c0.2-0.1,0.4-0.1,0.5-0.2c1.2-0.7,1.6-1.9,1.6-2.8c0-0.8-0.4-1.9-1.4-2.5C109.1,52.5,86,41.9,86,41.9
-		l0,0l0,0c0,0-10.6-23.1-10.7-23.3c-0.6-0.9-1.6-1.3-2.5-1.4c-1,0-2.1,0.4-2.8,1.6c-0.1,0.2-0.2,0.3-0.2,0.5
-		c-1,3.7-13.7,48.7-13.7,48.9C55.8,69.4,56.3,70.4,56.9,71z"
-        ></path>
-        <path
-          fill="#D0476E"
-          d="M96 36.4l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c1.2-1.2 1.2-3.2 0-4.4-1.2-1.2-3.2-1.2-4.4 0l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2L93 30.6c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2L91.6 32c-1.2 1.2-1.2 3.2 0 4.4C92.8 37.6 94.8 37.6 96 36.4zM107.2 16.4l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-1.2 1.2-1.2 3.2 0 4.4 1.2 1.2 3.2 1.2 4.4 0l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c1.2-1.2 1.2-3.2 0-4.4C110.4 15.2 108.4 15.2 107.2 16.4zM124.1 3.9c-1.2-1.2-3.2-1.2-4.4 0l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2L118 5.6c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2l-.3.3c-.1.1-.1.1-.2.2-.1.1-.1.1-.2.2L116.6 7c-1.2 1.2-1.2 3.2 0 4.4 1.2 1.2 3.2 1.2 4.4 0l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3c.1-.1.1-.1.2-.2.1-.1.1-.1.2-.2l.3-.3C125.3 7.1 125.3 5.1 124.1 3.9z"
-        ></path>
-        <path
-          fill="#D0476E"
-          d="M110.3,64.4l-1.2,0.3c-4.5,1.3-8.6,2.4-12.3,3.5c0,0.8,0.1,1.6,0.1,2.5c0,21.8-17.7,39.6-39.6,39.6
-		c-21.8,0-39.6-17.7-39.6-39.6s17.7-39.6,39.6-39.6c0.8,0,1.6,0,2.4,0.1c1.1-4.1,2.4-8.6,3.8-13.6c0.1-0.3,0.2-0.6,0.3-0.8
-		c-2.1-0.3-4.3-0.4-6.5-0.4C27.4,16.4,3,40.8,3,70.7S27.4,125,57.3,125c30,0,54.3-24.4,54.3-54.3c0-2.2-0.1-4.4-0.4-6.6
-		C111,64.3,110.7,64.4,110.3,64.4z"
-        ></path>
-        <path
-          fill="#D0476E"
-          d="M51.1,61.8c0.9-3.1,2.3-8.3,4.7-16.7c-13.4,0.8-24.1,12-24.1,25.6c0,14.1,11.5,25.7,25.7,25.7
-		c13.7,0,24.9-10.7,25.6-24.2c-8.3,2.3-13.5,3.8-16.6,4.7c-2,2.9-5.3,4.8-9,4.8c-6,0-10.9-4.9-10.9-10.9
-		C46.4,67,48.3,63.8,51.1,61.8z"
-        ></path>
-      </svg>
-    ),
-    title: "Targeted Pain Relief",
-    paragraph:
-      "Precisely target the areas of discomfort for fast and effective relief. Whether it's muscle pain, joint pain, or nerve-related pain, our device works to relieve pain at the source.",
-  },
-  {
-    id: 6,
-    icon: (
-      // Continue with last SVG
       <svg width="40" height="45" viewBox="0 0 24 24" className="fill-current">
         <path
           fill="#F8B1B2"
@@ -144,9 +69,9 @@ const featuresData: Feature[] = [
         ></path>
       </svg>
     ),
-    title: "User-Friendly Interface",
+    title: "Pain Reduction",
     paragraph:
-      "Designed to be intuitive and easy to use, our device ensures a smooth experience from setup to operation. The simple interface allows users of all ages to operate it with ease.",
+      "Our holistic approach not only addresses immediate pain but also focuses on reducing chronic discomfort over time. By integrating modern technology with Ayurvedic wisdom, our product aids in decreasing inflammation and promoting long-term relief, enhancing your quality of life.",
   },
 ];
 
