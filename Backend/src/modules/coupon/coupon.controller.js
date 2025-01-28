@@ -12,6 +12,7 @@
 //   res.status(201).json({ message: "success", createCoupon });
 // });
 
+
 // const getAllCoupons = catchAsyncError(async (req, res, next) => {
 //   let apiFeature = new ApiFeatures(couponModel.find(), req.query)
 //     .pagination()

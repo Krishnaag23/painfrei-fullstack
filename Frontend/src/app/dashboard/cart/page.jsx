@@ -39,28 +39,21 @@ const Cart = () => {
       }, 2000);
       return;
     }
-    if (instagramClicks < 1) {
-      setError("Failed to apply coupon, Retry again.");
-      setTimeout(() => {
-        toast.error("Failed to apply coupon, Retry again.");
-      }, 10000);
-      return;
-    } else {
-      try {
-        const response = await axios.post(
-          process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
-          { code: "Pain20" },
-          { headers: { token: `${localStorage.getItem("token")}` } },
-        );
-        setCart(response.data.cart);
-        setCouponCode("");
-        await fetchCart();
-        setInstagramClicked(true);
 
-        setSuccessMsg("Coupon applied successfully!");
-      } catch {
-        setError("Failed to apply coupon.");
-      }
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
+        { code: "Pain20" },
+        { headers: { token: `${localStorage.getItem("token")}` } },
+      );
+      setCart(response.data.cart);
+      setCouponCode("");
+      await fetchCart();
+      setInstagramClicked(true);
+
+      setSuccessMsg("Coupon applied successfully!");
+    } catch {
+      setError("Failed to apply coupon.");
     }
   };
 
