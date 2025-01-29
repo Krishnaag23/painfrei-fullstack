@@ -31,13 +31,9 @@ const Cart = () => {
         "_blank",
         "noopener,noreferrer",
       );
-    } catch (error) {
-      setError("Failed to apply coupon, Retry again.");
-
-      setTimeout(() => {
-        toast.error("Failed to apply coupon, Retry again.");
-      }, 2000);
-      return;
+    } catch (err) {
+      // console.error("Error following on Instagram:", err);
+      setError(err.error);
     }
 
     try {
@@ -52,8 +48,9 @@ const Cart = () => {
       setInstagramClicked(true);
 
       setSuccessMsg("Coupon applied successfully!");
-    } catch {
-      setError("Failed to apply coupon.");
+    } catch (err) {
+      setError(err.response.data.error);
+      // console.error("Error applying coupon:", err);
     }
   };
 
@@ -148,13 +145,13 @@ const Cart = () => {
       await fetchCart(); // Re-fetch updated cart after coupon applied
       setSuccessMsg("Coupon applied successfully!");
     } catch {
-      setError("Failed to apply coupon.");
+      setError("Invalid or Expired Coupon Code.");
     }
   };
 
   // Proceed to Checkout
   const handleCheckout = () => {
-    console.log("Cart: ", cart);
+    // console.log("Cart: ", cart);
     localStorage.setItem("quantity", cart.cartItem[0].productId.quantity);
     localStorage.setItem("productID", cart.cartItem[0].productId.id);
     router.push("/dashboard/checkout");

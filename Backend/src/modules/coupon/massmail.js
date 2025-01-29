@@ -1,5 +1,5 @@
 import { CouponService } from "./coupon.service.js";
-import customers from "./preorders-test.json" assert { type: "json" };
+import customers from "./preorders.json" assert { type: "json" };
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { dbConnection } from "../../../Database/dbConnection.js";
@@ -42,7 +42,7 @@ const sendPreorderAnnouncementEmail = async (
 
             <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
                 <p style="font-size: 18px; color: #4caf50; margin: 0;">🎉 Exclusive Discount for Pre-order Customers</p>
-                <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">Use Code: ${couponCode}</p>
+                <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">Use Coupon Code: ${couponCode}</p>
                 <p style="color: #666; font-size: 14px;">Valid for ${expiryDays} days only</p>
             </div>
 
