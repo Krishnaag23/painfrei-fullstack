@@ -67,21 +67,48 @@ const ProductPage = ({ params }) => {
       setIsDeliverable(deliverablePinCodes.includes(parseInt(storedPinCode)));
     }
   }, []);
-
-  const handleCheckDelivery = async () => {
+  const handleCheckDelivery = async (): Promise<boolean | null> => {
     if (pinCode.trim() === "" && !savedPinCode) {
       toast.error("Please check availability before proceeding.");
-      return;
-    } else {
-      if (pinCode) {
-        const deliverable = deliverablePinCodes.includes(parseInt(pinCode));
-        setIsDeliverable(deliverable);
+      return null;
+    }
 
-        localStorage.setItem("userPinCode", pinCode);
-        setSavedPinCode(pinCode);
-      }
+    // console.log("Checking delivery for pin code:", pinCode);
+
+    if (pinCode) {
+      // Compute the deliverability value locally.
+      const deliverable = deliverablePinCodes.includes(parseInt(pinCode));
+
+      // Update state (for UI updates) and localStorage (for future visits).
+      console.log("Is deliverable:", deliverable);
+
+      setIsDeliverable(deliverable);
+      localStorage.setItem("isDeliverable", JSON.stringify(deliverable));
+      localStorage.setItem("userPinCode", pinCode);
+      setSavedPinCode(pinCode);
+
+      // Return the computed value.
+      return deliverable;
+    }
+
+    return localStorage.getItem("isDeliverable") === "true";
+  };
+  const handleButtonClick = async () => {
+    // Get the deliverability value from the check.
+    const deliverable = await handleCheckDelivery();
+
+    // If the check failed (e.g., invalid pin), exit early.
+    if (deliverable === null) return;
+    // console.log("Deliverable in handlebutton:", deliverable);
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // Use the computed deliverability to determine the next action.
+    if (deliverable) {
+      handleAddToCart();
+    } else if (savedPinCode && deliverable === false) {
+      handlePreOrder();
     }
   };
+
   const handleClearSavedPin = () => {
     localStorage.removeItem("userPinCode");
     setSavedPinCode("");
@@ -194,10 +221,7 @@ const ProductPage = ({ params }) => {
     localStorage.setItem("isDeliverable", isDeliverable);
     localStorage.setItem("quantity", quantity.toString());
     localStorage.setItem("productId", params.id);
-    if (!isDeliverable) {
-      handlePreOrder();
-      return;
-    }
+
     if (!user) {
       toast("Please Login to add to cart");
       setTimeout(() => {
@@ -262,19 +286,6 @@ const ProductPage = ({ params }) => {
     localStorage.setItem("quantity", quantity.toString());
 
     window.location.href = "/dashboard/checkout";
-  };
-  const handleButtonClick = async () => {
-    // Validate the pin code (assuming pinCode is the latest value from an input)
-
-    // Compute deliverability based on the pin code input (fresh value)
-    await handleCheckDelivery();
-    if (isDeliverable) {
-      handleAddToCart();
-    } else {
-      if (savedPinCode && !isDeliverable) {
-        handlePreOrder();
-      }
-    }
   };
 
   if (loading) {
