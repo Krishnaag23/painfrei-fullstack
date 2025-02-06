@@ -72,12 +72,15 @@ const ProductPage = ({ params }) => {
     if (pinCode.trim() === "" && !savedPinCode) {
       toast.error("Please check availability before proceeding.");
       return;
-    }
-    const deliverable = deliverablePinCodes.includes(parseInt(pinCode));
-    setIsDeliverable(deliverable);
+    } else {
+      if (pinCode) {
+        const deliverable = deliverablePinCodes.includes(parseInt(pinCode));
+        setIsDeliverable(deliverable);
 
-    localStorage.setItem("userPinCode", pinCode); // Save the pin code in local storage
-    setSavedPinCode(pinCode);
+        localStorage.setItem("userPinCode", pinCode);
+        setSavedPinCode(pinCode);
+      }
+    }
   };
   const handleClearSavedPin = () => {
     localStorage.removeItem("userPinCode");
