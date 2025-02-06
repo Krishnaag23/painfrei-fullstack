@@ -9,31 +9,26 @@ interface FAQItem {
 }
 
 const faqData: FAQItem[] = [
-  {
-    question: "What is Painfrei?",
-    answer:
-      "Painfrei is a startup that deals with innovative pain relief solution that combines modern technology with traditional Ayurvedic principles. We specialize in providing natural, targeted relief for various types of pain using non-invasive methods and safe, effective therapies.",
-  },
-  {
-    question: "How does Painfrei work?",
-    answer:
-      "Painfrei Standard Device is the first of its kind, designed not only to relieve pain but also to aid in recovery. It employs a dual-action mechanism that integrates low TENS (Transcutaneous Electrical Nerve Stimulation) technology with antimicrobial gel patches. This combination provides targeted pain relief, stimulates natural healing processes, reduces discomfort effectively, and promotes faster recovery.",
-  },
+  // {
+  //   question: "How does Painfrei work?",
+  //   answer:
+  //     "Painfrei Standard Device is the first of its kind, designed not only to relieve pain but also to aid in recovery. It employs a dual-action mechanism that integrates low TENS (Transcutaneous Electrical Nerve Stimulation) technology with antimicrobial gel patches. This combination provides targeted pain relief, stimulates natural healing processes, reduces discomfort effectively, and promotes faster recovery.",
+  // },
 
   {
     question: "Is Painfrei safe to use?",
     answer:
-      "Yes, Painfrei is designed with safety as a top priority. It uses non-invasive technology and natural ingredients. However, we recommend consulting your healthcare provider before use, especially if you have pre-existing medical conditions or are taking other medications.",
+      "Yes, Painfrei is designed with safety as a top priority. It uses non-invasive technology and natural ingredients. However, we recommend consulting your healthcare provider before use if you have pre-existing medical conditions or are taking other medications.",
   },
   {
     question: "Can Painfrei be used for all types of pain?",
     answer:
-      "Painfrei is effective for a wide range of pain types, including chronic back pain, muscle cramps, and menstrual pain. For persistent or severe pain, it's best to consult a healthcare professional for a tailored treatment plan.",
+      "Painfrei is effective for a wide range of pain types, including chronic back pain, muscle cramps, and helps in menstrual pain. For persistent or severe pain, it's best to consult a healthcare professional for a tailored treatment plan.",
   },
   {
     question: "How often can I use Painfrei?",
     answer:
-      "The recommended usage of Painfrei depends on individual needs. It can generally be used daily, starting with shorter sessions and gradually increasing duration based on your comfort level and relief needs.",
+      "The recommended usage of Painfrei depends on individual needs. Apply when you are in pain for instant relief. Start with shorter sessions and gradually increasing duration based on your comfort level and relief needs.",
   },
   {
     question: "Can I use Painfrei with other medications?",
@@ -42,7 +37,8 @@ const faqData: FAQItem[] = [
   },
   {
     question: "Where can I purchase Painfrei products?",
-    answer: "Painfrei products are available for pre-order on this website.",
+    answer:
+      "Painfrei products are available for Order on this website at select locations.",
   },
 ];
 
@@ -54,7 +50,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="bg-main rounded-xl mt-8 py-16 dark:from-gray-dark dark:to-gray-900">
+    <section className="mt-8 rounded-xl bg-main py-16 dark:from-gray-dark dark:to-gray-900">
       <div className="container mx-auto px-4">
         <h2 className="mb-12 text-center text-3xl font-bold text-gray-800 dark:text-white">
           Frequently Asked Questions

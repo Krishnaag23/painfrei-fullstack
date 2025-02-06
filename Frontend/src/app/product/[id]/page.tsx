@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import useAuth from "@/hooks/useAuth";
 import TokenHandler from "@/components/tokenHandler";
 import FAQ from "@/components/FAQ";
+import { promises } from "dns";
 
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
@@ -38,7 +39,7 @@ const ProductPage = ({ params }) => {
     208001, 208002, 208003, 208004, 208005, 208006, 208007, 208008, 208009,
     208010, 208011, 208012, 208013, 208014, 208015, 208016, 208017, 208018,
     208019, 208020, 208021, 208022, 208023, 208024, 208025, 208026, 208027,
-    209217, 208004, 243503,
+    209217, 208004, 243503, 243006, 243006, 243003, 243001, 243123,
   ];
   useEffect(() => {
     const fetchProduct = async () => {
@@ -67,13 +68,14 @@ const ProductPage = ({ params }) => {
     }
   }, []);
 
-  const handleCheckDelivery = () => {
-    if (pinCode.trim() === "") {
-      alert("Please enter a pin code.");
+  const handleCheckDelivery = async () => {
+    if (pinCode.trim() === "" && !savedPinCode) {
+      toast.error("Please check availability before proceeding.");
       return;
     }
     const deliverable = deliverablePinCodes.includes(parseInt(pinCode));
     setIsDeliverable(deliverable);
+
     localStorage.setItem("userPinCode", pinCode); // Save the pin code in local storage
     setSavedPinCode(pinCode);
   };
@@ -125,6 +127,8 @@ const ProductPage = ({ params }) => {
           },
           { headers: { token: `${localStorage.getItem("token")}` } },
         );
+        localStorage.removeItem("quantity");
+        localStorage.removeItem("productId");
 
         setTimeout(() => {
           window.location.href = "/dashboard/cart";
@@ -184,10 +188,6 @@ const ProductPage = ({ params }) => {
   };
 
   const handleAddToCart = async () => {
-    if (!savedPinCode) {
-      toast.error("Please check delivery availability before proceeding.");
-      return;
-    }
     localStorage.setItem("isDeliverable", isDeliverable);
     localStorage.setItem("quantity", quantity.toString());
     localStorage.setItem("productId", params.id);
@@ -214,6 +214,8 @@ const ProductPage = ({ params }) => {
         { headers: { token: `${localStorage.getItem("token")}` } },
       );
       toast.success("Product added to cart");
+      localStorage.removeItem("quantity");
+      localStorage.removeItem("productId");
       setTimeout(() => {
         window.location.href = "/dashboard/cart";
       }, 1000);
@@ -257,6 +259,19 @@ const ProductPage = ({ params }) => {
     localStorage.setItem("quantity", quantity.toString());
 
     window.location.href = "/dashboard/checkout";
+  };
+  const handleButtonClick = async () => {
+    // Validate the pin code (assuming pinCode is the latest value from an input)
+
+    // Compute deliverability based on the pin code input (fresh value)
+    await handleCheckDelivery();
+    if (isDeliverable) {
+      handleAddToCart();
+    } else {
+      if (savedPinCode && !isDeliverable) {
+        handlePreOrder();
+      }
+    }
   };
 
   if (loading) {
@@ -361,7 +376,7 @@ const ProductPage = ({ params }) => {
                           ₹649.00
                         </p>
                       </div>
-                      <div className="text-right">
+                      {/* <div className="text-right">
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                           Stock Status
                         </p>
@@ -374,7 +389,7 @@ const ProductPage = ({ params }) => {
                         >
                           {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                         </p>
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* Quantity Selector */}
@@ -399,10 +414,10 @@ const ProductPage = ({ params }) => {
                       </div>
                     </div>
 
-                    {/* Delivery Check Section */}
+                    {/* Delivery Check & Add to Cart Section */}
                     <div className="rounded-lg p-6 shadow-lg dark:bg-gray-800">
                       <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100 sm:text-xl">
-                        Check Delivery Availability
+                        Check Availability & Add to Cart
                       </h2>
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                         <input
@@ -412,14 +427,7 @@ const ProductPage = ({ params }) => {
                           value={pinCode}
                           onChange={(e) => setPinCode(e.target.value)}
                         />
-                        <button
-                          onClick={handleCheckDelivery}
-                          className="w-full rounded-lg bg-primary px-6 py-2.5 text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/30 dark:focus:ring-primary/50 sm:w-auto"
-                        >
-                          Check
-                        </button>
                       </div>
-
                       {isDeliverable !== null && (
                         <div
                           className={`mt-4 rounded-lg p-4 text-center ${
@@ -429,22 +437,20 @@ const ProductPage = ({ params }) => {
                           }`}
                         >
                           {isDeliverable && savedPinCode
-                            ? `Hooray! We deliver to ${savedPinCode}. Add to cart now!`
-                            : `Oops! We currently don't deliver to ${savedPinCode}. However, you can still preorder, and we'll notify you once delivery becomes available in your area.`}
+                            ? `Hurray, Available at ${savedPinCode}. Add to cart now!`
+                            : `Oops! We currently don't support orders to ${savedPinCode}. However, you can still preorder, and we'll notify you once it becomes available in your area.`}
                         </div>
                       )}
+                      <button
+                        onClick={handleButtonClick}
+                        disabled={isAddingToCart || product.quantity === 0}
+                        className="mt-4 w-full transform rounded-xl bg-primary px-6 py-3 font-medium text-white transition-all hover:bg-primary/90 focus:ring-4 focus:ring-blue-200 active:scale-95 disabled:cursor-not-allowed disabled:bg-gray-300 dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
+                      >
+                        {!isDeliverable && savedPinCode
+                          ? "Preorder"
+                          : "Add to Cart"}
+                      </button>
                     </div>
-
-                    {/* Add to Cart Button */}
-                    <button
-                      onClick={handleAddToCart}
-                      disabled={isAddingToCart || product.quantity === 0}
-                      className="w-full transform rounded-xl bg-primary px-6 py-3 font-medium text-white transition-all hover:bg-primary/90 focus:ring-4 focus:ring-blue-200 active:scale-95 disabled:cursor-not-allowed disabled:bg-gray-300 dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary/80 dark:disabled:bg-gray-600"
-                    >
-                      {!isDeliverable && savedPinCode
-                        ? "Preorder Now"
-                        : "Add to cart"}
-                    </button>
                   </div>
                 </div>
               </div>

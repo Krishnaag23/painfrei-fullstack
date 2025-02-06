@@ -108,8 +108,8 @@ export default function CheckoutForm() {
     };
 
     const order: OrderDetails = {
-      quantity: localStorage.getItem("quantity"),
-      productId: localStorage.getItem("productId"),
+      quantity: localStorage.getItem("quantity") || "1",
+      productId: localStorage.getItem("productId") || "",
     };
 
     const shippingAddress: ShippingAddress = {
@@ -118,21 +118,75 @@ export default function CheckoutForm() {
       phone: formData.phone,
       state: formData.state,
     };
+
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}preorder/${newId}`,
+      // Step 1: Create Razorpay order for preorder
+      const paymentResponse = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}preorder/create-payment`,
         {
-          shippingDetails,
-          shippingAddress,
-          order,
+          productId: order.productId,
+          quantity: order.quantity,
         },
       );
-      localStorage.removeItem("quantity");
-      localStorage.removeItem("productId");
-      router.push("/dashboard/order-confirmation");
+
+      const { razorpayOrderId, amount } = paymentResponse.data;
+
+      // Step 2: Initialize Razorpay payment
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount,
+        currency: "INR",
+        name: "Painfrei Care & Wellness",
+        description: "Preorder Payment for Pain Relief Oil",
+        order_id: razorpayOrderId,
+        handler: async (response: any) => {
+          try {
+            // Step 3: Verify payment on success
+            console.log("Preorder payment response:", response);
+            await axios.post(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}preorder/verify-payment`,
+              {
+                ...response,
+                shippingDetails,
+                shippingAddress,
+                productId: order.productId,
+                quantity: order.quantity,
+              },
+            );
+
+            // Step 4: Clear storage and redirect only after successful verification
+            localStorage.removeItem("quantity");
+            localStorage.removeItem("productId");
+            router.push("/dashboard/order-confirmation");
+          } catch (verificationError) {
+            setError("Payment verification failed. Please contact support.");
+            console.error("Verification error:", verificationError);
+          }
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      if (window.Razorpay) {
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      } else {
+        setError("Payment gateway unavailable. Please try again later.");
+      }
     } catch (error) {
-      setError("Error placing order.");
-      console.error(error);
+      setError("Error initiating preorder payment. Please try again.");
+      console.error("Preorder payment error:", error);
+    }
+  };
+
+  // Update the handleSubmit to remove redundant logic
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isDeliverable === "true") {
+      handleCheckout();
+    } else {
+      handlePreOrder();
     }
   };
 
@@ -222,17 +276,6 @@ export default function CheckoutForm() {
     } catch (error) {
       setError("Payment verification failed.");
       console.error(error);
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Order placed:", formData);
-    console.log("isDeliverable:", isDeliverable);
-    if (isDeliverable === "true") {
-      handleCheckout();
-    } else {
-      handlePreOrder();
     }
   };
 

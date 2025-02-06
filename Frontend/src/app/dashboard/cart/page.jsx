@@ -117,7 +117,7 @@ const Cart = () => {
 
   // Update Item Quantity
   const handleQuantityChange = async (itemId, quantity) => {
-    if (quantity < 1) return; // Prevent invalid quantity
+    if (!Number.isInteger(quantity) || quantity < 1) return; // Prevent invalid quantity
 
     try {
       await axios.put(
@@ -200,26 +200,45 @@ const Cart = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-2 sm:space-x-4">
-                <button
-                  className="rounded border px-2 py-1 sm:px-3 sm:py-2"
-                  onClick={() =>
-                    handleQuantityChange(item.productId._id, item.quantity - 1)
-                  }
-                  disabled={item.quantity === 1}
-                >
-                  -
-                </button>
-                <span className="text-base font-medium sm:text-lg">
-                  {item.quantity}
-                </span>
-                <button
-                  className="rounded border px-2 py-1 sm:px-3 sm:py-2"
-                  onClick={() =>
-                    handleQuantityChange(item.productId._id, item.quantity + 1)
-                  }
-                >
-                  +
-                </button>
+                <div className="flex items-center space-x-2 sm:space-x-4">
+                  <button
+                    className="rounded border px-2 py-1 sm:px-3 sm:py-2"
+                    onClick={() =>
+                      handleQuantityChange(
+                        item.productId._id,
+                        item.quantity - 1,
+                      )
+                    }
+                    disabled={item.quantity === 1}
+                  >
+                    -
+                  </button>
+
+                  <input
+                    type="number"
+                    className="w-12 rounded border text-center"
+                    value={item.quantity}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value, 10);
+                      if (!isNaN(value) && value >= 1) {
+                        handleQuantityChange(item.productId._id, value);
+                      }
+                    }}
+                  />
+
+                  <button
+                    className="rounded border px-2 py-1 sm:px-3 sm:py-2"
+                    onClick={() =>
+                      handleQuantityChange(
+                        item.productId._id,
+                        item.quantity + 1,
+                      )
+                    }
+                  >
+                    +
+                  </button>
+                </div>
+
                 <button
                   className="rounded bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 sm:text-base"
                   onClick={() => handleRemove(item.productId._id)}
