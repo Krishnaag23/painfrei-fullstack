@@ -80,7 +80,7 @@ const ProductPage = ({ params }) => {
       const deliverable = deliverablePinCodes.includes(parseInt(pinCode));
 
       // Update state (for UI updates) and localStorage (for future visits).
-      console.log("Is deliverable:", deliverable);
+      // console.log("Is deliverable:", deliverable);
 
       setIsDeliverable(deliverable);
       localStorage.setItem("isDeliverable", JSON.stringify(deliverable));
@@ -99,14 +99,16 @@ const ProductPage = ({ params }) => {
 
     // If the check failed (e.g., invalid pin), exit early.
     if (deliverable === null) return;
-    // console.log("Deliverable in handlebutton:", deliverable);
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+
     // Use the computed deliverability to determine the next action.
-    if (deliverable) {
-      handleAddToCart();
-    } else if (savedPinCode && deliverable === false) {
-      handlePreOrder();
-    }
+
+    setTimeout(() => {
+      if (deliverable) {
+        handleAddToCart();
+      } else {
+        handlePreOrder();
+      }
+    }, 3000);
   };
 
   const handleClearSavedPin = () => {
