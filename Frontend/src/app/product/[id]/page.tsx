@@ -73,7 +73,7 @@ const ProductPage = ({ params }) => {
       return null;
     }
 
-    // console.log("Checking delivery for pin code:", pinCode);
+    console.log("Checking delivery for pin code:", pinCode);
 
     if (pinCode) {
       // Compute the deliverability value locally.
@@ -83,8 +83,13 @@ const ProductPage = ({ params }) => {
       // console.log("Is deliverable:", deliverable);
 
       setIsDeliverable(deliverable);
-      localStorage.setItem("isDeliverable", JSON.stringify(deliverable));
+
+      // console.log("Is deliverable:", deliverable);
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      localStorage.setItem("isDeliverable", deliverable.toString());
       localStorage.setItem("userPinCode", pinCode);
+
       setSavedPinCode(pinCode);
 
       // Return the computed value.
@@ -94,7 +99,6 @@ const ProductPage = ({ params }) => {
     return localStorage.getItem("isDeliverable") === "true";
   };
   const handleButtonClick = async () => {
-    // Get the deliverability value from the check.
     const deliverable = await handleCheckDelivery();
 
     // If the check failed (e.g., invalid pin), exit early.
@@ -220,7 +224,7 @@ const ProductPage = ({ params }) => {
   };
 
   const handleAddToCart = async () => {
-    localStorage.setItem("isDeliverable", isDeliverable);
+    // localStorage.setItem("isDeliverable", isDeliverable);
     localStorage.setItem("quantity", quantity.toString());
     localStorage.setItem("productId", params.id);
 
@@ -231,7 +235,7 @@ const ProductPage = ({ params }) => {
       }, 1000);
       return;
     }
-    localStorage.setItem("isDeliverable", isDeliverable);
+    // localStorage.setItem("isDeliverable", isDeliverable);
     try {
       setIsAddingToCart(true);
       await axios.post(
@@ -284,7 +288,7 @@ const ProductPage = ({ params }) => {
   };
   const handlePreOrder = async () => {
     localStorage.setItem("productId", params.id);
-    localStorage.setItem("isDeliverable", isDeliverable);
+    // localStorage.setItem("isDeliverable", isDeliverable);
     localStorage.setItem("quantity", quantity.toString());
 
     window.location.href = "/dashboard/checkout";
