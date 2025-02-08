@@ -54,23 +54,21 @@ const Hero = () => {
             ref={titleRef}
             className="hero-text-shadow mb-6 text-4xl font-bold leading-tight text-black dark:text-white sm:text-5xl md:text-6xl"
           >
-            Relief at Your Fingertips with Painfrei
+            Relief, instantly with Painfrei
           </h1>
           <p
             ref={descriptionRef}
             className="mx-auto mb-12 max-w-3xl text-lg !leading-relaxed text-body-color dark:text-body-color-dark sm:text-xl md:text-2xl"
           >
-            Experience a breakthrough in pain relief and wellness with a
-            solution designed to ease discomfort, boost recovery, and restore
-            your day-to-day comfort. Painfrei brings you targeted, effective
-            relief wherever you are.
+            Bringing you our optimized formula for pain relief, wherever,
+            whenever.
           </p>
           <div ref={ctaRef}>
             <Link
               href="/product"
               className="hero-button-glow inline-block rounded-full bg-primary px-8 py-4 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:bg-primary/80 hover:shadow-lg"
             >
-              Get Started
+              View Products
             </Link>
           </div>
         </div>

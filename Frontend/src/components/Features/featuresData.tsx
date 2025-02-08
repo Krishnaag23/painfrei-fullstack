@@ -32,7 +32,7 @@ const featuresData: Feature[] = [
     ),
     title: "Power of Ayurveda",
     paragraph:
-      "Embrace the ancient wisdom of Ayurveda, which incorporates time-honored healing methods to alleviate pain and promote overall well-being. By utilizing natural ingredients known for their anti-inflammatory and analgesic properties, we support your body's innate healing processes.",
+      "Time-honored healing methods for aches and pains, brought to you in a perfected form.",
   },
   {
     id: 2,
@@ -52,7 +52,7 @@ const featuresData: Feature[] = [
     ),
     title: "Instant Pain Relief",
     paragraph:
-      "Experience immediate relief from discomfort through our innovative Pain Relief Oil that combines latest technology with Ayurvedic principles. This synergy provides fast-acting alleviation of various pains, including muscle aches, joint discomfort, and menstrual cramps, helping you regain comfort swiftly.",
+      "Experience immediate relief through our pain relief oil; combining the cutting edge with ayurvedic principles.",
   },
   {
     id: 3,
@@ -71,7 +71,7 @@ const featuresData: Feature[] = [
     ),
     title: "Pain Reduction",
     paragraph:
-      "Our holistic approach not only addresses immediate pain but also focuses on reducing chronic discomfort over time. By integrating modern technology with Ayurvedic wisdom, our product aids in decreasing inflammation and promoting long-term relief, enhancing your quality of life.",
+      "Our holistic approach addresses immediate pain while also reducing chronic aches, inflammation and giving long-term relief.",
   },
 ];
 

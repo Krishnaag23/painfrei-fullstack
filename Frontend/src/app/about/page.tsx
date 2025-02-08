@@ -15,7 +15,7 @@ const AboutPage = () => {
     <>
       <Breadcrumb
         pageName="About Page"
-        description="At Painfreí, we understand that chronic pain can impact every facet of life. That's why we are dedicated to offering advanced solutions that blend modern technology with the time-tested wisdom of Ayurvedic practices."
+        description="At Painfrei, we understand that chronic pain is a shackle; that&apos;s why we are dedicated to offering advanced solutions that blend cutting edge innovations with the Ayurvedic tradition."
       />
       <AboutSectionOne />
       <AboutSectionTwo />

@@ -29,9 +29,8 @@ const AboutSectionTwo = () => {
                   Innovative Technology
                 </h3>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                  Utilizing low TENS technology and Ayurvedic gel patches,
-                  Painfreí provides targeted pain relief while promoting natural
-                  healing.
+                  Combining cutting edge technology with ayurveda, Painfreí
+                  provides targeted pain relief while promoting natural healing.
                 </p>
               </div>
 
@@ -40,12 +39,12 @@ const AboutSectionTwo = () => {
                   Comprehensive Pain Management
                 </h3>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                  Our device not only focuses on physical relief but also
+                  Our Oil not only focuses on physical relief but also
                   targets the underlying causes of pain for long-term benefits.
                 </p>
               </div>
 
-              <div className="mb-1">
+              {/* <div className="mb-1">
                 <h3 className="mb-4 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-xl xl:text-2xl">
                   User-Centric Design
                 </h3>
@@ -53,7 +52,7 @@ const AboutSectionTwo = () => {
                   Designed with user feedback, our interfaces are simple and
                   intuitive, ensuring a stress-free experience.
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

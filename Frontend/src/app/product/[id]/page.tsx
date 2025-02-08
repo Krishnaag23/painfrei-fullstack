@@ -7,8 +7,6 @@ import { toast } from "react-hot-toast";
 import useAuth from "@/hooks/useAuth";
 import TokenHandler from "@/components/tokenHandler";
 import FAQ from "@/components/FAQ";
-import { promises } from "dns";
-
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -379,12 +377,10 @@ const ProductPage = ({ params }) => {
                       {product.title}
                     </h1>
                     <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-                      Experience the soothing properties of Painfrei Pain Relief
-                      Oil, meticulously crafted to provide effective relief from
-                      various aches and discomforts. Infused with a unique blend
-                      of modern and Ayurvedic ingredients, our oil harnesses the
-                      healing power of nature to promote wellness and restore
-                      balance in your life.
+                      Experience immediate relief through our pain relief oil,
+                      combining the cutting edge with ayurvedic principles. Our
+                      product harnesses the power of nature to promote wellness
+                      and restore your well-being.
                     </p>
                   </div>
 

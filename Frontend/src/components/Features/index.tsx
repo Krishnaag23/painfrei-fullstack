@@ -83,16 +83,12 @@ const Features = () => {
             ref={titleRef}
             className="mb-4 text-3xl font-bold text-gray-800 dark:text-white md:text-4xl"
           >
-            Innovative Features for Optimal Relief
+            Signature Innovations
           </h2>
           <p
             ref={descriptionRef}
             className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300"
-          >
-            Our pain relief device combines cutting-edge technology with
-            Ayurvedic healing principles, offering you a comprehensive solution
-            for managing discomfort and enhancing your well-being.
-          </p>
+          ></p>
         </div>
 
         <div

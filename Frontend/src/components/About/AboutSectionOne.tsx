@@ -34,14 +34,14 @@ const AboutSectionOne = () => {
               <div className="mb-12 max-w-[570px] lg:mb-0">
                 <div className="mx-[-12px] flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="Dual Mechanism for Comprehensive Relief" />
+                    {/* <List text="Dual Mechanism for Comprehensive Relief" />
                     <List text="Smart App Integration for Personalized Control" />
-                    <List text="User-friendly Interface" />
+                    <List text="User-friendly Interface" /> */}
                   </div>
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="Effectively addresses chronic pain" />
+                    {/* <List text="Effectively addresses chronic pain" />
                     <List text="Integrates Ayurvedic healing principles" />
-                    <List text="Supports natural endorphin release" />
+                    <List text="Supports natural endorphin release" /> */}
                   </div>
                 </div>
               </div>
