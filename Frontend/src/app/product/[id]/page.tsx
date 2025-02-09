@@ -473,7 +473,33 @@ const ProductPage = ({ params }) => {
             </div>
           </>
         )}
-
+        {/* Instructions of Use */}
+        <div className="mt-12 rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">
+          <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
+            Instructions for Use
+          </h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div className="rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                For Adults (Below 45 years)
+              </h3>
+              <p className="mt-2 text-sm sm:text-base">
+                Apply a small amount of the oil to the affected area and gently
+                massage for 8-10 seconds until absorbed.
+              </p>
+            </div>
+            <div className="rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                For Seniors (45 years and above)
+              </h3>
+              <p className="mt-2 text-sm sm:text-base">
+                Gently massage the oil into the affected area for 20-25 seconds.
+                Avoid excessive pressure, especially in cold or dry weather, as
+                it may cause a warming sensation.
+              </p>
+            </div>
+          </div>
+        </div>
         <FAQ />
         {/* Reviews Section */}
         <div className="mt-12 rounded-2xl bg-main p-6 shadow-sm dark:bg-gray-800 sm:p-8">

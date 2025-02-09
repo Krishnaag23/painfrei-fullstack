@@ -316,7 +316,7 @@ export default function CheckoutForm() {
         type="tel"
         value={formData.phone}
         onChange={handleChange}
-        placeholder="9876543210"
+        placeholder=""
         required
         pattern="^[1-9]\d{9}$" // Pattern for Indian numbers
       />

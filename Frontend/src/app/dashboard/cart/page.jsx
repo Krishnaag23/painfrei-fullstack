@@ -27,7 +27,7 @@ const Cart = () => {
       setError("");
       setInstagramClicks((prev) => prev + 1);
       window.open(
-        "https://www.instagram.com/the_painfrei_guy/",
+        "https://www.instagram.com/painfreicare/",
         "_blank",
         "noopener,noreferrer",
       );
@@ -39,7 +39,7 @@ const Cart = () => {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
-        { code: "Pain20" },
+        { code: "PAIN5" },
         { headers: { token: `${localStorage.getItem("token")}` } },
       );
       setCart(response.data.cart);
@@ -47,7 +47,7 @@ const Cart = () => {
       await fetchCart();
       setInstagramClicked(true);
 
-      setSuccessMsg("Coupon applied successfully!");
+      setSuccessMsg("Offer applied successfully!");
     } catch (err) {
       setError(err.response.data.error);
       // console.error("Error applying coupon:", err);
@@ -59,13 +59,13 @@ const Cart = () => {
     try {
       setSecondDiscountClicked(true);
       window.open(
-        "https://www.instagram.com/painfreicare/",
+        "https://www.instagram.com/the_painfrei_guy/",
         "_blank",
         "noopener,noreferrer",
       );
       const response = await axios.post(
         process.env.NEXT_PUBLIC_BACKEND_URL + "carts/apply-coupon",
-        { code: "Extra-relief-25" },
+        { code: "PAIN10" },
         { headers: { token: `${localStorage.getItem("token")}` } },
       );
 
@@ -286,7 +286,7 @@ const Cart = () => {
                     />
                   </svg>
                   <span className="text-sm font-medium text-gray-800 sm:text-base">
-                    Get Early Bird Discount!
+                    Limited Time Discount Offer!
                   </span>
                 </div>
                 <button
@@ -305,7 +305,9 @@ const Cart = () => {
                         : "bg-white text-gray-900 group-hover:bg-opacity-0 group-hover:text-white"
                     }`}
                   >
-                    {instagramClicked ? "✓ Followed" : "Follow on Instagram"}
+                    {instagramClicked
+                      ? "✓ Followed"
+                      : "Follow Painfrei on Instagram"}
                   </span>
                 </button>
               </div>
