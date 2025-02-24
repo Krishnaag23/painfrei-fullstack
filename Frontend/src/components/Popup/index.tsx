@@ -32,7 +32,7 @@ const PopupModal = () => {
 
   const openInstagram = () => {
     window.open(
-      "https://instagram.com/the_painfrei_guy",
+      "https://www.instagram.com/painfrei_foundation/",
       "_blank",
       "noopener,noreferrer",
     );
@@ -43,15 +43,12 @@ const PopupModal = () => {
 
   return (
     <div
-      className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-[2px] transition-all"
+      className="fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-black/40 p-4 backdrop-blur-[2px] transition-all"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) handleClose();
-      }}
     >
-      <div className="animate-slide-up relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
+      <div className="relative w-full max-w-md transform animate-slide-up overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
         <button
           onClick={handleClose}
           className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200"
