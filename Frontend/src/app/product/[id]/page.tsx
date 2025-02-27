@@ -38,8 +38,7 @@ const ProductPage = ({ params }) => {
     208010, 208011, 208012, 208013, 208014, 208015, 208016, 208017, 208018,
     208019, 208020, 208021, 208022, 208023, 208024, 208025, 208026, 208027,
     209217, 208004, 243503, 243006, 243006, 243003, 243001, 243123, 211001,
-    211003, 211005, 211004, 211012
-
+    211003, 211005, 211004, 211012,
   ];
   useEffect(() => {
     const fetchProduct = async () => {
@@ -390,9 +389,17 @@ const ProductPage = ({ params }) => {
                     {/* Pricing and Stock Status */}
                     <div className="flex flex-wrap items-center justify-between">
                       <div className="space-y-1">
-                        <p className="text-xl font-bold text-primary dark:text-primary/90 sm:text-2xl">
-                          ₹649.00
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xl font-bold text-primary dark:text-primary/90 sm:text-2xl">
+                            ₹649.00
+                          </p>
+                          <p className="text-muted-foreground text-sm line-through">
+                            ₹999.00
+                          </p>
+                          <span className="text-sm font-medium text-primary">
+                            (35% off)
+                          </span>
+                        </div>
                       </div>
                       {/* <div className="text-right">
                         <p className="text-sm text-gray-600 dark:text-gray-400">

@@ -79,9 +79,18 @@ const ProductList = () => {
                           life.
                         </p>
                         <div className="flex items-center justify-between">
-                          <span className="text-lg font-bold text-primary">
-                            ₹649.00
-                          </span>
+                          <div className="flex flex-wrap items-center justify-between">
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-2">
+                                <p className="text-xl font-bold text-primary dark:text-primary/90 sm:text-2xl">
+                                  ₹649.00
+                                </p>
+                                <p className="text-muted-foreground text-sm line-through">
+                                  ₹999.00
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                           <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
