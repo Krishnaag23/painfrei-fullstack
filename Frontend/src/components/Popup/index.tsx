@@ -32,7 +32,7 @@ const PopupModal = () => {
 
   const openInstagram = () => {
     window.open(
-      "https://www.instagram.com/painfrei_foundation/",
+      "https://www.instagram.com/prayasrath.ngo?igsh=ZDRkc2FyamhzeWRv",
       "_blank",
       "noopener,noreferrer",
     );
