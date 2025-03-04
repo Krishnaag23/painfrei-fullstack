@@ -52,7 +52,7 @@ const OrderConfirmation = () => {
                 <p className="leading-relaxed text-body-color">
                   Return your used bottles and enjoy an instant{" "}
                   <span className="font-bold text-primary">20% discount</span>{" "}
-                  on your next purchase! Let's reduce waste together while
+                  on your next purchase! Let&apos;s reduce waste together while
                   saving on your order.
                 </p>
               </div>
