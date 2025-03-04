@@ -8,26 +8,24 @@ const PopupModal = () => {
 
   useEffect(() => {
     // Check if user has previously interacted with the popup
-    const hasSeenPopup = localStorage.getItem("hasSeenInstagramPopup");
+    // const hasSeenPopup = localStorage.getItem("hasSeenInstagramPopup");
 
-    if (!hasSeenPopup) {
-      // Set timeout for initial display
-      const timeoutId = setTimeout(() => {
-        setIsOpen(true);
-      }, 2000);
+    // Set timeout for initial display
+    const timeoutId = setTimeout(() => {
+      setIsOpen(true);
+      document.body.style.overflow = "hidden";
+    }, 2000);
 
-      // Cleanup timeout if component unmounts
-      return () => clearTimeout(timeoutId);
-    }
+    // Cleanup timeout if component unmounts
+    return () => {
+      clearTimeout(timeoutId);
+      document.body.style.overflow = "";
+    };
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
-    if (!hasInteracted) {
-      setHasInteracted(true);
-      // Store interaction in localStorage
-      localStorage.setItem("hasSeenInstagramPopup", "true");
-    }
+    document.body.style.overflow = "";
   };
 
   const openInstagram = () => {
@@ -47,6 +45,7 @@ const PopupModal = () => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
+      onScroll={(e) => e.preventDefault()}
     >
       <div className="relative w-full max-w-md transform animate-slide-up overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
         <button
