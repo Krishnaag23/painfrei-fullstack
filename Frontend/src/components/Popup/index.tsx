@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 const PopupModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     // Check if user has previously interacted with the popup
@@ -29,12 +30,24 @@ const PopupModal = () => {
   };
 
   const openInstagram = () => {
-    window.open(
-      "https://www.instagram.com/prayasrath.ngo?igsh=ZDRkc2FyamhzeWRv",
-      "_blank",
-      "noopener,noreferrer",
-    );
-    handleClose();
+    if (counter === 0 || counter === 1) {
+      window.open(
+        "https://www.instagram.com/prayasrath.ngo?igsh=ZDRkc2FyamhzeWRv",
+        "_blank",
+        "noopener,noreferrer",
+      );
+    }
+
+    if (counter === 2) {
+      window.open(
+        "https://www.instagram.com/the_painfrei_guy/",
+        "_blank",
+        "noopener,noreferrer",
+      );
+      handleClose();
+    }
+
+    setCounter(counter + 1);
   };
 
   if (!isOpen) return null;
@@ -45,11 +58,10 @@ const PopupModal = () => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      onScroll={(e) => e.preventDefault()}
     >
       <div className="relative w-full max-w-md transform animate-slide-up overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
         <button
-          onClick={handleClose}
+          onClick={openInstagram}
           className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200"
           aria-label="Close modal"
         >
