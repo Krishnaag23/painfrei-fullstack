@@ -462,8 +462,8 @@ const ProductPage = ({ params }) => {
                           }`}
                         >
                           {isDeliverable && savedPinCode
-                            ? `Hurray, Available at ${savedPinCode}. Add to cart now!`
-                            : `Oops! We currently don't support orders to ${savedPinCode}. However, you can still preorder, and we'll notify you once it becomes available in your area.`}
+                            ? `Limited Stock in the given pin code. Add to cart now!`
+                            : `Oops! Out of Stock. However, you can still preorder, and we'll notify you once it becomes available in your area.`}
                         </div>
                       )}
                       <button

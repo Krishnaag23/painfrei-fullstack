@@ -77,8 +77,8 @@ const PopupModal = () => {
               Alert!
             </h2>
             <p className="mb-8 text-gray-600">
-              Follow us on Instagram to receive your exclusive discount code and
-              stay updated with our latest pain relief solutions.
+              Unlock your exclusive discount! Follow Prayasrath Foundation on
+              Instagram and stay updated with our latest pain relief solutions.
             </p>
           </div>
 
