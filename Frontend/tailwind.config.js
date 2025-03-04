@@ -39,7 +39,7 @@ module.exports = {
         transparent: "transparent",
         main: "#FFEBEA",
         green: "#06413C",
-        act:"#AAE0CD",
+        act: "#AAE0CD",
         high: "#D0476E",
         white: "#FFFFFF",
         black: "#121723",
@@ -79,6 +79,20 @@ module.exports = {
       },
       dropShadow: {
         three: "0px 5px 15px rgba(6, 8, 15, 0.05)",
+      },
+      keyframes: {
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "slide-up": {
+          "0%": { transform: "translateY(10px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+      },
+      animation: {
+        "fade-in": "fade-in 0.3s ease-out",
+        "slide-up": "slide-up 0.4s ease-out",
       },
     },
   },

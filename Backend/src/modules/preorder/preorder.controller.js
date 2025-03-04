@@ -2,6 +2,130 @@ import { catchAsyncError } from "../../utils/catchAsyncError.js";
 import { AppError } from "../../utils/AppError.js";
 import { NewpreOrderModel } from "../../../Database/models/Newpreorder.model.js";
 import nodemailer from "nodemailer";
+import crypto from "crypto";
+import Razorpay from "razorpay";
+import { productModel } from "../../../Database/models/product.model.js";
+
+// Initialize Razorpay instance
+const razorpayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+// Create Razorpay Order for Preorders
+const createPreOrderPayment = catchAsyncError(async (req, res, next) => {
+  const { productId, quantity } = req.body;
+
+  // Validate input
+  if (!productId || !quantity) {
+    return next(new AppError("Product ID and quantity are required", 400));
+  }
+
+  // Get product details
+  const product = await productModel.findById(productId);
+  if (!product) {
+    return next(new AppError("Product not found", 404));
+  }
+
+  // Calculate amount
+  const price = product.priceDiscount || product.price;
+  const totalAmount = price * quantity;
+
+  // Create Razorpay order
+  const options = {
+    amount: totalAmount * 100, // Convert to paise
+    currency: "INR",
+    receipt: `preorder_${Date.now()}`,
+  };
+
+  try {
+    const razorpayOrder = await razorpayInstance.orders.create(options);
+
+    res.status(200).json({
+      success: true,
+      razorpayOrderId: razorpayOrder.id,
+      amount: options.amount,
+      currency: options.currency,
+      productId,
+      quantity,
+      totalAmount,
+    });
+  } catch (error) {
+    console.error("Razorpay Error:", error);
+    return next(new AppError("Error creating payment order", 500));
+  }
+});
+
+// Verify Preorder Payment
+const verifyPreOrderPayment = catchAsyncError(async (req, res, next) => {
+  const { shippingDetails, shippingAddress, productId, quantity } = req.body;
+  const razorpayOrderId = req.body.razorpay_order_id;
+  const razorpayPaymentId = req.body.razorpay_payment_id;
+  const razorpaySignature = req.body.razorpay_signature;
+
+  // Validate required fields
+  if (
+    !razorpayOrderId ||
+    !razorpayPaymentId ||
+    !razorpaySignature || 
+    !shippingDetails ||
+    !shippingAddress ||
+    !productId ||
+    !quantity
+  ) {
+    return next(new AppError("Missing required fields", 400));
+  }
+
+  // Verify signature
+  const generatedSignature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+    .update(`${razorpayOrderId}|${razorpayPaymentId}`)
+    .digest("hex");
+
+  if (generatedSignature !== razorpaySignature) {
+    return next(new AppError("Invalid payment signature", 400));
+  }
+
+  // Create preorder record
+  try {
+    const newPreOrder = new NewpreOrderModel({
+      orderInfo: {
+        productId,
+        quantity,
+
+        totalProductDiscount: 0, // Add discount logic if needed
+      },
+      shippingDetails,
+      shippingAddress,
+      paymentMethod: "card",
+      isPaid: true,
+      paidAt: Date.now(),
+      razorpayOrderId,
+      razorpayPaymentId,
+      razorpaySignature,
+      paymentStatus: "paid",
+    });
+
+    await newPreOrder.save();
+
+    // Update product inventory
+    await productModel.findByIdAndUpdate(productId, {
+      $inc: { quantity: -quantity, sold: quantity },
+    });
+
+    // Send confirmation email (uncomment when ready)
+    // await sendOrderConfirmationEmail(...);
+
+    res.status(201).json({
+      success: true,
+      message: "Preorder payment verified and order created",
+      preOrder: newPreOrder,
+    });
+  } catch (error) {
+    console.error("Database Error:", error);
+    return next(new AppError("Error saving preorder details", 500));
+  }
+});
 
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
@@ -117,4 +241,4 @@ const createNewPreOrder = catchAsyncError(async (req, res, next) => {
   }
 });
 
-export { createNewPreOrder };
+export { createNewPreOrder, createPreOrderPayment, verifyPreOrderPayment };

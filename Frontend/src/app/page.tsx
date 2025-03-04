@@ -14,6 +14,7 @@ import ProductList from "@/components/Product/ProductList";
 import { useEffect } from "react";
 import TokenHandler from "@/components/tokenHandler";
 import FAQ from "@/components/FAQ";
+import PopupModal from "@/components/Popup";
 
 export const metadata: Metadata = {
   title: "Painfrei Care & Wellness",
@@ -25,6 +26,7 @@ export default async function Home() {
     <>
       <ScrollUp />
       <TokenHandler />
+      <PopupModal />
       <Hero />
       <ProductList />
       {/* <Video /> */}

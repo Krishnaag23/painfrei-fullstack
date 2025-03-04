@@ -196,7 +196,21 @@ const Cart = () => {
                   <h2 className="text-lg font-semibold sm:text-xl">
                     {item.productId.title}
                   </h2>
-                  <p className="text-sm text-gray-500 sm:text-base">₹{649.0}</p>
+                  <div className="flex flex-wrap items-center justify-between">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xl font-bold text-primary dark:text-primary/90 sm:text-2xl">
+                          ₹649.00
+                        </p>
+                        <p className="text-muted-foreground text-sm line-through">
+                          ₹999.00
+                        </p>
+                        <span className="text-green-600 text-sm font-medium">
+                          (35% off)
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center space-x-2 sm:space-x-4">
