@@ -391,14 +391,14 @@ const ProductPage = ({ params }) => {
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <p className="text-xl font-bold text-primary dark:text-primary/90 sm:text-2xl">
-                            ₹649.00
+                            ₹{product.price}.00
                           </p>
                           <p className="text-muted-foreground text-sm line-through">
                             ₹999.00
                           </p>
-                          <span className="text-sm font-medium text-primary">
+                          {/* <span className="text-sm font-medium text-primary">
                             (35% off)
-                          </span>
+                          </span> */}
                         </div>
                       </div>
                       {/* <div className="text-right">
