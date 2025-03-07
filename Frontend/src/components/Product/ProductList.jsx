@@ -116,7 +116,7 @@ const ProductList = () => {
                       </div>
                       <div className="p-4">
                         <h3 className="mb-2 text-xl font-semibold text-gray-800 dark:text-white">
-                          Sample Product
+                          Sample
                         </h3>
                         <p className="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
                           Experience the soothing properties of Painfrei Pain

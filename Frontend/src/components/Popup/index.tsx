@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 
 const PopupModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     // Check if user has previously interacted with the popup
@@ -30,24 +28,12 @@ const PopupModal = () => {
   };
 
   const openInstagram = () => {
-    if (counter === 0 || counter === 1) {
-      window.open(
-        "https://www.instagram.com/prayasrath.ngo?igsh=ZDRkc2FyamhzeWRv",
-        "_blank",
-        "noopener,noreferrer",
-      );
-    }
-
-    if (counter === 2) {
-      window.open(
-        "https://www.instagram.com/the_painfrei_guy/",
-        "_blank",
-        "noopener,noreferrer",
-      );
-      handleClose();
-    }
-
-    setCounter(counter + 1);
+    window.open(
+      "https://www.instagram.com/prayasrath.ngo?igsh=ZDRkc2FyamhzeWRv",
+      "_blank",
+      "noopener,noreferrer",
+    );
+    handleClose();
   };
 
   if (!isOpen) return null;
