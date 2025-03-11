@@ -47,7 +47,7 @@ const PopupModal = () => {
     >
       <div className="relative w-full max-w-md transform animate-slide-up overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
         <button
-          onClick={openInstagram}
+          onClick={handleClose}
           className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200"
           aria-label="Close modal"
         >

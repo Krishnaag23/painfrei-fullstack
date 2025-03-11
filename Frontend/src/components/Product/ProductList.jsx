@@ -129,7 +129,7 @@ const ProductList = () => {
                         </p>
                         <div className="flex items-center justify-between">
                           <span className="text-lg font-bold text-primary">
-                            ₹299.00
+                            ₹350.00
                           </span>
                           <motion.button
                             whileHover={{ scale: 1.05 }}

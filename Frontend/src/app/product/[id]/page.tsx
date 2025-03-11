@@ -382,6 +382,9 @@ const ProductPage = ({ params }) => {
                       combining the cutting edge with ayurvedic principles. Our
                       product harnesses the power of nature to promote wellness
                       and restore your well-being.
+                      <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                        15 ml half-size Sample Bottle.
+                      </p>
                     </p>
                   </div>
 
@@ -393,9 +396,9 @@ const ProductPage = ({ params }) => {
                           <p className="text-xl font-bold text-primary dark:text-primary/90 sm:text-2xl">
                             ₹{product.price}.00
                           </p>
-                          <p className="text-muted-foreground text-sm line-through">
+                          {/* <p className="text-muted-foreground text-sm line-through">
                             ₹999.00
-                          </p>
+                          </p> */}
                           {/* <span className="text-sm font-medium text-primary">
                             (35% off)
                           </span> */}
@@ -462,7 +465,7 @@ const ProductPage = ({ params }) => {
                           }`}
                         >
                           {isDeliverable && savedPinCode
-                            ? `Limited Stock in the given pin code. Add to cart now!`
+                            ? `Only available in Kanpur, Prayagraj and Bareilly. Add to cart now!`
                             : `Oops! Out of Stock. However, you can still preorder, and we'll notify you once it becomes available in your area.`}
                         </div>
                       )}
