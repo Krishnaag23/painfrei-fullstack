@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 
 const PopupModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
     // Check if user has previously interacted with the popup
@@ -45,7 +44,6 @@ const PopupModal = () => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      onScroll={(e) => e.preventDefault()}
     >
       <div className="relative w-full max-w-md transform animate-slide-up overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
         <button
